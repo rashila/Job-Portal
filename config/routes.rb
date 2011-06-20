@@ -3,6 +3,10 @@ JobPortal::Application.routes.draw do
 
   resources :companies
 
+  resources :candidates do
+    resources :contactinfos
+  end
+
   devise_for :users
 
   # The priority is based upon order of creation:

@@ -1,0 +1,73 @@
+<%= form_for(@candidate) do |f| %>
+  <% if @candidate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
+
+      <ul>
+      <% @candidate.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p><label for="candidate_first_name">First Name:</label><br/>
+    <%= text_field 'candidate', 'first_name' %></p>
+  <p><label for="candidate_last_name">Last Name:</label><br/>
+     <%= text_field 'candidate', 'last_name' %></p>
+  <p><label for="candidate_qualification">Qualification:</label><br/>
+	<%= select_tag "candidate[qualification]",options_for_select(["Under Graguate","Post Graduate"]), {:multiple => true}%>
+
+
+  <div class="field">
+    <%= f.label :date_of_birth %><br />
+    <%= f.text_field :date_of_birth %>
+  </div>
+  <div class="field">
+  	<%= label :contactinfo, :address %><br />
+    <%= text_field :contactinfo, :address %>
+ </div>
+  
+   
+
+  <!--div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :date_of_birth %>
+  </div>
+  <div class="field">
+    <%= f.label :contact_number %><br />
+    <%= f.text_field :date_of_birth %>
+  </div>
+  <div class="field">
+    <%= f.label :alternate_email %><br />
+    <%= f.text_field :date_of_birth %>
+  </div-->
+  
+  </div>
+  <div class="field">
+    <%= f.label :experience %><br />
+    <%= f.text_field :experience %>
+  </div>
+  <div class="field">
+    <%= f.label :expected_salary %><br />
+    <%= f.text_field :expected_salary %>
+  </div>
+  <div class="field">
+    <%= f.label :skill_set %><br />
+    <%= f.text_area :skill_set %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  
+<% end %>
+  
+ 
+
+
+<script>
+	$(function (){
+ 		$('#candidate_date_of_birth').datepicker();
+ 	});
+
+</script>
