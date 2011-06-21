@@ -28,7 +28,7 @@ class CompaniesController < ApplicationController
   # GET /companies/new.xml
   def new
     @company = Company.new
-
+    @contactinfo = Contactinfo.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @company }
@@ -38,16 +38,21 @@ class CompaniesController < ApplicationController
   # GET /companies/1/edit
   def edit
     @company = Company.find(params[:id])
+    @contactinfo= Contactinfo.find(@company.contactinfos_id)
   end
 
   # POST /companies
   # POST /companies.xml
   def create
     @company = Company.new(params[:company])
-
+    @contactinfo = Contactinfo.new(params[:contactinfo])
+    @contactinfo.save
+    @company.contactinfos_id = @contactinfo.id
+      
     respond_to do |format|
-      if @company.save
-        format.html { redirect_to(@company, :notice => 'Company was successfully created.') }
+      if @company.save && @contactinfo.save
+        format.html { redirect_to(@company)}
+        flash[:notice] = "Company #{@company.name} was successfully created." 
         format.xml  { render :xml => @company, :status => :created, :location => @company }
       else
         format.html { render :action => "new" }
@@ -63,7 +68,8 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.update_attributes(params[:company])
-        format.html { redirect_to(@company, :notice => 'Company was successfully updated.') }
+        format.html { redirect_to(@company) }
+         flash[:notice] = "Company #{@company.name} was successfully updated." 
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

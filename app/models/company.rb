@@ -5,6 +5,7 @@ class Company
   field :established_date, :type => Date
   field :employee_count, :type => Integer
   field :website, :type => String
-  field :desciption, :type => String
-  has_many :contact_info
+  field :description, :type => String
+  field :contactinfos_id, :type => String
+  has_many :contactinfos
 end

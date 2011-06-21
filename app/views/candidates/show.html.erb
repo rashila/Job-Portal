@@ -1,46 +1,44 @@
-<p id="notice"><%= notice %></p>
-<p>
-  <b>First name:</b>
-  <%= @candidate.first_name %>
-</p>
+<h1><%=@candidate.name%></h1>
+<table border=1>
+<tr>
+  <th>First name:</th>
+   <th>Last name:</th>
+   <th>Qualification:</th>
+   <th>Date of Birth:</th>
+   <th>Address:</th>
+   <th>Email:</th>  
+   <th>Alternate Email:</th>
+   <th>Contact Numther:</th>
+   <th>Experience:</th>
+	<th>Expected salary:</th>
+	<th>Skill set:</th>
+</tr>
+<tr>
+ <td> <%= @candidate.first_name %></td>
 
-<p>
-  <b>Last name:</b>
-  <%= @candidate.last_name %>
-</p>
 
-<p>
-  <b>Qualification:</b>
-  <%= @candidate.qualification %>
-  
-</p>
-<p>
-  <b>Date of birth:</b>
-  <%= @candidate.date_of_birth %>
-</p>
+<td><%= @candidate.last_name %></td>
 
-<p>
-     <b>Address:</b>  
-    <% for contactinfo in @candidate.contactinfos %>  
-        <h3><%= contactinfos.address %></h3>  
-      <% end %>  
-   
-<p>
-  <b>Experience:</b>
-  <%= @candidate.experience %>
-</p>
+<td><%= @candidate.qualification %></td>
+<td><%= @candidate.date_of_birth %></td>
+<td><%= Contactinfo.find(@candidate.contactinfos_id).address if @candidate.contactinfos_id %></td>
+<td><%= Contactinfo.find(@candidate.contactinfos_id).email if @candidate.contactinfos_id %></td>
+<td><%= Contactinfo.find(@candidate.contactinfos_id).alternate_email if @candidate.contactinfos_id %></td>
+<td><%= Contactinfo.find(@candidate.contactinfos_id).contact_number if @candidate.contactinfos_id %></td>
+<td><%= @candidate.experience %>
+</td>
 
-<p>
-  <b>Expected salary:</b>
+<td>
+ 
   <%= @candidate.expected_salary %>
-</p>
+</td>
 
-<p>
-  <b>Skill set:</b>
+<td>
+ 
   <%= @candidate.skill_set %>
-</p>
-
-      
+</td>
+</tr>
+      </table>
     
 <%= link_to 'Edit', edit_candidate_path(@candidate) %> |
 <%= link_to 'Back', candidates_path %>

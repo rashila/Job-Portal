@@ -22,8 +22,9 @@ class CandidatesController < ApplicationController
   # GET /candidates/new
   # GET /candidates/new.xml
   def new
+    puts 'newwwwwwwwwwww'
     @candidate = Candidate.new
-    
+    @contactinfo = Contactinfo.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @candidate }
@@ -43,12 +44,16 @@ class CandidatesController < ApplicationController
     @contactinfo = Contactinfo.new(params[:contactinfo])
     @contactinfo.save
     @candidate.contactinfos_id = @contactinfo.id
+   
 #    @candidate.qualification = params[:qualification]
     respond_to do |format|
-      if @candidate.save
-        format.html { redirect_to(@candidate, :notice => 'Candidate was successfully created.') }
+      if @candidate.save(:validate => false) && @contactinfo.save 
+        puts '1111111111111'
+        format.html { redirect_to(@candidate) }
+        flash[:notice] = "Candidate #{@candidate.name} was created successfully."
         format.xml  { render :xml => @candidate, :status => :created, :location => @candidate }
       else
+        puts '222222222222222'
         format.html { render :action => "new" }
         format.xml  { render :xml => @candidate.errors, :status => :unprocessable_entity }
       end
@@ -61,10 +66,11 @@ class CandidatesController < ApplicationController
     @candidate = Candidate.find(params[:id])
     @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
     @contactinfo.update_attributes(params[:contactinfo])
-    respond_to do |format|
-      if @candidate.update_attributes(params[:candidate])
-        format.html { redirect_to(@candidate, :notice => 'Candidate was successfully updated.') }
-        format.xml  { head :ok }
+      if @candidate.update_attributes(params[:candidate]) && @contactinfo.update_attributes(params[:contactinfo])
+       #format.html { redirect_to(@candidate) }
+        flash[:notice] = "Candidate #{@candidate.name} was updated   successfully."
+        redirect_to "/candidates"
+       # format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @candidate.errors, :status => :unprocessable_entity }
@@ -82,5 +88,5 @@ class CandidatesController < ApplicationController
       format.html { redirect_to(candidates_url) }
       format.xml  { head :ok }
     end
-  end
+  
 end
