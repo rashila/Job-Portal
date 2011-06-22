@@ -8,4 +8,5 @@ class Company
   field :description, :type => String
   field :contactinfos_id, :type => String
   has_many :contactinfos
+  validates_presence_of :name
 end

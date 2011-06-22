@@ -8,6 +8,9 @@
     <th>Employee count</th>
     <th>Website</th>
     <th>Desciption</th>
+    <th>Address</th>
+	<th>Email</th>
+	<th>Alternate Email</th>
     <th></th>
     <th></th>
     <th></th>
@@ -20,7 +23,10 @@
     <td><%= company.established_date %></td>
     <td><%= company.employee_count %></td>
     <td><%= company.website %></td>
-    <td><%= company.desciption %></td>
+    <td><%= company.description %></td>
+    <td><%= Contactinfo.find(company.contactinfos_id).email if company.contactinfos_id %></td>
+	<td><%= Contactinfo.find(company.contactinfos_id).alternate_email if company.contactinfos_id %></td>
+	<td><%= Contactinfo.find(company.contactinfos_id).contact_number if company.contactinfos_id %></td>
     <td><%= link_to 'Show', company %></td>
     <td><%= link_to 'Edit', edit_company_path(company) %></td>
     <td><%= link_to 'Destroy', company, :confirm => 'Are you sure?', :method => :delete %></td>

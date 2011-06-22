@@ -27,8 +27,28 @@
 </p>
 
 <p>
-  <b>Desciption:</b>
-  <%= @company.desciption %>
+  <b>Description:</b>
+  <%= @company.description %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= Contactinfo.find(@company.contactinfos_id).address if @company.contactinfos_id %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= Contactinfo.find(@company.contactinfos_id).email if @company.contactinfos_id %>
+</p>
+
+<p>
+  <b>Alternate Email:</b>
+  <%= Contactinfo.find(@company.contactinfos_id).alternate_email if @company.contactinfos_id %>
+</p>
+
+<p>
+  <b>Contact Number:</b>
+  <%= Contactinfo.find(@company.contactinfos_id).contact_number if @company.contactinfos_id %>
 </p>
 
 

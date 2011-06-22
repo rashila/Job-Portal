@@ -13,6 +13,8 @@ class Candidate
   #field :user_id,:value => 1
  # embeds_many :contactinfos
   has_many :contactinfos
+  accepts_nested_attributes_for :contactinfos, :allow_destroy => true
+
   #key :contactinfos_id
   #def address
     #Contactinfo.where(:candidates_contactinfos_id =>self._id).all
@@ -21,4 +23,8 @@ class Candidate
   def name
     "#{first_name} #{last_name}"
   end
-   end
+  
+ 
+
+
+end
