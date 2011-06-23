@@ -1,0 +1,66 @@
+<%= form_for(@position) do |f| %>
+  <% if @position.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@position.errors.count, "error") %> prohibited this position from being saved:</h2>
+
+      <ul>
+      <% @position.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <p><label for="position_status">Status:</label><br/>
+	<%= select_tag "position[status]",options_for_select(["Open","Inprogress","Close"])%></p>
+  <p><label for="position_location">Location:</label><br/>
+	<%= select_tag "position[location]",options_for_select(["Delhi","Calcutta","Bombay","Pune","Chennai","Bangalore","Kochi","Trivandrum","Hyderabad"])%></p>
+  <div class="field">
+    <%= f.label :date_published %><br />
+    <%= f.text_field :date_published %>
+  </div>
+  <div class="field">
+    <%= f.label :last_date %><br />
+    <%= f.text_field :last_date %>
+  </div>
+  <div class="field">
+    <%= f.label :salary_range %><br />
+    <%= f.text_field :salary_range %>
+  </div>
+  <div class="field">
+    <%= f.label :skillset %><br />
+    <%= f.text_area :skillset %>
+  </div>
+  
+    <p><label for="position_qualification">Qualification:</label><br/>
+	<%= select_tag "position[qualification]",options_for_select(["Under Graguate","Post Graduate"]), {:multiple => true}%>\</p>
+  <div class="field">
+    <%= f.label :vacancies %><br />
+    <%= f.text_field :count %>
+  </div>
+  <p><label for="position_experience">Experience:</label><br/>
+	<%= select_tag "position[experience]",options_for_select([">1","1-3","4-6","7-10"])%></p>
+  <p><label for="position_working_time">Working Time:</label><br/>
+	<%= select_tag "position[working_time]",options_for_select(["8am -12 pm","12:30pm - 4:30 pm","5pm-9pm"])%></p>
+  <div class="actions">
+  	<table>
+   <th> <%= f.submit :SAVE %></th>
+   <th> <%= f.submit :PUBLISH %></th>
+	</table>
+  </div>
+<% end %>
+<script>
+	$(function (){
+ 		$('#position_date_published').datepicker();
+		$('#position_last_date').datepicker();
+ 	});
+
+</script>

@@ -1,45 +1,52 @@
-<h1><%=@candidate.name%></h1>
-<table border=1>
-<tr>
-  <th>First name:</th>
-   <th>Last name:</th>
-   <th>Qualification:</th>
-   <th>Date of Birth:</th>
-   <th>Address:</th>
-   <th>Email:</th>  
-   <th>Alternate Email:</th>
-   <th>Contact Number:</th>
-   <th>Experience:</th>
-	<th>Expected salary:</th>
-	<th>Skill set:</th>
-</tr>
-<tr>
- <td> <%= @candidate.first_name %></td>
 
+<h2><%=@candidate.name%></h2>	
+<div  style="background-color: #fff; color: #333;margin-left: 100px;font-style: normal" >
+	
 
-<td><%= @candidate.last_name %></td>
-
-<td><%= @candidate.qualification %></td>
-<td><%= @candidate.date_of_birth %></td>
-<td><%= Contactinfo.find(@candidate.contactinfos_id).address if @candidate.contactinfos_id %></td>
-<td><%= Contactinfo.find(@candidate.contactinfos_id).email if @candidate.contactinfos_id %></td>
-<td><%= Contactinfo.find(@candidate.contactinfos_id).alternate_email if @candidate.contactinfos_id %></td>
-<td><%= Contactinfo.find(@candidate.contactinfos_id).contact_number if @candidate.contactinfos_id %></td>
-<td><%= @candidate.experience %>
-</td>
-
-<td>
+<dl >
+  <dt><b>First name:</b></dt>
+  <dd> <%= @candidate.first_name %></dd>
+  <br>
+   <dt><b>Last name:</b></dt>
+   <dd><%= @candidate.last_name %></dd>
+   <br>
+   <dt><b>Qualification:</b></dt>
+   <dd><%= @candidate.qualification %></td>
+   <br>
+   <dt><b>Date of Birth:</b></dt>
+   <dd><%= @candidate.date_of_birth %></td>
+   <br>
+   <dt><b>Address:</b></dt>
+   <dd><%= Contactinfo.find(@candidate.contactinfos_id).address if @candidate.contactinfos_id %></dd>
+   <br>
+   <dt><b>Email:</b></dt> 
+   <dd><%= Contactinfo.find(@candidate.contactinfos_id).email if @candidate.contactinfos_id %></dd> 
+   <br>
+   <dt><b>Alternate Email:</b></dt>
+   <dd><%= Contactinfo.find(@candidate.contactinfos_id).alternate_email if @candidate.contactinfos_id %></dd>
+   <br>
+   <dt><b>Contact Number:</b></dt>
+   <dd><%= Contactinfo.find(@candidate.contactinfos_id).contact_number if @candidate.contactinfos_id %></dd>
+   <br>
+   <dt><b>Experience:</b></dt>
+   <dd><%= @candidate.experience %>
+   <br>
+	<dt><b>Expected salary:</b></dt>
+	<dd>
  
   <%= @candidate.expected_salary %>
-</td>
-
-<td>
+</dd>
+<br>
+	<dt><b>Skill set:</b></dt>
+	<dd>
  
   <%= @candidate.skill_set %>
-</td>
-</tr>
-      </table>
-    
-<%= link_to 'Edit', edit_candidate_path(@candidate) %> |
+</dd>
+	<br>
+
+</dl>
+
+   </div> 
+<%= link_to 'Edit', edit_candidate_path(@candidate) %> 
 <%= link_to 'Back', candidates_path %>
 

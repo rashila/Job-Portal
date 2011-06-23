@@ -1,56 +1,27 @@
-<p id="notice"><%= notice %></p>
+<h3><%=@company.name%></h3>
+<div  style="background-color: #fff; color: #333;margin-left: 100px;font-style: normal" >
+	<dl>
+		<dt><b>Name:</b></dt>
+		<dd><%= @company.name %></dd>
+		<dt><b>Established date:</b></dt>
+		<dd><%= @company.established_date %></dd>
 
-<p>
-  <b>Name:</b>
-  <%= @company.name %>
-</p>
+		<dt><b>Website:</b></dt>
+		<dd><%= @company.website %></dd>
 
-<p>
-  <b>Business type:</b>
-  <%= @company.business_type %>
-</p>
+		<dt><b>Description:</b></dt>
+		<dd><%= @company.description %></dd>
+		<dt><b>Address:</b></dt>
+		<dd><%= Contactinfo.find(@company.contactinfos_id).address if @company.contactinfos_id %></dd>
 
-<p>
-  <b>Established date:</b>
-  <%= @company.established_date %>
-</p>
+		<dt> <b>Email:</b></dt>
+		<dd><%= Contactinfo.find(@company.contactinfos_id).email if @company.contactinfos_id %></dd>
+		<dt> <b>Alternate Email:</b></dt>
+		<dd><%= Contactinfo.find(@company.contactinfos_id).alternate_email if @company.contactinfos_id %></dd>
+		<dt> <b>Contact Number:</b></dt>
+		<dd><%= Contactinfo.find(@company.contactinfos_id).contact_number if @company.contactinfos_id %></dd>
+</dl>
 
-<p>
-  <b>Employee count:</b>
-  <%= @company.employee_count %>
-</p>
-
-
-<p>
-  <b>Website:</b>
-  <%= @company.website %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @company.description %>
-</p>
-
-<p>
-  <b>Address:</b>
-  <%= Contactinfo.find(@company.contactinfos_id).address if @company.contactinfos_id %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= Contactinfo.find(@company.contactinfos_id).email if @company.contactinfos_id %>
-</p>
-
-<p>
-  <b>Alternate Email:</b>
-  <%= Contactinfo.find(@company.contactinfos_id).alternate_email if @company.contactinfos_id %>
-</p>
-
-<p>
-  <b>Contact Number:</b>
-  <%= Contactinfo.find(@company.contactinfos_id).contact_number if @company.contactinfos_id %>
-</p>
-
-
+<br>
 <%= link_to 'Edit', edit_company_path(@company) %> |
 <%= link_to 'Back', companies_path %>

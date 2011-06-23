@@ -1,21 +1,35 @@
 JobPortal::Application.routes.draw do
   
 
-  resources :companies
+  
 
-  resources :candidates do
+  resources :positions
+
+    resources :candidates do
     resources :contactinfos
   end
+  resources :companies do
+    resources :contactinfos
+  end
+    resources :users do
+     member do
+      get :avatar
+    end
+  end
+
 
   devise_for :users
-
+  
+  match "/positions/search" => 'positions#search'
+  match "/positions/:id/show" => 'positions#show'
+  match "/images/uploads" => "gridfs#serve"
+          resources :things
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
-  match 'companies/:id/welcome' => 'companies#welcome'
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase

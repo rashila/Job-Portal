@@ -1,16 +1,14 @@
 <h1>Listing companies</h1>
 
-<table>
+<table border=1>
   <tr>
-    <th>Name</th>
-    <th>Business type</th>
+    <th>Company Name</th>
     <th>Established date</th>
-    <th>Employee count</th>
+	<th>Company Address</th>
     <th>Website</th>
-    <th>Desciption</th>
-    <th>Address</th>
-	<th>Email</th>
-	<th>Alternate Email</th>
+	<th>Company Email</th>
+	<th>Contact number</th>
+    <th>Company Profile</th>
     <th></th>
     <th></th>
     <th></th>
@@ -19,14 +17,12 @@
 <% @companies.each do |company| %>
   <tr>
     <td><%= company.name %></td>
-    <td><%= company.business_type %></td>
-    <td><%= company.established_date %></td>
-    <td><%= company.employee_count %></td>
+    <td><%= company.established_date %></td> 
+	<td><%= Contactinfo.find(company.contactinfos_id).address if company.contactinfos_id%></td>
     <td><%= company.website %></td>
+	<td><%= Contactinfo.find(company.contactinfos_id).email if company.contactinfos_id%></td>
+	<td><%= Contactinfo.find(company.contactinfos_id).contact_number if company.contactinfos_id%></td>
     <td><%= company.description %></td>
-    <td><%= Contactinfo.find(company.contactinfos_id).email if company.contactinfos_id %></td>
-	<td><%= Contactinfo.find(company.contactinfos_id).alternate_email if company.contactinfos_id %></td>
-	<td><%= Contactinfo.find(company.contactinfos_id).contact_number if company.contactinfos_id %></td>
     <td><%= link_to 'Show', company %></td>
     <td><%= link_to 'Edit', edit_company_path(company) %></td>
     <td><%= link_to 'Destroy', company, :confirm => 'Are you sure?', :method => :delete %></td>

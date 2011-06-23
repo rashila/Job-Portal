@@ -1,0 +1,37 @@
+<h2><%=@position.title%></h2>
+<br>
+<br>
+<table border = 1>
+<tr> 
+    <th><b>Title:</b></th>
+	<th><b>Desription:</b></th>
+	<th><b>Status:</b</th>
+	<th> <b>Location:</b></th>
+	<th><b>Date published:</b></th>
+	<th><b>Last date:</b></th>
+	<th><b>Salary Range:</b></th>
+	<th><b>Skillset:</b></th>
+	<th><b>Qualification:</b></th>
+	<th><b>Vacancies:</b></th>
+	<th><b>Experience:</b></th>
+	<th><b>Working time:</b></th>
+	
+</tr>	
+<tr>
+	<td><%= @position.title %></td>
+	<td> <%= @position.description %></td>
+	<td> <%= @position.status %></td>
+	<td> <%= @position.location %></td>
+	<td><%= @position.date_published %></td>
+	<td><%= @position.last_date %></td>
+	<td><%= @position.salary_range %></td>
+	<td> <%= @position.skillset %></td>
+	<td> <%= @position.qualification %></td>
+	<td><%= @position.count %></td>
+	<td> <%= @position.experience %></td>
+	<td> <%= @position.working_time %></td>
+</tr>	
+</table>
+
+<%= link_to 'Edit', edit_position_path(@position) %> |
+<%= link_to 'Back', positions_path %>

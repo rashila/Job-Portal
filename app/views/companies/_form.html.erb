@@ -1,3 +1,5 @@
+<div  style="background-color: #fff; color: #333;margin-left: 100px;font-style: normal" >
+	
 <%= form_for(@company) do |f| %>
   <% if @company.errors.any?  ||  @contactinfo.errors.any?%>
     <div id="error_explanation">
@@ -13,49 +15,65 @@
       </ul>
     </div>
   <% end %>
-
+<table>
+<tr>
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+   <td> <%= f.label :company_name %></td>
+  <td>  <%= f.text_field :name %></td>
   </div>
+  </tr>
+ <tr>
   <div class="field">
-    <%= f.label :business_type %><br />
-    <%= f.text_field :business_type %>
+   <td> <%= f.label :established_date %></td>
+  <td>  <%= f.text_field :established_date %></td>
   </div>
-  <div class="field">
-    <%= f.label :established_date %><br />
-    <%= f.date_select :established_date %>
-  </div>
-  <div class="field">
-    <%= f.label :employee_count %><br />
-    <%= f.text_field :employee_count %>
-  </div>
+  </tr>
   
+  <tr>
   <div class="field">
-    <%= f.label :website %><br />
-    <%= f.text_field :website %>
+   <td><%= label :contactinfo, :company_address %></td>
+  <td>  <%= text_area :contactinfo, :address %></td>
   </div>
+  </tr>
+ <tr>
   <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
+   <td> <%= f.label :website%></td>
+  <td>  <%= f.text_field :website %></td>
   </div>
-<div class="field">
-  	<%= label :contactinfo, :address %><br />
-    <%= text_area :contactinfo, :address %>
- </div>
+  </tr>
+<tr>
   <div class="field">
-    <%= label :contactinfo,:email %><br />
-    <%= text_field :contactinfo,:email %>
+   <td><%= label :contactinfo, :company_email%></td>
+  <td>  <%= text_field :contactinfo, :email %></td>
   </div>
+  </tr>
+  <tr>
   <div class="field">
-    <%= label :contactinfo,:alternate_email %><br />
-    <%= text_field :contactinfo,:alternate_email %>
+   <td><%= label :contactinfo, :alternate_email%></td>
+  <td>  <%= text_field :contactinfo, :alternate_email %></td>
   </div>
+  </tr>
+  <tr>
   <div class="field">
-    <%= label :contactinfo,:contact_number %><br />
-    <%= text_field :contactinfo,:contact_number %>
+   <td><%= label :contactinfo, :contact_number %></td>
+  <td>  <%= text_field :contactinfo, :contact_number %></td>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  </tr>
+ <tr>
+  <div class="field">
+   <td> <%= f.label :company_profile %></td>
+  <td>  <%= f.text_area :description %></td>
+  </div>
+  </tr>
+  </table>
+  <div class="actions" align="justify">
+ <%= f.submit %>
   </div>
 <% end %>
+</div>
+<script>
+	$(function (){
+ 		$('#company_established_date').datepicker();
+ 	});
+
+</script>
