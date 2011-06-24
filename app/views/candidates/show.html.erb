@@ -1,52 +1,84 @@
+<div class="content_pane">
+<h3><%= @candidate.name%></h3>
 
-<h2><%=@candidate.name%></h2>	
-<div  style="background-color: #fff; color: #333;margin-left: 100px;font-style: normal" >
-	
+	<div class="label">
+		<b>First name:</b>
+	</div>
+	<div class="value">
+		<%= @candidate.first_name %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Last name:</b>
+	</div>
+	<div class="value">
+		<%= @candidate.last_name %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Qualification:</b>
+	</div>
+	<div class="value">
+		<%= @candidate.qualification %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Date of Birth:</b>
+	</div>
+	<div class="value">
+		<%= @candidate.date_of_birth %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Address:</b>
+	</div>
+	<div class="value">
+		<%= Contactinfo.find(@candidate.contactinfos_id).address if @candidate.contactinfos_id %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Email:</b>
+	</div>
+		<div class="value">
+			<%= Contactinfo.find(@candidate.contactinfos_id).email if @candidate.contactinfos_id %>
+		</div>
+		<br clear="all">
+		<div class="label">
+			<b>Alternate Email:</b>
+		</div>
+		<div class="value">
+			<%= Contactinfo.find(@candidate.contactinfos_id).alternate_email if @candidate.contactinfos_id %>
+		</div>
+		<br clear="all">
+		<div class="label">
+			<b>Contact Number:</b>
+		</div>
+		<div class="value">
+			<%= Contactinfo.find(@candidate.contactinfos_id).contact_number if @candidate.contactinfos_id %>
+		</div>
+		<br clear="all">
+		<div class="label">
+			<b>Experience:</b>
+		</div>
+		<div class="value">
+			<%= @candidate.experience %>
+		</div>
+		<br clear="all">
+		<div class="label">
+			<b>Expected salary:</b>
+		</div>
 
-<dl >
-  <dt><b>First name:</b></dt>
-  <dd> <%= @candidate.first_name %></dd>
-  <br>
-   <dt><b>Last name:</b></dt>
-   <dd><%= @candidate.last_name %></dd>
-   <br>
-   <dt><b>Qualification:</b></dt>
-   <dd><%= @candidate.qualification %></td>
-   <br>
-   <dt><b>Date of Birth:</b></dt>
-   <dd><%= @candidate.date_of_birth %></td>
-   <br>
-   <dt><b>Address:</b></dt>
-   <dd><%= Contactinfo.find(@candidate.contactinfos_id).address if @candidate.contactinfos_id %></dd>
-   <br>
-   <dt><b>Email:</b></dt> 
-   <dd><%= Contactinfo.find(@candidate.contactinfos_id).email if @candidate.contactinfos_id %></dd> 
-   <br>
-   <dt><b>Alternate Email:</b></dt>
-   <dd><%= Contactinfo.find(@candidate.contactinfos_id).alternate_email if @candidate.contactinfos_id %></dd>
-   <br>
-   <dt><b>Contact Number:</b></dt>
-   <dd><%= Contactinfo.find(@candidate.contactinfos_id).contact_number if @candidate.contactinfos_id %></dd>
-   <br>
-   <dt><b>Experience:</b></dt>
-   <dd><%= @candidate.experience %>
-   <br>
-	<dt><b>Expected salary:</b></dt>
-	<dd>
- 
-  <%= @candidate.expected_salary %>
-</dd>
-<br>
-	<dt><b>Skill set:</b></dt>
-	<dd>
- 
-  <%= @candidate.skill_set %>
-</dd>
-	<br>
-
-</dl>
-
-   </div> 
-<%= link_to 'Edit', edit_candidate_path(@candidate) %> 
-<%= link_to 'Back', candidates_path %>
-
+		<div class="value">
+			<%= @candidate.expected_salary %>
+		</div>
+		<br clear="all">
+		<div class="label">
+			<b>Skill set:</b>
+		</div>
+		<div class="value">
+			<%= @candidate.skill_set %>
+		</div>
+		<br clear="all">
+	</div>
+	<%= link_to 'Edit', edit_candidate_path(@candidate) %>
+	<%= link_to 'Back', candidates_path %>

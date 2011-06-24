@@ -1,27 +1,25 @@
+<div class="content_pane">
 <h3><%=@company.name%></h3>
-<div  style="background-color: #fff; color: #333;margin-left: 100px;font-style: normal" >
-	<dl>
-		<dt><b>Name:</b></dt>
-		<dd><%= @company.name %></dd>
-		<dt><b>Established date:</b></dt>
-		<dd><%= @company.established_date %></dd>
 
-		<dt><b>Website:</b></dt>
-		<dd><%= @company.website %></dd>
+		<div class="label"><b>Name:</b></div>
+		<div class="value"><%= @company.name %></div><br clear="all" />
+		<div class="label"><b>Established date:</b></div>
+		<div class="value"><%= @company.established_date %></div><br clear="all" />
 
-		<dt><b>Description:</b></dt>
-		<dd><%= @company.description %></dd>
-		<dt><b>Address:</b></dt>
-		<dd><%= Contactinfo.find(@company.contactinfos_id).address if @company.contactinfos_id %></dd>
+		<div class="label"><b>Website:</b></div>
+		<div class="value"><%= @company.website %></div><br clear="all" />
 
-		<dt> <b>Email:</b></dt>
-		<dd><%= Contactinfo.find(@company.contactinfos_id).email if @company.contactinfos_id %></dd>
-		<dt> <b>Alternate Email:</b></dt>
-		<dd><%= Contactinfo.find(@company.contactinfos_id).alternate_email if @company.contactinfos_id %></dd>
-		<dt> <b>Contact Number:</b></dt>
-		<dd><%= Contactinfo.find(@company.contactinfos_id).contact_number if @company.contactinfos_id %></dd>
-</dl>
+		<div class="label"><b>Description:</b></div>
+		<div class="value"><%= @company.description %></div><br clear="all" />
+		<div class="label"><b>Address:</b></div>
+		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).address if @company.contactinfos_id %></div><br clear="all" />
 
+		<div class="label"> <b>Email:</b></div>
+		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).email if @company.contactinfos_id %></div><br clear="all" />
+		<div class="label"> <b>Alternate Email:</b></div>
+		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).alternate_email if @company.contactinfos_id %></div><br clear="all" />
+		<div class="label"> <b>Contact Number:</b></div>
+		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).contact_number if @company.contactinfos_id %></div><br clear="all" />
 <br>
 <%= link_to 'Edit', edit_company_path(@company) %> |
 <%= link_to 'Back', companies_path %>
