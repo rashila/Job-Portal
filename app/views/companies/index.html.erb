@@ -16,14 +16,13 @@
 
 <% @companies.each do |company| %>
   <tr>
-    <td><%= company.name %></td>
+    <td><%= link_to company.name,"/companies/"+company.id.to_s+"/show" %></td>
     <td><%= company.established_date %></td> 
 	<td><%= Contactinfo.find(company.contactinfos_id).address if company.contactinfos_id%></td>
     <td><%= company.website %></td>
 	<td><%= Contactinfo.find(company.contactinfos_id).email if company.contactinfos_id%></td>
 	<td><%= Contactinfo.find(company.contactinfos_id).contact_number if company.contactinfos_id%></td>
     <td><%= company.description %></td>
-    <td><%= link_to 'Show', company %></td>
     <td><%= link_to 'Edit', edit_company_path(company) %></td>
     <td><%= link_to 'Destroy', company, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>

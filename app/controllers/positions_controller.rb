@@ -44,10 +44,7 @@ class PositionsController < ApplicationController
   # POST /positions.xml
   def create
     @position = Position.new(params[:position])
-    puts "!!!!!!!"
-    puts @position.inspect
-    puts "@@@@@"
-  #  @position.companies_id = @company.find(params[:id])
+  # @position.companies_id = @company.find(params[:id])
    # @position.save
     respond_to do |format|
       if @position.save
@@ -69,8 +66,9 @@ class PositionsController < ApplicationController
 
     respond_to do |format|
       if @position.update_attributes(params[:position])
-        format.html { redirect_to(@position, :notice => 'Position was successfully updated.') }
-        format.xml  { head :ok }
+        
+         flash[:notice] = "Position #{@position.title} was updated successfully."
+        format.html { redirect_to(@position)}
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
