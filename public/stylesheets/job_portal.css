@@ -1,0 +1,29 @@
+.menu {
+	padding: 50px 20px 0px 25px; 
+}
+.label {
+	float: left;
+	text-align: right;
+	width: 300px;
+	font-size: 12px;
+	padding: 10px 10px 10px 100px;
+}
+.value {
+	float: left;
+	text-align: left;
+	width: 300px;
+	font-size: 12px;
+	padding: 10px 10px 10px 10px;
+}
+
+.content_pane {
+	padding-left: 50px;
+}
+th {
+	font-weight: bold;
+	font-size: 13px;
+}
+
+td {
+	font-size: 12px;
+}
