@@ -10,6 +10,8 @@ gem "mongoid", "~> 2.0"
 gem "bson_ext", "~> 1.3"
 gem 'SystemTimer', '1.2.3'
 gem "devise", "~> 1.3.4"
+gem "mail"
+gem 'tlsmail'
 
 # Use unicorn as the web server
 # gem 'unicorn'
