@@ -10,14 +10,10 @@ JobPortal::Application.routes.draw do
   resources :companies do
     resources :contactinfos
   end
-  
 
-  
-
-  match "/positions/search" => 'positions#search'
   match "/positions/:id/show" => 'positions#show'
-  match "/images/uploads" => "gridfs#serve"
-  resources :things
+  match "/candidates/:id/show" => 'candidates#show'    
+  match "/companies/:id/show" => 'companies#show'   
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
