@@ -12,12 +12,11 @@
 
 <% @positions.each do |position| %>
   <tr>
-    <td><%= position.title %></td>
+    <td><%= link_to position.title,"/positions/"+position.id.to_s+"/show" %></td>
     <td><%= position.status %></td>
     <td><%= position.location %></td>
     <td><%= position.last_date %></td>
-	<td><%= link_to 'Show', position %></td>
-    <td><%= link_to 'Edit', edit_position_path(position) %></td>
+    <td><%= link_to 'Edit', "/positions/"+position.id.to_s+"/edit"%></td>
     <td><%= link_to 'Destroy', position, :confirm => 'Are you sure?', :method => :delete %></td>	
     <% end %>
   </tr>
@@ -26,4 +25,4 @@
 
 <br />
 
-<!--%= link_to 'New Position', new_position_path %-->
+<%= link_to 'New Position', new_position_path %>

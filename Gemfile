@@ -15,6 +15,7 @@ gem 'tlsmail'
 
 # Use unicorn as the web server
 # gem 'unicorn'
+gem 'date_validator'
 
 # Deploy with Capistrano
 # gem 'capistrano'
