@@ -97,4 +97,15 @@ class CompaniesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def get_mail
+    Mail.defaults do
+      retriever_method :pop3, :address    => "pop.gmail.com",
+                          :port       => 995,
+                          :user_name  => 'noushad.meeras@gmail.com',
+                          :password   => 'diakuttan@feb16',
+                          :enable_ssl => true
+     end
+    puts Mail.first.inspect
+  end
 end

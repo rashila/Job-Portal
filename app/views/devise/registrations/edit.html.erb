@@ -15,9 +15,6 @@
   <p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
   <%= f.password_field :current_password %></p>
 
-  <p><%= f.label :user_type %><br />
-  <%= f.select("user", "user_type", UserType.all.collect {|ut| [ ut.title, ut.id ] }, {:include_blank => false}) %></p>
-
   <p><%= f.submit "Update" %></p>
 <% end %>
 

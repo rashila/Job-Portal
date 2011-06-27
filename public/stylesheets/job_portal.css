@@ -27,3 +27,6 @@ th {
 td {
 	font-size: 12px;
 }
+#user_navigation {
+	float: right;
+}

@@ -12,9 +12,7 @@
   <p><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></p>
 
-  <p><%= f.label :user_type %><br />
-  <%= f.collection_select :user_type_id, UserType.all, :id, :title %></p>
-
+  <%= f.hidden_field :user_type, :value => params[:user_type] %>
   <p><%= f.submit "Sign up" %></p>
 <% end %>
 

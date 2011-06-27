@@ -1,29 +1,23 @@
 JobPortal::Application.routes.draw do
   
-
+  devise_for :users
   
-
   resources :positions
 
-    resources :candidates do
+  resources :candidates do
     resources :contactinfos
   end
   resources :companies do
     resources :contactinfos
   end
-    resources :users do
-     member do
-      get :avatar
-    end
-  end
-
-
-  devise_for :users
   
+
+  
+
   match "/positions/search" => 'positions#search'
   match "/positions/:id/show" => 'positions#show'
   match "/images/uploads" => "gridfs#serve"
-          resources :things
+  resources :things
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -75,9 +69,9 @@ JobPortal::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => "home#index"
 
-  # See how all your routes lay out with "rake routes"
+# See how all your routes lay out with "rake routes"
 
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+# This is a legacy wild controller route that's not recommended for RESTful applications.
+# Note: This route will make all actions in every controller accessible via GET requests.
+# match ':controller(/:action(/:id(.:format)))'
 end

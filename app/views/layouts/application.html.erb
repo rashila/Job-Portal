@@ -12,7 +12,18 @@
 
 </head>
 <body>
-	
+  <div id="user_navigation">
+    <% if user_signed_in? %>  
+      Signed in as <%= current_user.email %>. Not you?  
+      <%= link_to "Sign out", destroy_user_session_path %>  
+    <% else %>  
+      <%= link_to "New Candidate?", new_user_registration_path(:user_type => 1) %> |
+      <%= link_to "New Company?", new_user_registration_path(:user_type => 2) %> |
+      <%= link_to "New Agency?", new_user_registration_path(:user_type => 3) %><br clear="all" />
+      <%= link_to "Sign in", new_user_session_path %>  
+    <% end %> 
+  </div>
+  <% if user_signed_in? %>
   <table class="menu">
     <tr>
       <td><a href="/candidates">Candidates</a>&nbsp;|&nbsp;</td>
@@ -20,7 +31,7 @@
       <td><a href="/positions">Positions</a>&nbsp;|&nbsp;</td>
     </tr>
   </table>
-
+  <% end %>
 	
   <% flash.each do |name, msg| %>
     <%= content_tag :section, msg, :id => "flash_#{name}", :class => "flash" %>
