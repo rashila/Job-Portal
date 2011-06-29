@@ -10,22 +10,14 @@ class Position
   field :skillset, :type => String
   field :qualification, :type => String
   field :experience, :type => String , :null => false
+  field :company_id ,:type => String
   validates_presence_of :title,:location,:description,:salary_range,:skillset,:qualification,:experience
   validates_numericality_of :salary_range, :message => "cannot be string/special character"
   
 #  validates whether the last date is less than publishd date and the published day should be active on the day to be published
- validates :date_published, :date => { :after => Time.now }
-  validates :last_date, :date => { :after => :date_published }
-  #validates :on, :date => { :after => :end_date } 
-
-  
- #validate :validate_last_date_before_date_published 
-#  
-#def validate_last_date_before_date_published
-#       errors.add(:last_date, "cannot be less than or equal to published date") if (last_date < date_published)
-#      
-# end
-  belongs_to :company
+validates_date :date_published,  :on_or_after => :today
+  validates_date :last_date,:after => :date_published 
+belongs_to :company
   
   
     

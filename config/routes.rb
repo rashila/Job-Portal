@@ -2,7 +2,7 @@ JobPortal::Application.routes.draw do
   
   devise_for :users
   
-  resources :positions
+  #resources :positions
 
   resources :candidates do
     resources :contactinfos
@@ -10,10 +10,20 @@ JobPortal::Application.routes.draw do
   resources :companies do
     resources :contactinfos
   end
+  #resources :companies do
+    resources :positions
+  #end
 
   match "/positions/:id/show" => 'positions#show'
+  match "/positions/:company_id/new" => 'positions#new'
+  match "/positions/:company_id/index" => "positions#index"
+  match "/create_position" => 'positions#create'
   match "/candidates/:id/show" => 'candidates#show'    
   match "/companies/:id/show" => 'companies#show'   
+  match "/destroy_positions" => 'positions#destroy'
+  match "/companies/:id/welcome" => "companies#welcome", :as=> :company_welcome
+  match "/companies/:id/company_resumes" => "companies#company_resumes", :as => :company_resumes
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

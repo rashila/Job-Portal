@@ -16,7 +16,7 @@ gem 'tlsmail'
 # Use unicorn as the web server
 # gem 'unicorn'
 gem 'date_validator'
-
+gem 'validates_timeliness', '~> 3.0.2'
 # Deploy with Capistrano
 # gem 'capistrano'
 

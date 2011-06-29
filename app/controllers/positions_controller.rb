@@ -1,10 +1,11 @@
 class PositionsController < ApplicationController
-  helper_method :sort_column, :sort_direction  
+  
   # GET /positions
   # GET /positions.xml
  #  before_filter :authenticate_user!
   def index
-    @positions = Position.find(:all)
+    @company = Company.find(params[:company_id])
+    @positions = @company.positions
     #@positions = Position.order(params[:sort] + ' ' + params[:direction])if (params[:sort] && params[:direction])
 
 
@@ -18,7 +19,8 @@ class PositionsController < ApplicationController
   # GET /positions/1.xml
   def show
     @position = Position.find(params[:id])
-
+   # @company = Company.find(params[:id])
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @position }
@@ -28,7 +30,9 @@ class PositionsController < ApplicationController
   # GET /positions/new
   # GET /positions/new.xml
   def new
+    @company = Company.find(params[:company_id])
     @position = Position.new
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @position }
@@ -43,15 +47,20 @@ class PositionsController < ApplicationController
   # POST /positions
   # POST /positions.xml
   def create
-    @position = Position.new(params[:position])
-  # @position.companies_id = @company.find(params[:id])
-   # @position.save
-    respond_to do |format|
-      if @position.save
+    puts params
+    @position  = Position.new(params[:position])
+    @company = Company.find(params[:position][:company_id]) if params[:position][:company_id]
+    @position.valid?
+   
+   respond_to do |format|
+     if @position.errors.length == 0
+       # @position.company_id = params[:company_id]
+        @position.save
+          
           puts "Sucess"
           flash[:notice] = "Position #{@position.title} was created successfully."
           format.html { redirect_to(@position) }
-          #redirect_to("/positions/create", :notice => 'Position was created successfully')
+          #redirect_to("/positions/c")
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
@@ -83,7 +92,7 @@ class PositionsController < ApplicationController
     @position.destroy
 
     respond_to do |format|
-      format.html { redirect_to(positions_url) }
+      format.html { redirect_to("/positions/#{params[:company_id]}/index") }
       format.xml  { head :ok }
   end
 end

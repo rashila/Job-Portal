@@ -10,19 +10,19 @@
     
   </tr>
 
-<% @positions.each do |position| %>
+<% @positions.each do |position|%>
   <tr>
     <td><%= link_to position.title,"/positions/"+position.id.to_s+"/show" %></td>
     <td><%= position.status %></td>
     <td><%= position.location %></td>
-    <td><%= position.last_date %></td>
+    <td><%= position.last_date%></td>
     <td><%= link_to 'Edit', "/positions/"+position.id.to_s+"/edit"%></td>
-    <td><%= link_to 'Destroy', position, :confirm => 'Are you sure?', :method => :delete %></td>	
-    <% end %>
+   <td><%= link_to 'Destroy', "/destroy_positions?id="+position.id.to_s+"&company_id="+params[:company_id]+"", :confirm => 'Are you sure?', :method => :delete %></td>
+   
+<%end%>
   </tr>
 
 </table>
 
 <br />
 
-<%= link_to 'New Position', new_position_path %>
