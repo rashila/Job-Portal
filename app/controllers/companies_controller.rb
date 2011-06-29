@@ -48,6 +48,7 @@ class CompaniesController < ApplicationController
     @contactinfo = Contactinfo.new(params[:contactinfo])
     @company.valid?
     @contactinfo.valid?
+    @company.user_id = current_user.id
     respond_to do |format|
       if @company.errors.length == 0 and @contactinfo.errors.length == 0
         @contactinfo.save(:validate => false)
@@ -98,14 +99,28 @@ class CompaniesController < ApplicationController
     end
   end
   
-  def get_mail
+  def company_resumes
     Mail.defaults do
-      retriever_method :pop3, :address    => "pop.gmail.com",
+    retriever_method :pop3, :address    => "pop.gmail.com",
                           :port       => 995,
-                          :user_name  => 'noushad.meeras@gmail.com',
-                          :password   => 'diakuttan@feb16',
+                          :user_name  => 'noushad.meeras',
+                          :password   => 'fsrashila',
                           :enable_ssl => true
-     end
-    puts Mail.first.inspect
+    end
+    @emails = Mail.all
+    @emails.each do |email|
+      email.attachments.each do |tattch|
+        fn = tattch.filename
+        begin
+          File.open("public/resumes/"+fn, "w+b", 0644 ) { |f| f.write tattch.body.decoded }
+        rescue Exception => e
+          logger.error "Unable to save data for #{fn} because #{e.message}"
+        end
+      end
+    end
+  end
+  
+  def download
+    send_file 'public/resumes/'+params[:filename]
   end
 end

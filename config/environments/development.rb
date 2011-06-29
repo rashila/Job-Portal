@@ -20,19 +20,19 @@ JobPortal::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
   
-  require 'tlsmail'    
-  Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
+  #require 'tlsmail'    
+  #Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
 
-  config.action_mailer.smtp_settings = {
-    :enable_starttls_auto => true,  
-    :address            => 'smtp.gmail.com',
-    :port               => 587,
-    :tls                  => true,
-    :domain             => 'gmail.com', #you can also use google.com
-    :authentication     => :plain,
-    :user_name          => 'noushad.meeras@gmail.com',
-    :password           => 'fsrashila'
-  }
+  #config.action_mailer.smtp_settings = {
+   # :enable_starttls_auto => true,  
+   # :address            => 'smtp.gmail.com',
+   # :port               => 587,
+   # :tls                  => true,
+   # :domain             => 'gmail.com', #you can also use google.com
+   # :authentication     => :plain,
+   # :user_name          => 'noushad.meeras@gmail.com',
+   # :password           => 'fsrashila'
+  #}
 
 
   # Don't care if the mailer can't send

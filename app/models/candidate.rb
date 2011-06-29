@@ -12,12 +12,13 @@ class Candidate
   field :expected_salary, :type => String
   field :skill_set, :type => String
   field :contactinfos_id, :type => String
-
+  field :user_id, :type => String
+  
   validates_presence_of :first_name,:last_name,:qualification,:date_of_birth,:experience,:expected_salary,:skill_set
   #field :user_id,:value => 1
  # embeds_many :contactinfos
   has_many :contactinfos
- 
+  belongs_to :user
 
   accepts_nested_attributes_for :contactinfos, :allow_destroy => true
 

@@ -1,0 +1,20 @@
+<table>
+<% @emails.each do |email| %>
+    <thead>
+    	<th>
+    		From
+    	</th>
+    	<th>
+    		Resume file
+    	</th>
+    </thead>
+    <tr>
+    	<td>
+    		<%= email.from %>
+    	</td>
+    	<td>
+    		<%= email.parts[1].content_type_parameters[:name] %>
+    	</td>
+    </tr>
+<% end %>
+</table> 
