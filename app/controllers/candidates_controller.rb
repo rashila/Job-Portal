@@ -13,6 +13,7 @@ class CandidatesController < ApplicationController
   # GET /candidates/1.xml
   def show
     @candidate = Candidate.find(params[:id])
+    @skillset = @candidate.skillsets
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @candidate }
@@ -22,6 +23,7 @@ class CandidatesController < ApplicationController
   # GET /candidates/new
   # GET /candidates/new.xml
   def new
+    load_data
     @candidate = Candidate.new
     @contactinfo = Contactinfo.new
     respond_to do |format|
@@ -32,6 +34,7 @@ class CandidatesController < ApplicationController
 
   # GET /candidates/1/edit
   def edit
+    load_data
     @candidate = Candidate.find(params[:id])
     @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
   end
@@ -39,6 +42,7 @@ class CandidatesController < ApplicationController
   # POST /candidates
   # POST /candidates.xml
   def create
+    load_data
     @candidate = Candidate.new(params[:candidate])
     @contactinfo = Contactinfo.new(params[:contactinfo])
     @candidate.valid?
@@ -92,4 +96,13 @@ class CandidatesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  def add
+    @skillset = Skillset.find(params[:id])
+    @candidate = @skillset.save
+  end
+  private
+def load_data
+  @skillsets = Skillset.all.collect{|skill| skill.name}
+  
+end
 end

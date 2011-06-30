@@ -3,7 +3,7 @@
 	
 
 
-<%= form_for(@candidate) do |f| %>
+<%= form_for @candidate  , :html => { :multipart => true } do |f| %>
   <% if @candidate.errors.any? ||  @contactinfo.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@candidate.errors.count+@contactinfo.errors.count, "error") %> prohibited this candidate from being saved:</h2>
@@ -74,9 +74,18 @@
 	</p></td>
 	</tr>
 	<tr>
-  <div class="field">
+ <div class="field" >
+<tr>
  <td><%= f.label :skill_set %><br /></td>
-  <td><%= f.text_area :skill_set %></td>
+  <td><%= select_tag "candidate[skillset]",options_for_select(@skillsets), {:multiple => true}%></td>
+  
+  </div>
+  </tr>
+ 
+<tr>
+  <div class="field">
+   <td> <%= f.label :resume%><br /></td>
+   <td> <%= f.file_field :resume %></td>
   </div>
   </tr>
    <!--fieldset>
@@ -90,7 +99,7 @@
   
  
  </table>
-
+<br>
   <div class="actions">
 <%= f.submit %>
   </div>
@@ -106,4 +115,5 @@
  	});
 
 </script>
+
 </html>

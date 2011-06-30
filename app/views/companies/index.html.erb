@@ -24,7 +24,7 @@
 	<td><%= Contactinfo.find(company.contactinfos_id).contact_number if company.contactinfos_id%></td>
     <td><%= company.description %></td>
     <td><%= link_to 'Edit', edit_company_path(company) %></td>
-    <td><%= link_to 'Destroy', 	company, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', "/destroy_companies?id="+company.id.to_s+"", :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

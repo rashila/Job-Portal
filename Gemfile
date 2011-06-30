@@ -12,7 +12,8 @@ gem 'SystemTimer', '1.2.3'
 gem "devise", "~> 1.3.4"
 gem "mail"
 gem 'tlsmail'
-
+gem 'carrierwave', :git => "git://github.com/jnicklas/carrierwave.git"
+gem 'mini_magick', :git => 'git://github.com/probablycorey/mini_magick.git'
 # Use unicorn as the web server
 # gem 'unicorn'
 gem 'date_validator'
