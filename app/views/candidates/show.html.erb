@@ -76,9 +76,21 @@
 			<b>Skill set:</b>
 		</div>
 		<div class="value">
-			<%= @candidate.skill_set %>
+			<%= @candidate.skillset %>
 		</div>
 		<br clear="all">
+		<div class="label">
+			<b>Resume</b>
+		</div>
+		<div class="value">
+			<%= link_to @candidate.resume_filename, download_candidate_resume_path(@candidate.id) %>
+		</div>
+		<br clear="all">
+		<div class="label">
+			<b><%= link_to 'Edit', edit_candidate_path(@candidate) %></b>
+		</div>
+		<div class="value">
+			<b><%= link_to 'Back', candidates_path %></b>
+		</div>
 	</div>
-	<%= link_to 'Edit', edit_candidate_path(@candidate) %>
-	<%= link_to 'Back', candidates_path %>
+	

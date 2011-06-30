@@ -18,11 +18,16 @@ JobPortal::Application.routes.draw do
   match "/positions/:company_id/new" => 'positions#new'
   match "/positions/:company_id/index" => "positions#index"
   match "/create_position" => 'positions#create'
-  match "/candidates/:id/show" => 'candidates#show'    
+  
+  match "/candidates/:id/show" => 'candidates#show'
+  match "/candidates/:id/download_candidate_resume" => "candidates#download_candidate_resume", :as => :download_candidate_resume
+  match "/candidates/:id/welcome" => "candidates#welcome", :as=> :candidate_welcome 
+    
   match "/companies/:id/show" => 'companies#show'   
   match "/destroy_positions" => 'positions#destroy'
   match "/companies/:id/welcome" => "companies#welcome", :as=> :company_welcome
   match "/companies/:id/company_resumes" => "companies#company_resumes", :as => :company_resumes
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

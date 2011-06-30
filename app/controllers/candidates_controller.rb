@@ -1,8 +1,11 @@
 class CandidatesController < ApplicationController
+  def welcome
+    @candidate = Candidate.find(params[:id])
+  end
   # GET /candidates
   # GET /candidates.xml
   def index
-      @candidates = Candidate.find(:all)
+    @candidates = Candidate.find(:all)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @candidates }
@@ -45,6 +48,7 @@ class CandidatesController < ApplicationController
     load_data
     @candidate = Candidate.new(params[:candidate])
     @contactinfo = Contactinfo.new(params[:contactinfo])
+    @candidate.user_id = current_user.id
     @candidate.valid?
     @contactinfo.valid?
     respond_to do |format|
@@ -68,15 +72,15 @@ class CandidatesController < ApplicationController
     @candidate = Candidate.find(params[:id])
     @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
     if @contactinfo.update_attributes(params[:contactinfo])
-      contactinfo_success = 1
+    contactinfo_success = 1
     end
     if @candidate.update_attributes(params[:candidate])
-      candidate_success = 1
+    candidate_success = 1
     end
     respond_to do |format|
       if contactinfo_success == 1 and candidate_success == 1
         format.html { redirect_to(@candidate) }
-        flash[:notice] = "Candidate #{@candidate.name} was successfully updated." 
+        flash[:notice] = "Candidate #{@candidate.name} was successfully updated."
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -96,13 +100,21 @@ class CandidatesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
   def add
     @skillset = Skillset.find(params[:id])
     @candidate = @skillset.save
   end
-  private
-def load_data
-  @skillsets = Skillset.all.collect{|skill| skill.name}
+
+  def download_candidate_resume
+    @candidate = Candidate.find(params[:id])
+    send_file "public"+@candidate.resume.url, :disposition => 'inline' 
+  end
   
-end
+  private
+
+  def load_data
+    @skillsets = Skillset.all.collect{|skill| skill.name}
+
+  end
 end
