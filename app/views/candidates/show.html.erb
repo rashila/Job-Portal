@@ -36,6 +36,13 @@
 		<%= Contactinfo.find(@candidate.contactinfos_id).address if @candidate.contactinfos_id %>
 	</div>
 	<br clear="all">
+   <div class="label">
+		<b>State:</b>
+	</div>
+	<div class="value">
+		<%= State.find(Contactinfo.find(@candidate.contactinfos_id).state).name%>
+	</div>
+	<br clear="all">
 	<div class="label">
 		<b>Email:</b>
 	</div>

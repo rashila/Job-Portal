@@ -11,6 +11,7 @@
     <th>Qualification</th>
     <th>Date of birth</th>
 	<th>Address</th>
+    <th>State</th>
 	<th>Email</th>
 	<th>Alternate Email</th>
 	<th>Contact Number</th>
@@ -30,6 +31,7 @@
     <td><%= candidate.qualification %></td>
     <td><%= candidate.date_of_birth %></td>
 	<td><%= Contactinfo.find(candidate.contactinfos_id).address if candidate.contactinfos_id %></td>
+    <td><%= State.find(Contactinfo.find(candidate.contactinfos_id).state).name%></td>
 	<td><%= Contactinfo.find(candidate.contactinfos_id).email if candidate.contactinfos_id %></td>
 	<td><%= Contactinfo.find(candidate.contactinfos_id).alternate_email if candidate.contactinfos_id %></td>
 	<td><%= Contactinfo.find(candidate.contactinfos_id).contact_number if candidate.contactinfos_id %></td>

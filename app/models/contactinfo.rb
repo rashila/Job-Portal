@@ -19,10 +19,10 @@ class Contactinfo
   validates_format_of :alternate_email,:with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => [:create,:edit],:message => "invalid email format for Alternate email"
  validates_numericality_of :contact_number, :message => "should contain numbers "
  validates_numericality_of :zip, :message => "should not contain characters "
- #has_one :state
+ has_and_belongs_to_many :states
  #has_one :city
  def address
-    "#{address1}, #{address2},#{address3},#{city},#{state},#{zip}"
+    "#{address1}, #{address2},#{address3},#{city},#{zip}"
   end
  
  

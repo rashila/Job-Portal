@@ -3,5 +3,5 @@ class State
   field :name, :type => String
   field :contactinfos_id, :type => String
   has_many :cities
-  has_one :contactinfo
+  has_and_belongs_to_many :contactinfos
 end
