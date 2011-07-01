@@ -69,6 +69,7 @@ class CandidatesController < ApplicationController
   # PUT /candidates/1
   # PUT /candidates/1.xml
   def update
+    load_data
     @candidate = Candidate.find(params[:id])
     @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
     if @contactinfo.update_attributes(params[:contactinfo])
@@ -115,6 +116,7 @@ class CandidatesController < ApplicationController
 
   def load_data
     @skillsets = Skillset.all.collect{|skill| skill.name}
-
+    @states = State.all.collect{|state| state.name}
+    @cities = City.all.collect{|city| city.name}
   end
 end

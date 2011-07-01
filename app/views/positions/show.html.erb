@@ -1,34 +1,62 @@
-<h2><%=@position.title%></h2>
-<br>
-<br>
-<table border = 1>
-<tr> 
-    <th><b>Title:</b></th>
-	<th><b>Desription:</b></th>
-	<th><b>Status:</b</th>
-	<th> <b>Location:</b></th>
-	<th><b>Date published:</b></th>
-	<th><b>Last date:</b></th>
-	<th><b>Salary Range:</b></th>
-	<th><b>Skillset:</b></th>
-	<th><b>Qualification:</b></th>
-	<th><b>Experience:</b></th>
-	
-	
-</tr>	
-<tr>
-	<td><%= @position.title %></td>
-	<td> <%= @position.description %></td>
-	<td> <%= @position.status %></td>
-	<td> <%= @position.location %></td>
-	<td><%= @position.date_published %></td>
-	<td><%= @position.last_date %></td>
-	<td><%= @position.salary_range %></td>
-	<td> <%= @position.skillset %></td>
-	<td> <%= @position.qualification %></td>
-	<td> <%= @position.experience %></td>
-	
-</tr>	
-</table>
+<div class="content_pane">
+<h3><%= @position.title%></h3>
+
+	<div class="label">
+		<b>Position Title:</b>
+	</div>
+	<div class="value">
+		<%= @position.title %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Description:</b>
+	</div>
+	<div class="value">
+		<%= @position.description %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Date Published:</b>
+	</div>
+	<div class="value">
+		<%= @position.date_published %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Last Date:</b>
+	</div>
+	<div class="value">
+		<%= @position.last_date %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Salary Range:</b>
+	</div>
+	<div class="value">
+		<%=@position.salary_range %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Skillsets:</b>
+	</div>
+		<div class="value">
+			<%= @position.skillset%>
+		</div>
+		<br clear="all">
+		<div class="label">
+			<b>Qualification:</b>
+		</div>
+		<div class="value">
+			<%= @position.qualification %>
+		</div>
+		<br clear="all">
+		<div class="label">
+			<b>Experience:</b>
+		</div>
+		<div class="value">
+			<%= @position.experience %>
+		</div>
+		<br clear="all">
+	</div>
 
 <%= link_to 'Back',"/companies/"+@position.company_id.to_s+"/welcome"%>

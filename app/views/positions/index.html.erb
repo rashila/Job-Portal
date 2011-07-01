@@ -4,7 +4,7 @@
   <tr>
     <th>Title</th> 
     <th>Status</th>
-    <th>Location</th>
+    <th>Company Location</th>
     <th>Last date</th>
     
     
@@ -14,7 +14,8 @@
   <tr>
     <td><%= link_to position.title,"/positions/"+position.id.to_s+"/show" %></td>
     <td><%= position.status %></td>
-    <td><%= position.location %></td>
+    <td><%= load_address :id => position.company.contactinfos_id %></td>
+    <!--td><%= Contactinfo.find(position.company.contactinfos_id).address%></td-->
     <td><%= position.last_date%></td>
     <td><%= link_to 'Edit', "/positions/"+position.id.to_s+"/edit"%></td>
    <td><%= link_to 'Destroy', "/destroy_positions?id="+position.id.to_s+"&company_id="+params[:company_id]+"", :confirm => 'Are you sure?', :method => :delete %></td>

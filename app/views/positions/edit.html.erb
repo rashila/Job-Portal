@@ -31,10 +31,6 @@
  <td><p><label for="position_status">Status:</label><br/></td>
  <td><%= select_tag "position[status]",options_for_select(["Open","Inprogress","Close"])%></p></td>
 	</tr>
- <tr>
-  <td><p><label for="position_location">Location:</label><br/></td>
-  <td><%= select_tag "position[location]",options_for_select(["Delhi","Calcutta","Bombay","Pune","Chennai","Bangalore","Kochi","Trivandrum","Hyderabad"])%></p></td>
-</tr>
 <tr>
   <div class="field">
   <td><%= f.label :date_published %></td>
@@ -56,9 +52,9 @@
  <tr>
   <div class="field">
   <td><%= f.label :skillset %></td>
-   <td><%= f.text_field :skillset %></td>
-  </div>
+<td><%= select_tag "position[skillset]",options_for_select(@skillsets), {:multiple => true}%></p></td>
 </tr>
+ <tr>
  <tr>
    <td><p><label for="position_qualification">Qualification:</label></td>
 	<td><%= select_tag "position[qualification]",options_for_select(["Under Graguate","Post Graduate"]), {:multiple => true}%></p></td>

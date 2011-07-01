@@ -27,6 +27,7 @@ class CompaniesController < ApplicationController
   # GET /companies/new
   # GET /companies/new.xml
   def new
+    load_data
     @company = Company.new
     @contactinfo = Contactinfo.new
     respond_to do |format|
@@ -37,6 +38,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1/edit
   def edit
+    load_data
     @company = Company.find(params[:id])
     @contactinfo= Contactinfo.find(@company.contactinfos_id)
   end
@@ -44,6 +46,7 @@ class CompaniesController < ApplicationController
   # POST /companies
   # POST /companies.xml
   def create
+    load_data
     @company = Company.new(params[:company])
     @contactinfo = Contactinfo.new(params[:contactinfo])
     @company.valid?
@@ -67,6 +70,7 @@ class CompaniesController < ApplicationController
   # PUT /companies/1
   # PUT /companies/1.xml
   def update
+    load_data
     @company = Company.find(params[:id])
     @contactinfo = Contactinfo.find(@company.contactinfos_id)
     if @contactinfo.update_attributes(params[:contactinfo])
@@ -122,5 +126,13 @@ class CompaniesController < ApplicationController
   
   def download
     send_file 'public/resumes/'+params[:filename]
+  end
+  
+  private
+
+  def load_data
+    @skillsets = Skillset.all.collect{|skill| skill.name}
+    @states = State.all.collect{|state| state.name}
+    @cities = City.all.collect{|city| city.name}
   end
 end
