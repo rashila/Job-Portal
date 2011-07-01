@@ -83,7 +83,7 @@
 			<b>Resume</b>
 		</div>
 		<div class="value">
-			<%= link_to @candidate.resume_filename, download_candidate_resume_path(@candidate.id) %>
+			<%= link_to_resume(@candidate.resume_filename, @candidate.id.to_s, "Candidate") %>
 		</div>
 		<br clear="all">
 		<div class="label">

@@ -13,7 +13,7 @@
     		<%= email.from %>
     	</td>
     	<td>
-    		<%= email.parts[1].content_type_parameters[:name] %>
+    		<%= link_to_resume(email.attachments[0].filename, @company.id.to_s, "email") %>
     	</td>
     </tr>
 <% end %>

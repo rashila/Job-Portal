@@ -104,10 +104,12 @@ class CompaniesController < ApplicationController
   end
   
   def company_resumes
+    @company = Company.find(params[:id])
+    company_email = Contactinfo.find(@company.contactinfos_id).email
     Mail.defaults do
     retriever_method :pop3, :address    => "pop.gmail.com",
                           :port       => 995,
-                          :user_name  => 'noushad.meeras',
+                          :user_name  => company_email,
                           :password   => 'fsrashila',
                           :enable_ssl => true
     end
@@ -116,7 +118,14 @@ class CompaniesController < ApplicationController
       email.attachments.each do |tattch|
         fn = tattch.filename
         begin
-          File.open("public/resumes/"+fn, "w+b", 0644 ) { |f| f.write tattch.body.decoded }
+          if !File.directory? "public/email/resume/"+params[:id]
+            Dir.mkdir("public/email/resume/"+params[:id])
+          end
+          if File::exists?("public/email/resume/"+params[:id]+"/"+fn)
+            File.open("public/email/resume/"+params[:id]+"/"+email.message_id+"_"+fn, "w+b", 0644 ) { |f| f.write tattch.body.decoded }
+          else
+            File.open("public/email/resume/"+params[:id]+"/"+fn, "w+b", 0644 ) { |f| f.write tattch.body.decoded }
+          end
         rescue Exception => e
           logger.error "Unable to save data for #{fn} because #{e.message}"
         end
@@ -124,8 +133,13 @@ class CompaniesController < ApplicationController
     end
   end
   
-  def download
-    send_file 'public/resumes/'+params[:filename]
+  def resume_download
+    if params[:type] == "email"
+      send_file "public/email/resume/"+params[:id]+"/"+params[:attached_file_name]+"."+params[:format], :disposition => 'inline'
+    elsif params[:type] == "Candidate"
+      @candidate = Candidate.find(params[:id])
+      send_file "public"+@candidate.resume.url, :disposition => 'inline' 
+    end 
   end
   
   private
