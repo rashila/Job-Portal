@@ -36,8 +36,35 @@
   </tr>
   <tr>
   <div class="field">
- <td> 	<%= label :contactinfo, :address %><br /></td>
-  <td>  <%= text_area :contactinfo, :address %></td>
+ <td> 	<%= label :contactinfo, :address1 %><br /></td>
+  <td>  <%= text_field :contactinfo, :address1 %></td>
+ </div>
+ </tr>
+ <tr>
+  <div class="field">
+ <td> 	<%= label :contactinfo, :address2 %><br /></td>
+  <td>  <%= text_field :contactinfo, :address2 %></td>
+ </div>
+ </tr>
+ <tr>
+  <div class="field">
+ <td> 	<%= label :contactinfo, :address3 %><br /></td>
+  <td>  <%= text_field :contactinfo, :address3 %></td>
+ </div>
+ </tr>
+<tr>
+ <td><p><%= label :contactinfo, :state %></label><br/></td>
+  <td><%= select_tag "contactinfo[state]",options_for_select(@states)%></td>
+  </tr>
+  <div class="field">
+ <td id="test"><%= label :contactinfo, :city %><br /></td>
+  <td><%= select_tag 'contactinfo[city]',options_for_select(@cities)%></td>
+ </div>
+ </tr>
+ <tr>
+  <div class="field">
+ <td> 	<%= label :contactinfo, :pin %><br /></td>
+  <td>  <%= text_field :contactinfo, :zip %></td>
  </div>
  </tr>
   <tr>

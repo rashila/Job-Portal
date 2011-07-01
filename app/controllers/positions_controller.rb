@@ -30,6 +30,7 @@ class PositionsController < ApplicationController
   # GET /positions/new
   # GET /positions/new.xml
   def new
+    load_data
     @company = Company.find(params[:company_id])
     @position = Position.new
     
@@ -41,12 +42,14 @@ class PositionsController < ApplicationController
 
   # GET /positions/1/edit
   def edit
+    load_data
     @position = Position.find(params[:id])
   end
 
   # POST /positions
   # POST /positions.xml
   def create
+    load_data
     puts params
     @position  = Position.new(params[:position])
     @company = Company.find(params[:position][:company_id]) if params[:position][:company_id]
@@ -71,6 +74,7 @@ class PositionsController < ApplicationController
   # PUT /positions/1
   # PUT /positions/1.xml
   def update
+    load_data
     @position = Position.find(params[:id])
 
     respond_to do |format|
@@ -105,7 +109,9 @@ def search
    end
 
   end
-
-
+  private
+def load_data
+    @skillsets = Skillset.all.collect{|skill| skill.name}
+end
 
 end
