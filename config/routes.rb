@@ -2,7 +2,10 @@ JobPortal::Application.routes.draw do
   
   devise_for :users
   
-  #resources :positions
+  resources :skillsets
+  resources :states
+  resources :cities
+
 
   resources :candidates do
     resources :contactinfos
@@ -21,13 +24,14 @@ JobPortal::Application.routes.draw do
   
   match "/candidates/:id/show" => 'candidates#show'
   match "/candidates/:id/welcome" => "candidates#welcome", :as=> :candidate_welcome 
-   
+  match "/destroy_candidates" => 'candidates#destroy'
+  match "/destroy_companies" => 'companies#destroy' 
   match "/companies/:id/show" => 'companies#show'   
   match "/destroy_positions" => 'positions#destroy'
   match "/companies/:id/welcome" => "companies#welcome", :as=> :company_welcome
   match "/companies/:id/company_resumes" => "companies#company_resumes", :as => :company_resumes
   match '/companies/resume_download/:id/:type/:attached_file_name(.:format)' => 'companies#resume_download', :as => 'resume_download'
-
+  match '/my_cities_list' => 'candidates#update_cities'
 
   
   # The priority is based upon order of creation:

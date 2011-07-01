@@ -18,6 +18,7 @@ class Position
    validates_date :date_published,  :on_or_after => :today
    validates :last_date,:date => {:after => :date_published }
   belongs_to :company
+  has_many :skillsets
   
   
     

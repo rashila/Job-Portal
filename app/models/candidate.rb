@@ -12,16 +12,17 @@ class Candidate
   field :expected_salary, :type => String
   field :contactinfos_id, :type => String
   field :user_id, :type => String
-  field :skillset,:type => String
+  
   validates_presence_of :first_name,:last_name,:qualification,:date_of_birth,:experience,:expected_salary
   #field :user_id,:value => 1
  # embeds_many :contactinfos
   has_many :contactinfos
-  has_many :skillsets
+  has_and_belongs_to_many :skillsets
   
   belongs_to :user
 
   accepts_nested_attributes_for :contactinfos, :allow_destroy => true
+  #scope :skillset.joins(",")
 
 #File upload
 mount_uploader :resume, ResumeUploader

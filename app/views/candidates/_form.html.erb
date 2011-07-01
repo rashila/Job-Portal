@@ -54,11 +54,18 @@
  </tr>
 <tr>
  <td><p><%= label :contactinfo, :state %></label><br/></td>
-  <td><%= select_tag "contactinfo[state]",options_for_select(@states)%></td>
+  <td> 
+	<%= collection_select(:contactinfo, :state, @states, :id, :name,
+                     {:prompt   => "Select a state"},
+                     {:onchange => "#{remote_function(:url  => '/my_cities_list',:with => "'state_id='+value")}"}) %></td>
+     
   </tr>
-  <div class="field">
- <td id="test"><%= label :contactinfo, :city %><br /></td>
-  <td><%= select_tag 'contactinfo[city]',options_for_select(@cities)%></td>
+ 
+ <tr>
+ <div class="field">
+ <td><p><%= label :contactinfo, :city %></label><br/></td>
+ <td id="cities"><%= render :partial => 'cities',   :object => @cities %><br /></td>
+ 
  </div>
  </tr>
  <tr>
@@ -104,7 +111,10 @@
  <div class="field" >
 <tr>
  <td><%= f.label :skill_set %><br /></td>
-  <td><%= select_tag "candidate[skillset]",options_for_select(@skillsets), {:multiple => true}%></td>
+  <td><%= select_tag 'candidate[skillset_ids][]',options_from_collection_for_select(@skillsets, :id, :name,@candidate.skillsets.collect{|skillset| skillset.id}),{ :multiple => true}%>
+
+</td>
+</td>
   
   </div>
   </tr>

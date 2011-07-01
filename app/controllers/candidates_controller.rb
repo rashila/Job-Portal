@@ -29,6 +29,7 @@ class CandidatesController < ApplicationController
     load_data
     @candidate = Candidate.new
     @contactinfo = Contactinfo.new
+    @candidateskill = Candidateskill.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @candidate }
@@ -45,9 +46,17 @@ class CandidatesController < ApplicationController
   # POST /candidates
   # POST /candidates.xml
   def create
+    
+    
+    puts '++++++++++++++++++++++++++++'
+    p params
+    
     load_data
+    
     @candidate = Candidate.new(params[:candidate])
     @contactinfo = Contactinfo.new(params[:contactinfo])
+    @candidateskill = Candidateskill.new(params[:candidateskill])
+    #@state = Skillset.find(params[:state_id])
     @candidate.user_id = current_user.id
     @candidate.valid?
     @contactinfo.valid?
@@ -55,6 +64,13 @@ class CandidatesController < ApplicationController
       if @candidate.errors.length == 0 and @contactinfo.errors.length == 0
         @contactinfo.save(:validate => false)
         @candidate.contactinfos_id = @contactinfo.id
+        #@state.contactinfos_id = @contactinfo.state_id
+        
+        @candidateskill.candidates_id = @candidate.id
+        
+        @candidateskill.skillsets_id = @candidate.skillset_ids
+        @candidateskill.save
+       
         @candidate.save(:validate => false)
         format.html { redirect_to(@candidate) }
         flash[:notice] = "Candidate #{@candidate.name} was created successfully."
@@ -70,6 +86,8 @@ class CandidatesController < ApplicationController
   # PUT /candidates/1.xml
   def update
     load_data
+    puts params[:candidate][:skillset]
+    puts "........."
     @candidate = Candidate.find(params[:id])
     @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
     if @contactinfo.update_attributes(params[:contactinfo])
@@ -111,12 +129,33 @@ class CandidatesController < ApplicationController
     @candidate = Candidate.find(params[:id])
     send_file "public"+@candidate.resume.url, :disposition => 'inline' 
   end
+  def update_cities
+    # updates songs based on artist selected
+    state = State.find(params[:state_id])
+    cities = state.cities
+    puts "@@@@@@@@@"
+    puts cities.inspect
+    puts "!!!!!!!1"
+
+    # respond_to do |format|
+        # format.js{ render :update do |page|
+         # page.replace_html 'cities', :partial => 'cities', :object => cities
+         # end}
+      # end
+      render :update do |page|
+      page.replace_html 'cities', :partial => 'cities', :object => cities
+    end
   
+
+   end
+   
+   
   private
 
   def load_data
-    @skillsets = Skillset.all.collect{|skill| skill.name}
-    @states = State.all.collect{|state| state.name}
-    @cities = City.all.collect{|city| city.name}
+    @skillsets = Skillset.find(:all)
+    @states = State.all
+    @cities = City.all
+    
   end
 end

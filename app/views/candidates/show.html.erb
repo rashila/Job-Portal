@@ -76,7 +76,9 @@
 			<b>Skill set:</b>
 		</div>
 		<div class="value">
-			<%= @candidate.skillset %>
+			<%= @candidate.skillsets.collect{|skillset| skillset.name }.join(', ') %>
+
+
 		</div>
 		<br clear="all">
 		<div class="label">
