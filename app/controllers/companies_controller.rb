@@ -141,12 +141,21 @@ class CompaniesController < ApplicationController
       send_file "public"+@candidate.resume.url, :disposition => 'inline' 
     end 
   end
+  def update_cities
+    # updates songs based on artist selected
+    state = State.find(params[:state_id])
+    cities = state.cities
+      render :update do |page|
+      page.replace_html 'cities', :partial => 'cities', :object => cities
+    end
+  end
+
   
   private
 
   def load_data
-    @skillsets = Skillset.all.collect{|skill| skill.name}
-    @states = State.all.collect{|state| state.name}
-    @cities = City.all.collect{|city| city.name}
+    @skillsets = Skillset.find(:all)
+    @states = State.all
+    @cities = City.all
   end
 end

@@ -9,6 +9,7 @@ class Company
   has_many :contactinfos
   has_many :positions
   validates_presence_of :name,:established_date,:website,:description
+  validates_date :established_date, :on_or_before => :today
   belongs_to :user
 
  # validates_format_of :established_date, :with =>/\A[0-9]{2}\/[0-9]{2}\/[0-9]{4}\z/

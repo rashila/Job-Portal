@@ -4,7 +4,8 @@
   <tr>
     <th>Company Name</th>
     <th>Established date</th>
-	<th>Company Address</th>
+	<th>Company Address</th> 
+    <th>State</th>
     <th>Website</th>
 	<th>Company Email</th>
 	<th>Contact number</th>
@@ -19,6 +20,7 @@
     <td><%= link_to company.name,"/companies/"+company.id.to_s+"/show" %></td>
     <td><%= company.established_date %></td> 
 	<td><%= Contactinfo.find(company.contactinfos_id).address if company.contactinfos_id%></td>
+    <td><%= State.find(Contactinfo.find(company.contactinfos_id).state).name%></td>
     <td><%= company.website %></td>
 	<td><%= Contactinfo.find(company.contactinfos_id).email if company.contactinfos_id%></td>
 	<td><%= Contactinfo.find(company.contactinfos_id).contact_number if company.contactinfos_id%></td>
