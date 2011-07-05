@@ -33,7 +33,7 @@ class PositionsController < ApplicationController
     load_data
     @company = Company.find(params[:company_id])
     @position = Position.new
-    
+    @positionskillset = Positionskillset.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @position }
@@ -53,11 +53,16 @@ class PositionsController < ApplicationController
     puts params
     @position  = Position.new(params[:position])
     @company = Company.find(params[:position][:company_id]) if params[:position][:company_id]
+    @positionskillset = Positionskillset.new(params[:companyposition])
     @position.valid?
    
    respond_to do |format|
      if @position.errors.length == 0
        # @position.company_id = params[:company_id]
+        
+        @positionskillset.positions_id = @position.id
+        @positionskillset.skillsets_id = @position.skillset_ids
+        @positionskillset.save
         @position.save
           
           puts "Sucess"
@@ -111,7 +116,7 @@ def search
   end
   private
 def load_data
-    @skillsets = Skillset.all.collect{|skill| skill.name}
+    @skillsets = Skillset.all
 end
 
 end

@@ -10,6 +10,8 @@ class Company
   has_many :contactinfos
   has_many :positions
   has_many :email_settings
+  validates_presence_of :name,:established_date,:website,:description
+  validates_date :established_date, :on_or_before => :today
   belongs_to :user
   
   validates_presence_of :name,:established_date,:website,:description

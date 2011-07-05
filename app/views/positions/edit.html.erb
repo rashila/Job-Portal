@@ -52,7 +52,7 @@
  <tr>
   <div class="field">
   <td><%= f.label :skillset %></td>
-<td><%= select_tag "position[skillset]",options_for_select(@skillsets), {:multiple => true}%></p></td>
+ <td><%= select_tag 'position[skillset_ids][]',options_from_collection_for_select(@skillsets, :id, :name,@position.skillsets.collect{|skillset| skillset.id}),{ :multiple => true}%>
 </tr>
  <tr>
  <tr>

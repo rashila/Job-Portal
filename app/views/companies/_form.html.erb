@@ -49,11 +49,18 @@
  </tr>
 <tr>
  <td><p><%= label :contactinfo, :state %></label><br/></td>
-  <td><%= select_tag "contactinfo[state]",options_for_select(@states)%></td>
+  <td> 
+	<%= collection_select(:contactinfo, :state, @states, :id, :name,
+                     {:prompt   => "Select a state"},
+                     {:onchange => "#{remote_function(:url  => '/my_cities_list',:with => "'state_id='+value")}"}) %></td>
+     
   </tr>
-  <div class="field">
- <td id="test"><%= label :contactinfo, :city %><br /></td>
-  <td><%= select_tag 'contactinfo[city]',options_for_select(@cities)%></td>
+ 
+ <tr>
+ <div class="field">
+ <td><p><%= label :contactinfo, :city %></label><br/></td>
+ <td id="cities"><%= render :partial => 'cities',   :object => @cities %><br /></td>
+ 
  </div>
  </tr>
  <tr>

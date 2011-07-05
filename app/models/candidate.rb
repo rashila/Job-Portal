@@ -14,10 +14,13 @@ class Candidate
   field :user_id, :type => String
   
   validates_presence_of :first_name,:last_name,:qualification,:date_of_birth,:experience,:expected_salary
-  #field :user_id,:value => 1
- # embeds_many :contactinfos
+  validates_date :date_of_birth, :before => lambda { 18.years.ago },
+                                 :before_message => "must be at least 18 years old"
+
+
   has_many :contactinfos
   has_and_belongs_to_many :skillsets
+  
   
   belongs_to :user
 

@@ -13,6 +13,8 @@
 		<div class="value"><%= @company.description %></div><br clear="all" />
 		<div class="label"><b>Address:</b></div>
 		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).address if @company.contactinfos_id %></div><br clear="all" />
+        <div class="label"><b>State:</b></div>
+		<div class="value"><%= State.find(Contactinfo.find(@company.contactinfos_id).state).name%></div><br clear="all" />
 
 		<div class="label"> <b>Email:</b></div>
 		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).email if @company.contactinfos_id %></div><br clear="all" />
@@ -22,4 +24,4 @@
 		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).contact_number if @company.contactinfos_id %></div><br clear="all" />
 <br>
 <%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
+<%= link_to 'Back', "/companies/"+@company.id.to_s+"/welcome" %>
