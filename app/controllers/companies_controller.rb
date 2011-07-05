@@ -57,6 +57,9 @@ class CompaniesController < ApplicationController
         @contactinfo.save(:validate => false)
         @company.contactinfos_id = @contactinfo.id
         @company.save(:validate => false)
+        @email_setting = EmailSetting.new(:email => @contactinfo.email)
+        @email_setting.company_id = @company.id
+        @email_setting.save
         format.html { redirect_to(@company) }
         flash[:notice] = "Company #{@company.name} was created successfully."
         format.xml  { render :xml => @company, :status => :created, :location => @company }
@@ -75,6 +78,8 @@ class CompaniesController < ApplicationController
     @contactinfo = Contactinfo.find(@company.contactinfos_id)
     if @contactinfo.update_attributes(params[:contactinfo])
       contactinfo_success = 1
+      @email_setting = EmailSetting.find_by_company_id_and_email(@company.id, @contactinfo.email)
+      @email_setting.update_attribute(:email => @contactinfo.email)
     end
     if @company.update_attributes(params[:company])
       company_success = 1
