@@ -5,13 +5,14 @@ JobPortal::Application.routes.draw do
   resources :skillsets
   resources :states
   resources :cities
-
+  
 
   resources :candidates do
     resources :contactinfos
   end
-  resources :companies do
+  resources :companies do 
     resources :contactinfos
+    resources :email_settings
   end
   #resources :companies do
     resources :positions
@@ -21,16 +22,18 @@ JobPortal::Application.routes.draw do
   match "/positions/:company_id/new" => 'positions#new'
   match "/positions/:company_id/index" => "positions#index"
   match "/create_position" => 'positions#create'
+  match "/destroy_positions" => 'positions#destroy'
   
   match "/candidates/:id/show" => 'candidates#show'
   match "/candidates/:id/welcome" => "candidates#welcome", :as=> :candidate_welcome 
   match "/destroy_candidates" => 'candidates#destroy'
   match "/destroy_companies" => 'companies#destroy' 
   match "/companies/:id/show" => 'companies#show'   
-  match "/destroy_positions" => 'positions#destroy'
   match "/companies/:id/welcome" => "companies#welcome", :as=> :company_welcome
   match "/companies/:id/company_resumes" => "companies#company_resumes", :as => :company_resumes
   match '/companies/resume_download/:id/:type/:attached_file_name(.:format)' => 'companies#resume_download', :as => 'resume_download'
+  
+  
   match '/my_cities_list' => 'candidates#update_cities'
 
   

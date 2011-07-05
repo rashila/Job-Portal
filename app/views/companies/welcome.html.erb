@@ -1,6 +1,7 @@
 <h1>Welcome <%= @company.name %></h1><br />
 
 <%= link_to 'Fetch Resumes', company_resumes_path(@company.id) %><br />
+<%= link_to 'Email Settings', company_email_settings_url(@company) %><br />
 <%= link_to 'Create New Position' ,"/positions/"+@company.id.to_s+"/new"%><br />
 <%= link_to 'List All Positions', "/positions/"+@company.id.to_s+"/index" %><br />
-<%= link_to 'Edit Company Profile', edit_company_path(:id => params[:id]) %>
+<%= link_to 'Edit Company Profile', edit_company_path(:id => params[:id]) %><br .>

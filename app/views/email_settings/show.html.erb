@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Email:</b>
+  <%= @email_setting.email %>
+</p>
+
+<p>
+  <b>Password:</b>
+  <%= @email_setting.password %>
+</p>
+
+
+<%= link_to 'Edit', edit_company_email_setting_path(@company, @email_setting)%> |
+<%= link_to 'Back', company_email_settings_url(@company) %>

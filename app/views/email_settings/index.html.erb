@@ -1,0 +1,25 @@
+<h1>Listing email_settings</h1>
+
+<table>
+	<tr>
+		<th>Email</th>
+		<th>Password</th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+
+	<% @email_settings.each do |email_setting| %>
+	<tr>
+		<td><%= email_setting.email %></td>
+		<td><%= email_setting.password %></td>
+		<td><%= link_to 'Show', [@company, email_setting] %></td>
+		<td><%= link_to 'Edit', edit_company_email_setting_path(@company, email_setting) %></td>
+		<td><%= link_to 'Destroy', [@company, email_setting], :confirm => 'Are you sure?', :method => :delete %></td>
+	</tr>
+	<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Email setting', new_company_email_setting_path %>
