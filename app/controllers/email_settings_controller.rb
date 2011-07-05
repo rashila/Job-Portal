@@ -75,10 +75,11 @@ class EmailSettingsController < ApplicationController
   # DELETE /email_settings/1.xml
   def destroy
     @email_setting = EmailSetting.find(params[:id])
+    @company = @email_setting.company
     @email_setting.destroy
 
     respond_to do |format|
-      format.html { redirect_to(email_settings_url) }
+      format.html { redirect_to(company_email_settings_url(@company)) }
       format.xml  { head :ok }
     end
   end
