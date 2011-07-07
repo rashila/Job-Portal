@@ -13,6 +13,7 @@ JobPortal::Application.routes.draw do
   resources :companies do 
     resources :contactinfos
     resources :email_settings
+    resources :emails
   end
   #resources :companies do
     resources :positions
