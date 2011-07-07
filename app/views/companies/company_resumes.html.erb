@@ -1,20 +1,23 @@
 <table>
-<% @emails.each do |email| %>
-    <thead>
-    	<th>
-    		From
-    	</th>
-    	<th>
-    		Resume file
-    	</th>
-    </thead>
-    <tr>
-    	<td>
-    		<%= email.from %>
-    	</td>
-    	<td>
-    		<%= link_to_resume(email.attachments[0].filename, @company.id.to_s, "email") %>
-    	</td>
-    </tr>
-<% end %>
-</table> 
+	<thead>
+		<th>From</th>
+		<th>Date Received</th>
+		<th>Resume File</th>
+	</thead>
+	<% @emails.each do |email| %>
+	
+		<tr>
+		<td>
+			<%= email.from %>
+		</td>
+		<td>
+			<%= email.date_received %>
+		</td>
+		<td>
+			<%= link_to_resume(email.resume_file, @company.id.to_s, "email") %>
+		</td>
+		</tr>
+	
+	<% end %>
+</table>
+

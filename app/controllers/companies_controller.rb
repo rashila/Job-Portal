@@ -110,18 +110,36 @@ class CompaniesController < ApplicationController
   
   def company_resumes
     @company = Company.find(params[:id])
-    company_email = Contactinfo.find(@company.contactinfos_id).email
+    @email_settings = @company.email_settings
+    @emailss = {}
+    @email_settings.each do |email_setting|
+      fetch_mail(email_setting.email, email_setting.password, @company.id)
+    end
+    @emails = @company.emails
+  end
+  
+  def fetch_mail(email, pswd, company_id)
     Mail.defaults do
-    retriever_method :pop3, :address    => "pop.gmail.com",
+      retriever_method :pop3, :address    => "pop.gmail.com",
                           :port       => 995,
-                          :user_name  => company_email,
-                          :password   => 'fsrashila',
+                          :user_name  => email,
+                          :password   => pswd,
                           :enable_ssl => true
     end
-    @emails = Mail.all
-    @emails.each do |email|
+    emails = Mail.find(:what => :first, :count => 15, :order => :asc)
+    emails.each do |email|
+      
+      if email.attachments.length > 0
       email.attachments.each do |tattch|
         fn = tattch.filename
+        extension = File.extname(fn)
+        if extension == ".doc" || extension == ".docx"
+        @email = Email.new
+        @email.from = email.from
+        @email.resume_file = fn
+        @email.company_id = company_id
+        @email.date_received = email.date
+        @email.save
         begin
           if !File.directory? "public/email/resume/"+params[:id]
             Dir.mkdir("public/email/resume/"+params[:id])
@@ -134,8 +152,11 @@ class CompaniesController < ApplicationController
         rescue Exception => e
           logger.error "Unable to save data for #{fn} because #{e.message}"
         end
+        end 
+      end
       end
     end
+    emails
   end
   
   def resume_download
