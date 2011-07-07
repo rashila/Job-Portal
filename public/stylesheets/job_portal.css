@@ -19,13 +19,27 @@
 .content_pane {
 	padding-left: 50px;
 }
-th {
-	font-weight: bold;
-	font-size: 13px;
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
 }
-
-td {
-	font-size: 12px;
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
 }
 #user_navigation {
 	float: right;

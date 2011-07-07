@@ -1,23 +1,25 @@
-<table>
+<h3>Listing Resumes</h3>
+<table class="gridtable">
 	<thead>
 		<th>From</th>
 		<th>Date Received</th>
 		<th>Resume File</th>
+		<th></th>
 	</thead>
 	<% @emails.each do |email| %>
-	
-		<tr>
-		<td>
-			<%= email.from %>
-		</td>
-		<td>
-			<%= email.date_received %>
-		</td>
-		<td>
-			<%= link_to_resume(email.resume_file, @company.id.to_s, "email") %>
-		</td>
-		</tr>
-	
+
+	<tr>
+		<td><%= email.from %></td>
+		<td><%= email.date_received %></td>
+		<td><%= link_to_resume(email.resume_file, @company.id.to_s, "email") %></td>
+		<td><%= button_to 'Discard', [@company, email], :confirm => 'Are you sure?', :method => :delete %></td>
+	</tr>
+
 	<% end %>
 </table>
+
+
+
+
+
 
