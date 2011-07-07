@@ -19,7 +19,11 @@ gem 'mini_magick', :git => 'git://github.com/probablycorey/mini_magick.git'
 gem 'date_validator'
 gem 'validates_timeliness', '~> 3.0.2'
 gem 'jquery-rails'
-
+gem 'sunspot_rails'
+gem 'sunspot_mongoid'
+gem 'vinova_sunspot_mongoid', :require => 'sunspot_mongoid'
+gem 'mongoid_fulltext', :git => 'git://github.com/aaw/mongoid_fulltext.git' 
+#gem 'mongoid_search'
 # Deploy with Capistrano
 # gem 'capistrano'
 

@@ -1,6 +1,7 @@
 class CandidatesController < ApplicationController
   def welcome
     @candidate = Candidate.find(params[:id])
+   @positions = Position.find(:all)
   end
   # GET /candidates
   # GET /candidates.xml
@@ -145,11 +146,27 @@ class CandidatesController < ApplicationController
       render :update do |page|
       page.replace_html 'cities', :partial => 'cities', :object => cities
     end
-  
+  def search
+    
+  end
 
    end
-   
-   
+    def search
+       @candidate = Candidate.find(params[:id])
+          # @search = Sunspot.search(Position)  do |s| 
+            # s.keywords params[:q] 
+            # with(params[:q]).any_of(:title)
+             # with (:status,'Open')
+             load_data
+            @search = Position.search  do
+          
+                keywords(params[:title])
+                keywords(params[:experience])
+                keywords(params[:skillset_names])
+                keywords(params[:location])
+              with (:status,'Open')
+       end
+     end
   private
 
   def load_data

@@ -3,4 +3,4 @@
 <%= render 'form' %>
 
 <%= link_to 'Show', @company %> |
-<%= link_to 'Back', companies_path %>
+<%= link_to 'Back', "/companies/"+@company.id.to_s+"/welcome" %>
