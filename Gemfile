@@ -19,6 +19,8 @@ gem 'mini_magick', :git => 'git://github.com/probablycorey/mini_magick.git'
 gem 'date_validator'
 gem 'validates_timeliness', '~> 3.0.2'
 gem 'jquery-rails'
+gem 'crypt'
+
 
 # Deploy with Capistrano
 # gem 'capistrano'
