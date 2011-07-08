@@ -30,9 +30,10 @@ JobPortal::Application.routes.draw do
   
   #candidates
   match "/candidates/:id/show" => 'candidates#show'
-  match "/candidates/:id/welcome" => "candidates#welcome", :as=> :candidate_welcome 
+  match "/candidates/:id/search" => "candidates#search", :as=> :candidate_welcome 
   match "/destroy_candidates" => 'candidates#destroy'
   match '/my_cities_list' => 'candidates#update_cities'
+  #match "/candidates/search" => 'candidates#search'
      
   #companies
   match "/companies/:id/welcome" => "companies#welcome", :as=> :company_welcome

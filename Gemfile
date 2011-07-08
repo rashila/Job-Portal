@@ -22,6 +22,11 @@ gem 'jquery-rails'
 gem 'crypt'
 
 
+gem 'sunspot_rails'
+gem 'sunspot_mongoid'
+gem 'vinova_sunspot_mongoid', :require => 'sunspot_mongoid'
+gem 'mongoid_fulltext', :git => 'git://github.com/aaw/mongoid_fulltext.git' 
+#gem 'mongoid_search'
 # Deploy with Capistrano
 # gem 'capistrano'
 

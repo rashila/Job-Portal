@@ -63,6 +63,7 @@ class PositionsController < ApplicationController
         @positionskillset.positions_id = @position.id
         @positionskillset.skillsets_id = @position.skillset_ids
         @positionskillset.save
+        @position.status = 'Open'
         @position.save
           
           puts "Sucess"

@@ -3,5 +3,7 @@
 
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
-
+require 'sunspot/rails/tasks'
+require 'rake/dsl_definition'
 JobPortal::Application.load_tasks
+
