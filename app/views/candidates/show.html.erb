@@ -92,7 +92,7 @@
 			<b>Resume</b>
 		</div>
 		<div class="value">
-			<%= link_to_resume(@candidate.resume_filename, @candidate.id.to_s, "Candidate") %>
+			<%= link_to_resume(@candidate.resume_filename, @candidate.id.to_s, "Candidate") if @candidate.resume_filename %>
 		</div>
 		<br clear="all">
 		<div class="label">
