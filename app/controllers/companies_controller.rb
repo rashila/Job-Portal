@@ -1,4 +1,5 @@
 class CompaniesController < ApplicationController
+  
   def welcome
     @company = Company.find(params[:id])
   end
@@ -113,7 +114,7 @@ class CompaniesController < ApplicationController
     @email_settings = @company.email_settings
     @emailss = {}
     @email_settings.each do |email_setting|
-      fetch_mail(email_setting.email, email_setting.password, @company.id)
+      fetch_mail(email_setting.email, email_setting.decrypted_password, @company.id)
     end
     @emails = @company.emails
   end

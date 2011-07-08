@@ -1,4 +1,5 @@
 class EmailSettingsController < ApplicationController
+  
   # GET /email_settings
   # GET /email_settings.xml
   def index
@@ -36,6 +37,7 @@ class EmailSettingsController < ApplicationController
   def edit
     @email_setting = EmailSetting.find(params[:id])
     @company = @email_setting.company
+    @email_setting.password = @email_setting.decrypted_password
   end
 
   # POST /email_settings
@@ -44,6 +46,8 @@ class EmailSettingsController < ApplicationController
     @email_setting = EmailSetting.new(params[:email_setting])
     @company = Company.find(params[:company_id])
     @email_setting.company_id =@company.id
+    
+    @email_setting.password = @email_setting.encrypted_password(params[:email_setting][:password])
     respond_to do |format|
       if @email_setting.save
         format.html { redirect_to([@company, @email_setting], :notice => 'Email setting was successfully created.') }
@@ -60,6 +64,8 @@ class EmailSettingsController < ApplicationController
   def update
     @email_setting = EmailSetting.find(params[:id])
     @company = Company.find(@email_setting.company_id)
+    params[:email_setting][:password] = @email_setting.encrypted_password(params[:email_setting][:password])
+    
     respond_to do |format|
       if @email_setting.update_attributes(params[:email_setting])
         format.html { redirect_to([@company, @email_setting], :notice => 'Email setting was successfully updated.') }

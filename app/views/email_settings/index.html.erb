@@ -12,7 +12,6 @@
 	<% @email_settings.each do |email_setting| %>
 	<tr>
 		<td><%= email_setting.email %></td>
-		<td><%= email_setting.password %></td>
 		<td><%= link_to 'Show', [@company, email_setting] %></td>
 		<td><%= link_to 'Edit', edit_company_email_setting_path(@company, email_setting) %></td>
 		<td><%= link_to 'Destroy', [@company, email_setting], :confirm => 'Are you sure?', :method => :delete %></td>
