@@ -1,5 +1,7 @@
 class PositionsController < ApplicationController
   
+  before_filter :authenticate_user!
+  
   # GET /positions
   # GET /positions.xml
  #  before_filter :authenticate_user!

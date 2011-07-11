@@ -1,4 +1,7 @@
 class CandidatesController < ApplicationController
+  
+  before_filter :authenticate_user!
+  
   def welcome
     @candidate = Candidate.find(params[:id])
    @positions = Position.find(:all)

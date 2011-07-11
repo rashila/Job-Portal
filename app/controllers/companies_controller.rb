@@ -1,5 +1,7 @@
 class CompaniesController < ApplicationController
   
+  before_filter :authenticate_user!
+  
   def welcome
     @company = Company.find(params[:id])
   end
