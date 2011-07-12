@@ -1,4 +1,4 @@
-<div class="formLayout">
+
 	<%= form_for @candidate  , :html => { :multipart => true } do |f| %>
 	<% if @candidate.errors.any? ||  @contactinfo.errors.any? %>
 	<div id="error_explanation">
@@ -94,7 +94,7 @@
 
 	<%= f.file_field :resume %>
 	<br clear="left">
-</div>
+
 <br>
 <div class="actions">
 	<%= f.submit %>

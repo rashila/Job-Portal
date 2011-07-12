@@ -36,8 +36,12 @@ table.gridtable td {
 	background-color: #f3f3f3;
 	border: solid 1px #a1a1a1;
 	padding: 10px;
-	width: 700px;
+	
 	font-size:12px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 70em;
+ 
 }
     
 .formLayout label, .formLayout input
