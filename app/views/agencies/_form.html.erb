@@ -1,0 +1,109 @@
+<%= form_for(@agency) do |f| %>
+  <% if @agency.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@agency.errors.count, "error") %> prohibited this agency from being saved:</h2>
+
+      <ul>
+      <% @agency.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+ <table>
+<tr>
+  <div class="field">
+   <td> <%= f.label :agency_name %></td>
+  <td>  <%= f.text_field :name %></td>
+  </div>
+  </tr>
+ <tr>
+  <div class="field">
+   <td> <%= f.label :established_date %></td>
+  <td>  <%= f.text_field :established_date %></td>
+  </div>
+  </tr>
+  
+  <tr>
+  <div class="field">
+ <td> 	<%= label :contactinfo, :address1 %><br /></td>
+  <td>  <%= text_field :contactinfo, :address1 %></td>
+ </div>
+ </tr>
+ <tr>
+  <div class="field">
+ <td> 	<%= label :contactinfo, :address2 %><br /></td>
+  <td>  <%= text_field :contactinfo, :address2 %></td>
+ </div>
+ </tr>
+ <tr>
+  <div class="field">
+ <td> 	<%= label :contactinfo, :address3 %><br /></td>
+  <td>  <%= text_field :contactinfo, :address3 %></td>
+ </div>
+ </tr>
+<tr>
+ <td><p><%= label :contactinfo, :state %></label><br/></td>
+  <td> 
+	<%= collection_select(:contactinfo, :state, @states, :id, :name,
+                     {:prompt   => "Select a state"},
+                     {:onchange => "#{remote_function(:url  => '/my_cities_list',:with => "'state_id='+value")}"}) %></td>
+     
+  </tr>
+ 
+ <tr>
+ <div class="field">
+ <td><p><%= label :contactinfo, :city %></label><br/></td>
+ <td id="cities"><%= render :partial => 'cities',   :object => @cities %><br /></td>
+ 
+ </div>
+ </tr>
+ <tr>
+  <div class="field">
+ <td> 	<%= label :contactinfo, :pin %><br /></td>
+  <td>  <%= text_field :contactinfo, :zip %></td>
+ </div>
+ </tr>
+ <tr>
+  <div class="field">
+   <td> <%= f.label :website%></td>
+  <td>  <%= f.text_field :website %></td>
+  </div>
+  </tr>
+<tr>
+  <div class="field">
+   <td><%= label :contactinfo, :agency_email%></td>
+  <td>  <%= text_field :contactinfo, :email %></td>
+  </div>
+  </tr>
+  <tr>
+  <div class="field">
+   <td><%= label :contactinfo, :alternate_email%></td>
+  <td>  <%= text_field :contactinfo, :alternate_email %></td>
+  </div>
+  </tr>
+  <tr>
+  <div class="field">
+   <td><%= label :contactinfo, :contact_number %></td>
+  <td>  <%= text_field :contactinfo, :contact_number %></td>
+  </div>
+  </tr>
+ <tr>
+  <div class="field">
+   <td> <%= f.label :agency_profile %></td>
+  <td>  <%= f.text_area :description %></td>
+  </div>
+  </tr>
+  </table>
+  <div class="actions" align="justify">
+ <%= f.submit %>
+  </div>
+<% end %>
+</div>
+<script>
+	$(function (){
+ 		$('#agency_established_date').datepicker();
+ 	});
+
+</script>

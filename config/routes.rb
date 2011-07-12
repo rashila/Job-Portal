@@ -6,8 +6,12 @@ JobPortal::Application.routes.draw do
   resources :states
   resources :cities
   
+  
 
   resources :candidates do
+    resources :contactinfos
+  end
+  resources :agencies do
     resources :contactinfos
   end
   resources :companies do 
@@ -33,7 +37,8 @@ JobPortal::Application.routes.draw do
   match "/candidates/:id/search" => "candidates#search", :as=> :candidate_welcome 
   match "/destroy_candidates" => 'candidates#destroy'
   match '/my_cities_list' => 'candidates#update_cities'
-  #match "/candidates/search" => 'candidates#search'
+  match "/joblist/search" => 'joblist#search'
+  match "/joblist/show" => 'joblist#show'
      
   #companies
   match "/companies/:id/welcome" => "companies#welcome", :as=> :company_welcome
@@ -43,7 +48,11 @@ JobPortal::Application.routes.draw do
   match "/companies/:id/show" => 'companies#show'
   match '/my_cities_list' => 'companies#update_cities'
   
-
+  #agencies
+   match '/my_cities_list' => 'agencies#update_cities'
+   match "/destroy_agencies" => 'agencies#destroy' 
+   match "/agencies/:id/welcome" => "agencies#welcome", :as=> :agency_welcome
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

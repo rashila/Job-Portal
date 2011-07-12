@@ -20,7 +20,7 @@ gem 'date_validator'
 gem 'validates_timeliness', '~> 3.0.2'
 gem 'jquery-rails'
 gem 'crypt'
-
+gem 'will_paginate'
 
 gem 'sunspot_rails'
 gem 'sunspot_mongoid'

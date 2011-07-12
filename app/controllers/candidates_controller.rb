@@ -158,13 +158,13 @@ class CandidatesController < ApplicationController
             # with(params[:q]).any_of(:title)
              # with (:status,'Open')
              load_data
-            @search = Position.search  do
+            @search = Position.search do
           
-                keywords(params[:title])
-                keywords(params[:experience])
-                keywords(params[:skillset_names])
-                keywords(params[:location])
-              with (:status,'Open')
+                keywords(params[:title]) 
+                keywords(params[:experience]) 
+                keywords(params[:skillset_names]) 
+                keywords(params[:city]) 
+                with (:status,'Open')
        end
      end
   private

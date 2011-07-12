@@ -10,7 +10,7 @@ class Position
   field :title, :type => String
   field :description, :type => String
   field :status, :type => String
-  
+  field :city, :type => String
   field :date_published, :type => Date, :null =>false
   field :last_date, :type => Date, :null =>false
   field :salary_range, :type => String
@@ -25,31 +25,21 @@ class Position
   belongs_to :company
   belongs_to :candidate
   has_and_belongs_to_many  :skillsets
-  index:title
+  has_and_belongs_to_many  :cities
   
+    
  searchable :auto_index => false, :auto_remove => false do
-      text :title
+      text :title,:boost => 2.0
       text :experience
       text :skillset_names do |post|
         post.skillsets.map{|skillset| skillset.id}
       end
-      text :location do 
-        City.all.map{|city| city.id}
-      end
+      text :city 
+      
       string :status
-      string :title
+      string :city
+      string :title, :stored => true
     end      
- 
-  
-
- # def self.search(search)
-     # if !search.blank?
-       # where(:title => Position.any_in(search) )      
-    # else
-      # all
-  # end
-# #   
-# end
 
 end
 # Sunspot::Adapters::InstanceAdapter.register(SunspotHelper::InstanceAdapter, Position)

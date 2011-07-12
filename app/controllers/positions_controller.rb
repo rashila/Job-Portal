@@ -32,8 +32,10 @@ class PositionsController < ApplicationController
   def new
     load_data
     @company = Company.find(params[:company_id])
+    @city = Contactinfo.find(@company.contactinfos_id).city
     @position = Position.new
     @positionskillset = Positionskillset.new
+    @positioncity = PositionCity.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @position }
@@ -53,7 +55,10 @@ class PositionsController < ApplicationController
     puts params
     @position  = Position.new(params[:position])
     @company = Company.find(params[:position][:company_id]) if params[:position][:company_id]
-    @positionskillset = Positionskillset.new(params[:companyposition])
+    @city = Contactinfo.find(@company.contactinfos_id).city
+   
+    @positionskillset = Positionskillset.new(params[:positionskillset])
+    @positioncity = PositionCity.new(params[:positioncity])
     @position.valid?
    
    respond_to do |format|
@@ -64,9 +69,10 @@ class PositionsController < ApplicationController
         @positionskillset.skillsets_id = @position.skillset_ids
         @positionskillset.save
         @position.status = 'Open'
+        @position.city = @city
         @position.save
           
-          puts "Sucess"
+         
           flash[:notice] = "Position #{@position.title} was created successfully."
           format.html { redirect_to(@position) }
           #redirect_to("/positions/c")

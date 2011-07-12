@@ -10,7 +10,7 @@ field :user_type,   :type => String
   validates_uniqueness_of :email, :case_sensitive => false
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_type
   has_one :company
-
+  has_one :agency
   has_one :candidate
   
 end

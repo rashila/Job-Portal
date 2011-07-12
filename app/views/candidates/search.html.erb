@@ -11,13 +11,13 @@
    
 
     <td><label for="position_experience">Experience:</label></td>
-	<td><%= select_tag :experience,options_for_select(["",">1","1-3","4-6","7-10"])%></p></td>
+	<td><%= select_tag :experience,options_for_select(["","0-1","1-3","4-6","7-10"])%></p></td>
      <!--%= text_field_tag 'q1[]'%-->
  
    <td><label for='position[skillset_ids][]'>Skillsets:</label></td>
    <td> <%= select_tag :skillset_names,options_from_collection_for_select(@skillsets, :id, :name,Skillset.all.collect{|skillset| skillset.id})%></td>
-   <!--td><%= label_tag :location%></td>
-     <td><%= select_tag :location,options_from_collection_for_select(@cities, :id, :name,City.all.collect{|city| city.id})%></td-->
+  <td><label for="position_city">Location:</label></td>
+     <td><%= select_tag :city,options_from_collection_for_select(@cities, :name, :name,City.all.collect{|city| city.name})%></td>
 </tr>
 </table>
     <%= submit_tag "Search"%>
@@ -28,8 +28,8 @@
     <%= text_field_tag :search2, params[:search2] %>
     <%= submit_tag "Search"%> -->
  
-<% if @search%>
-  
+<% if @search and @search.total > 0 %>  
+   <p>Record found</p>
 	
    
    <% @search.each_hit_with_result do |hit, post| %>
@@ -58,6 +58,8 @@
 
 
 </dl>
+<%else%>
+<p>Record not found</p>
 <% end %>
 
 

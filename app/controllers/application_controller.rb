@@ -14,6 +14,12 @@ class ApplicationController < ActionController::Base
       else
         candidate_welcome_path(current_user.candidate.id)
       end
+      elsif current_user.user_type == "Agency"
+      if !Agency.exists?(:conditions => { :user_id => current_user.id })
+        new_agency_path 
+      else
+        agency_welcome_path(current_user.agency.id)
+      end
     end
   end
 end
