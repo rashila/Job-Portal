@@ -15,9 +15,12 @@
      <!--%= text_field_tag 'q1[]'%-->
  
    <td><label for='position[skillset_ids][]'>Skillsets:</label></td>
-   <td> <%= select_tag :skillset_names,options_from_collection_for_select(@skillsets, :id, :name,Skillset.all.collect{|skillset| skillset.id})%></td>
+   
+ <td><%= select_tag :skillset_names,options_for_select(Skillset.all.collect{ |c| [c.name, c.id] }.insert(0, ''))%></td>
+
   <td><label for="position_city">Location:</label></td>
-     <td><%= select_tag :city,options_from_collection_for_select(@cities, :name, :name,City.all.collect{|city| city.name})%></td>
+     <td><%= select_tag :city,options_for_select(City.all.collect{ |c| [c.name, c.name] }.insert(0, ''))%></td>
+     
 </tr>
 </table>
     <%= submit_tag "Search"%>
@@ -28,11 +31,12 @@
     <%= text_field_tag :search2, params[:search2] %>
     <%= submit_tag "Search"%> -->
  
-<% if @search and @search.total > 0 %>  
-   <p>Record found</p>
-	
+<% if @search.total > 0 %>  
+   
    
    <% @search.each_hit_with_result do |hit, post| %>
+    
+	
 	</dt><%= link_to post.title,"/positions/"+post.id.to_s+"/show"%></dt>
      <table border=1>
        <tr>
