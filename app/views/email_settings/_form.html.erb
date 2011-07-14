@@ -1,25 +1,65 @@
-<%= form_for([:company, @email_setting]) do |f| %>
-  <% if @email_setting.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@email_setting.errors.count, "error") %> prohibited this email_setting from being saved:</h2>
+<% i = 0 %>
+<% form_for [:company, @email_setting], :url => { :action => 'create' } do |f| %>
+<table id="EmailSetting">
+	<tr>
+                  <td class="txtBase">Email</td>
+                  <td class="txtBase">Password</td>
+                  <td></td>
+    </tr>
+    <% if @email_settings %>
+	<% @email_settings.each do |email_setting| %>
+		<% f.object_name = "email_settings[#{i}]" %>
+		<% f.object = email_setting %>
+		<tr>
 
-      <ul>
-      <% @email_setting.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+		<td><%= f.text_field :email %></td>
+		<td><%= f.password_field :password %></td>
+		<td><input type="button" onclick="removeRowFromTable(this);" value="Remove"></td>
+		<td><%= link_to 'Destroy', [@company, email_setting], :confirm => 'Are you sure?', :method => :delete %></td>
+		</tr>
+		<% i = i + 1 %>
+	<% end %>
+	<% end %>
+	<input type="button" onclick="addRowToTable();" value="Add New">
+	<%= submit_tag 'Save' %>
+</table>
 <% end %>
+
+
+<script type="text/javascript">
+var counter = 0;
+function addRowToTable()
+{
+  counter = counter + 1;	
+  var tbl = document.getElementById('EmailSetting');
+  var lastRow = tbl.rows.length;
+  var row = tbl.insertRow(lastRow);
+  var cell0 = row.insertCell(0);
+  var el = document.createElement('input');
+  el.type = 'text';
+  el.name =  "email_settings["+counter+"][email]";
+  el.id = "email_settings_"+counter+"_email";
+  el.size = 30;
+  cell0.appendChild(el);
+  var cell1 = row.insertCell(1);
+  var el = document.createElement('input');
+  el.type = 'password';
+  el.name = "email_settings["+counter+"][password]";
+  el.id = "email_settings_"+counter+"_password";
+  el.size = 30;
+  cell1.appendChild(el);
+  var cell2 = row.insertCell(2);
+  var el = document.createElement('input');
+  el.type = 'button';
+  el.value="Remove";
+  el.name = 'remove_'+counter;
+  el.setAttribute("onclick", "removeRowFromTable(this)")
+  cell2.appendChild(el);
+}
+
+function removeRowFromTable(src) {
+	var i=src.parentNode.parentNode.rowIndex;
+	document.getElementById('EmailSetting').deleteRow(i); 
+}
+</script>
+

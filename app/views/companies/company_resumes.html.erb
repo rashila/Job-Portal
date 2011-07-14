@@ -1,4 +1,10 @@
-<h3>Listing Resumes</h3>
+<br clear="all" /><br clear="all" />
+<% if @settings_needed ||  @password_needed %>
+  <%= @message %>&nbsp;
+  <%= link_to "Click here", company_email_settings_path(@company) %> to create email settings.
+<% end %>
+
+<h3>Listing Saved Resumes</h3>
 <table class="gridtable">
 	<thead>
 		<th>From</th>

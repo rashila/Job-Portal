@@ -60,9 +60,9 @@ class CompaniesController < ApplicationController
         @contactinfo.save(:validate => false)
         @company.contactinfos_id = @contactinfo.id
         @company.save(:validate => false)
-        @email_setting = EmailSetting.new(:email => @contactinfo.email)
-        @email_setting.company_id = @company.id
-        @email_setting.save
+        #@email_setting = EmailSetting.new(:email => @contactinfo.email)
+        #@email_setting.company_id = @company.id
+        #@email_setting.save
         format.html { redirect_to(@company) }
         flash[:notice] = "Company #{@company.name} was created successfully."
         format.xml  { render :xml => @company, :status => :created, :location => @company }
@@ -81,8 +81,8 @@ class CompaniesController < ApplicationController
     @contactinfo = Contactinfo.find(@company.contactinfos_id)
     if @contactinfo.update_attributes(params[:contactinfo])
       contactinfo_success = 1
-      @email_setting = EmailSetting.find_by_company_id_and_email(@company.id, @contactinfo.email)
-      @email_setting.update_attribute(:email => @contactinfo.email)
+      #@email_setting = EmailSetting.find_by_company_id_and_email(@company.id, @contactinfo.email)
+      #@email_setting.update_attribute(:email => @contactinfo.email)
     end
     if @company.update_attributes(params[:company])
       company_success = 1
@@ -115,8 +115,19 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
     @email_settings = @company.email_settings
     @emails = {}
-    @email_settings.each do |email_setting|
-      fetch_mail(email_setting.email, email_setting.decrypted_password, @company.id)
+    if @email_settings.length > 0
+      @email_settings.each do |email_setting|
+        if email_setting.password.length > 0 
+          fetch_mail(email_setting.email, email_setting.decrypted_password, @company.id)
+        else
+          @password_needed
+          @message = "One or more accounts saved with no passwords set. The system cannot fetch new resumes from email."
+        end
+      end
+      
+    else
+      @settings_needed = 1
+      @message = "There are no saved email settings. The system cannot fetch new resumes from email."
     end
     @emails = @company.emails
   end

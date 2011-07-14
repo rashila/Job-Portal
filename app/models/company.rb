@@ -19,4 +19,6 @@ class Company
 
  # validates_format_of :established_date, :with =>/\A[0-9]{2}\/[0-9]{2}\/[0-9]{4}\z/
   #validates_format_of :name, :with =>/\A[a-zA-z]\z/
+  has_many :reviews
+
 end
