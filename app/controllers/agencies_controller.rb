@@ -82,7 +82,7 @@ class AgenciesController < ApplicationController
     end
     respond_to do |format|
      if contactinfo_success == 1 and agency_success == 1
-        format.html { redirect_to(@agency) }
+        format.html { redirect_to("/agencies/"+@agency.id.to_s+"/welcome") }
         flash[:notice] = "Agency #{@agency.name} was successfully updated."
         format.xml  { head :ok }
       else
@@ -96,7 +96,9 @@ class AgenciesController < ApplicationController
   # DELETE /agencies/1.xml
   def destroy
     @agency = Agency.find(params[:id])
+    @contactinfo= Contactinfo.find(@agency.contactinfos_id)
     @agency.destroy
+    @contactinfo.destroy
 
     respond_to do |format|
       format.html { redirect_to(agencies_url) }

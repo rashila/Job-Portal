@@ -1,3 +1,10 @@
+<br>
+<table>
+
+<th><%= link_to 'Company List',"/companies"%></th>
+
+<th><%= link_to 'Edit your profile',"/agencies/"+@agency.id.to_s+"/edit"%></th>
+</table>
 <div class="content_pane">
 <h3><%=@agency.name%></h3>
 
@@ -25,5 +32,5 @@
 <br>
 
 
-<%= link_to 'Edit', edit_agency_path(@agency) %> |
-<%= link_to 'Back', agencies_path %>
+<%= link_to 'Edit', edit_agency_path(@agency) %> 
+<!--%= link_to 'Back', agencies_path %-->

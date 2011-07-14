@@ -5,16 +5,19 @@ class Position
   # require 'mongoid'
   include Mongoid::Document
 
-
+   
   include Sunspot::Mongoid 
+ 
   field :title, :type => String
   field :description, :type => String
   field :status, :type => String
+  field :published_status, :type => String
   field :city, :type => String
   field :date_published, :type => Date, :null =>false
   field :last_date, :type => Date, :null =>false
   field :salary_range, :type => String
   field :qualification, :type => String
+  field :positionskillsets_id, :type => String
   field :experience, :type => String , :null => false
   validates_presence_of :title,:description,:salary_range,:qualification,:experience
   #validates_numericality_of :salary_range, :message => "cannot be string/special character"

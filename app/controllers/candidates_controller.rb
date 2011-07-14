@@ -4,7 +4,8 @@ class CandidatesController < ApplicationController
   
   def welcome
     @candidate = Candidate.find(params[:id])
-   @positions = Position.find(:all)
+    @positions = Position.find(:all)
+     @skillsets = Skillset.all
   end
   # GET /candidates
   # GET /candidates.xml
@@ -50,17 +51,11 @@ class CandidatesController < ApplicationController
   # POST /candidates
   # POST /candidates.xml
   def create
-    
-    
-    puts '++++++++++++++++++++++++++++'
-    p params
-    
     load_data
     
     @candidate = Candidate.new(params[:candidate])
     @contactinfo = Contactinfo.new(params[:contactinfo])
     @candidateskill = Candidateskill.new(params[:candidateskill])
-    #@state = Skillset.find(params[:state_id])
     @candidate.user_id = current_user.id
     @candidate.valid?
     @contactinfo.valid?
@@ -74,7 +69,7 @@ class CandidatesController < ApplicationController
         
         @candidateskill.skillsets_id = @candidate.skillset_ids
         @candidateskill.save
-       
+        @candidate.candidateskills_id = @candidateskill.id
         @candidate.save(:validate => false)
         format.html { redirect_to(@candidate) }
         flash[:notice] = "Candidate #{@candidate.name} was created successfully."
@@ -102,7 +97,7 @@ class CandidatesController < ApplicationController
     end
     respond_to do |format|
       if contactinfo_success == 1 and candidate_success == 1
-        format.html { redirect_to(@candidate) }
+        format.html { redirect_to("/candidates/"+@candidate.id.to_s+"/welcome") }
         flash[:notice] = "Candidate #{@candidate.name} was successfully updated."
         format.xml  { head :ok }
       else
@@ -116,7 +111,11 @@ class CandidatesController < ApplicationController
   # DELETE /candidates/1.xml
   def destroy
     @candidate = Candidate.find(params[:id])
+    @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
+    @candidateskill = Candidateskill.find(@candidate.candidateskills_id)
     @candidate.destroy
+    @contactinfo.destroy
+    @candidateskill.destroy
 
     respond_to do |format|
       format.html { redirect_to(candidates_url) }
@@ -149,17 +148,8 @@ class CandidatesController < ApplicationController
       render :update do |page|
       page.replace_html 'cities', :partial => 'cities', :object => cities
     end
-  def search
-    
-  end
-
    end
     def search
-       @candidate = Candidate.find(params[:id])
-          # @search = Sunspot.search(Position)  do |s| 
-            # s.keywords params[:q] 
-            # with(params[:q]).any_of(:title)
-             # with (:status,'Open')
              load_data
             @search = Position.search do
           
@@ -167,15 +157,18 @@ class CandidatesController < ApplicationController
                 keywords(params[:experience]) 
                 keywords(params[:skillset_names]) 
                 keywords(params[:city]) 
+              
                 with (:status,'Open')
        end
-     end
+         
+   end
   private
 
   def load_data
     @skillsets = Skillset.find(:all)
     @states = State.all
     @cities = City.all
+    @cities = @cities.sort
     
   end
 end

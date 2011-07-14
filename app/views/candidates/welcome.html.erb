@@ -1,0 +1,39 @@
+<h3>Welcome <%= @candidate.name %></h3>
+<table>
+<th><%= link_to 'Search for jobs',"/candidates/"+@candidate.id.to_s+"/search"%></th>
+<th><%= link_to 'Company List',"/companies"%></th>
+<th><%= link_to 'Agencies List',"/agencies"%></th>
+<th><%= link_to 'Edit your profile',"/candidates/"+@candidate.id.to_s+"/edit"%></th>
+</table>
+<br>
+<div class="content_pane">
+
+
+<table border ="1">
+<tr>
+   <th>Position Name:</th>
+   <th>Company Name:</th>
+   <th>Location:</th>
+   <th>Experience:</th>
+   <th>Skillsets:</th>
+</tr>
+<% for position in @positions %>
+<tr>
+   <td><%= link_to position.title,"/positions/"+position.id.to_s+"/show"  %></td>
+
+<td><%= link_to position.company.name,"/companies/"+position.company.id.to_s+"/show"%></td>
+
+<td><%= Contactinfo.find(position.company.contactinfos_id).city%></td>
+
+
+<td><%= position.experience%></td>
+
+<td><%= position.skillsets.collect{|skillset| skillset.name }.join(', ')%></td>
+
+<% end %>
+</tr>
+</table>
+
+</div>
+</dt>
+</dl>

@@ -47,9 +47,10 @@
 	{:prompt   => "Select a state"},
 	{:onchange => "#{remote_function(:url  => '/my_cities_list',:with => "'state_id='+value")}"}) %>
 	<br clear="left">
-	<%= label :contactinfo, :city %></label>
-
+	<%= label :contactinfo, :city %></label>	
+    <div id="cities">
 	<%= render :partial => 'cities',   :object => @cities %>
+</div>
 	<br clear="left">
 
 	<%= label :contactinfo, :pin %>

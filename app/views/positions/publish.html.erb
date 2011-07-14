@@ -1,0 +1,12 @@
+
+  
+<h1>Publish Position </h1>
+
+<%= form_tag('/publish') do%>
+<%= check_box_tag(:publish_all) %>
+<%= label_tag(:publish_all, "Public to All") %>
+<%= check_box_tag(:publish_agency) %>
+<%= label_tag(:publish_agency, "Publish to Agencies") %>
+<%= submit_tag "PUBLISH"%>
+<% end %>
+

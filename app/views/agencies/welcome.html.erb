@@ -1,1 +1,11 @@
 <h1>Welcome <%= @agency.name %></h1><br />
+<br>
+
+<table>
+<tr>
+<td><%= link_to 'Company List',"/companies"%></td>
+</tr>
+<tr>
+<td><%= link_to 'Edit your profile',"/agencies/"+@agency.id.to_s+"/edit"%></td>
+</tr>
+</table>

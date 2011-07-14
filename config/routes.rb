@@ -29,12 +29,13 @@ JobPortal::Application.routes.draw do
   match "/positions/:company_id/index" => "positions#index"
   match "/create_position" => 'positions#create'
   match "/destroy_positions" => 'positions#destroy'
-  
+  match "/publish" => 'positions#publish'
   
   
   #candidates
   match "/candidates/:id/show" => 'candidates#show'
-  match "/candidates/:id/search" => "candidates#search", :as=> :candidate_welcome 
+  match "/candidates/:id/welcome" => "candidates#welcome", :as=> :candidate_welcome
+  match "/candidates/:id/search" => "candidates#search"
   match "/destroy_candidates" => 'candidates#destroy'
   match '/my_cities_list' => 'candidates#update_cities'
   match "/joblist/search" => 'joblist#search'

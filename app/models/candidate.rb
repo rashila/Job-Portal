@@ -12,6 +12,7 @@ class Candidate
   field :expected_salary, :type => String
   field :contactinfos_id, :type => String
   field :user_id, :type => String
+  field :candidateskills_id, :type => String
   
   validates_presence_of :first_name,:last_name,:qualification,:date_of_birth,:experience,:expected_salary
   validates_date :date_of_birth, :before => lambda { 18.years.ago },
@@ -20,29 +21,23 @@ class Candidate
 
   has_many :contactinfos
   has_and_belongs_to_many :skillsets
+  has_many :positions
+  has_many :companies
   
   
   belongs_to :user
 
   accepts_nested_attributes_for :contactinfos, :allow_destroy => true
-  #scope :skillset.joins(",")
-
+  
 #File upload
 mount_uploader :resume, ResumeUploader
 
 
-  #key :contactinfos_id
-  #def address
-    #Contactinfo.where(:candidates_contactinfos_id =>self._id).all
-    
-  #end
   def name
     "#{first_name} #{last_name}"
   end
  
    
-
-  
 
 
 end

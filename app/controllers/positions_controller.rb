@@ -37,7 +37,6 @@ class PositionsController < ApplicationController
     @city = Contactinfo.find(@company.contactinfos_id).city
     @position = Position.new
     @positionskillset = Positionskillset.new
-    @positioncity = PositionCity.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @position }
@@ -60,29 +59,37 @@ class PositionsController < ApplicationController
     @city = Contactinfo.find(@company.contactinfos_id).city
    
     @positionskillset = Positionskillset.new(params[:positionskillset])
-    @positioncity = PositionCity.new(params[:positioncity])
     @position.valid?
    
-   respond_to do |format|
-     if @position.errors.length == 0
+   respond_to do |format| 
+     if params[:commit] == "SAVE"
+     
        # @position.company_id = params[:company_id]
-        
-        @positionskillset.positions_id = @position.id
-        @positionskillset.skillsets_id = @position.skillset_ids
-        @positionskillset.save
-        @position.status = 'Open'
-        @position.city = @city
-        @position.save
+          if @position.errors.length == 0
+             @positionskillset.positions_id = @position.id
+             @positionskillset.skillsets_id = @position.skillset_ids
+             @positionskillset.save
+             @position.positionskillsets_id = @positionskillset.id
+             @position.status = 'Open'
+             @position.city = @city
+             @position.save
           
          
-          flash[:notice] = "Position #{@position.title} was created successfully."
-          format.html { redirect_to(@position) }
-          #redirect_to("/positions/c")
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
-     end
-    end
+            flash[:notice] = "Position #{@position.title} was created successfully."
+         
+            format.html { redirect_to(@position) }
+            
+         else
+            format.html { render :action => "new" }
+            format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
+         end
+      
+    else if params[:commit] == "SAVE&PUBLISH"
+           flash[:notice] = "Publish"
+          format.html { redirect_to("/publish")}
+        end
+       
+      end 
   end
 
   # PUT /positions/1
@@ -107,22 +114,32 @@ class PositionsController < ApplicationController
   # DELETE /positions/1.xml
   def destroy
     @position = Position.find(params[:id])
+    @positionskillset = Positionskillset.find(@position.positionskillsets_id)
     @position.destroy
-
+    @positionskillset.destroy
     respond_to do |format|
       format.html { redirect_to("/positions/#{params[:company_id]}/index") }
       format.xml  { head :ok }
   end
 end
-def search
-    @page_title = "Search"
-    @search =  Position.solr_search do |s|
-        s.keywords params[:q]
-      
-
-   end
 
   end
+  
+  def publish
+     #@position = Position.find(params[:id])
+     #flash[:notice] = "Position #{@position.title} was updated successfully."
+     @data = params[:publish_all]
+     @data1 = params[:publish_agency]
+       if @data
+         flash[:notice] = "Public to all"
+       else if @data1
+         flash[:notice] = "Public to agency"
+         end
+      end  
+   end
+   
+  
+  
   private
 def load_data
     @skillsets = Skillset.all
