@@ -151,6 +151,7 @@ class CandidatesController < ApplicationController
    end
     def search
              load_data
+               @candidate = Candidate.find(params[:id])
             @search = Position.search do
           
                 keywords(params[:title]) 
