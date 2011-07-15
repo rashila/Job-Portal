@@ -32,7 +32,7 @@
 
 
 <% end %>
-
+<br clear="all" /><br clear="all" />
 <!--  <%= label_tag 'skillset'%>
 <%= text_field_tag :search2, params[:search2] %>
 <%= submit_tag "Search"%> -->
@@ -41,8 +41,12 @@
 
 <% @search.each_hit_with_result do |hit, post| %>
 
-</dt><%= link_to post.title,"/positions/"+post.id.to_s+"/show"%></dt>
 <table class="gridtable">
+	<tr>
+		<th colspan="2">
+			<%= link_to post.title,"/positions/"+post.id.to_s+"/show"%>
+		</th>
+	</tr>
 	<tr>
 		<td>Company:</td>
 		<td><%= link_to post.company.name,"/companies/"+post.company.id.to_s+"/show"%></td>
@@ -62,6 +66,7 @@
 	</tr>
 
 </table>
+<div class="table_padding"></div>
 <% end %>
 
 </dl>

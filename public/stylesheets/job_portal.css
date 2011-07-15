@@ -4,6 +4,7 @@
 
 #menu {
 	border-bottom: thick inset #663300;
+	width: 100%;
 }
 #menu ul
 {
@@ -42,6 +43,7 @@ table.gridtable {
 	border-width: 1px;
 	border-color: #666666;
 	border-collapse: collapse;
+	float: left;
 }
 table.gridtable th {
 	border-width: 1px;
@@ -57,22 +59,26 @@ table.gridtable td {
 	border-color: #cccccc;
 	background-color: #dedede;
 }
+.table_padding {
+	padding: 7px;
+	float: left;
+}
 #user_navigation {
 	float: right;
 }
 .formLayout
 {
 	background-color: #f3f3f3;
-	border: solid 1px #a1a1a1;
-	padding: 10px;
-	
 	font-size:12px;
 	margin-left: auto;
 	margin-right: auto;
-	width: 70em;
- 
+	width: 100%;
 }
-    
+.heading {
+	padding: 30px;
+	font-size; 16px;
+	font-weight: bold;
+}  
 .formLayout label, .formLayout input
 {
   	display: block;
@@ -86,4 +92,5 @@ table.gridtable td {
   	text-align: right;
   	padding-right: 20px;
 }
+
 
