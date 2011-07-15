@@ -1,0 +1,11 @@
+<div id="review<%= review.id %>">
+<%=
+    content_tag(:p,
+    review.name)
+%>
+<!-- We are accessing the update function so we use put as class -->
+<span class="score"><%= review.score %></span><span> - <%= link_to 'Add one point!',review_path(review),:class => "put"  %></span>
+<p> - <%= link_to '*Delete this review',review_path(review),:method => :delete,:class => "delete"  %></p>
+<hr />
+</div>
+
