@@ -1,0 +1,17 @@
+<div id="menu">
+	<ul>
+		<li>
+			<%= link_to 'Search for jobs',"/candidates/"+@candidate.id.to_s+"/search"%>
+		</li>
+		<li>
+			<%= link_to 'Company List',"/companies"%>
+		</li>
+		<li>
+			<%= link_to 'Agencies List',"/agencies"%>
+		</li>
+		<li>
+			<%= link_to 'Edit your profile',"/candidates/"+@candidate.id.to_s+"/edit"%>
+		</li>
+	</ul>
+	<br clear="all" />
+</div>
