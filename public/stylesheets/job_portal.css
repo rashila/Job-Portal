@@ -2,9 +2,38 @@
 	padding: 50px 20px 0px 25px; 
 }
 
+#menu {
+	border-bottom: thick inset #663300;
+}
+#menu ul
+{
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
 
+#menu a
+{
+    display: block;
+    width: 12em;
+    color: white;
+    background-color: #646D7E;
+    text-decoration: none;
+    text-align: center;
+}
+
+#menu a:hover
+{
+    background-color: #333333;
+}
+#menu li
+{
+    float: left;
+    margin-right: 0.5em;
+}
 .content_pane {
 	padding-left: 50px;
+	padding-right: 50px;
 }
 table.gridtable {
 	font-family: verdana,arial,sans-serif;
@@ -18,15 +47,15 @@ table.gridtable th {
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
+	border-color: 	#dedede;
+	background-color: #cccccc;
 }
 table.gridtable td {
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
-	border-color: #666666;
-	background-color: #ffffff;
+	border-color: #cccccc;
+	background-color: #dedede;
 }
 #user_navigation {
 	float: right;

@@ -1,42 +1,53 @@
-<h3>Welcome <%= @candidate.name %></h3>
-<table>
-<th><%= link_to 'Search for jobs',"/candidates/"+@candidate.id.to_s+"/search"%></th>
-<th><%= link_to 'Company List',"/companies"%></th>
-<th><%= link_to 'Agencies List',"/agencies"%></th>
-<th><%= link_to 'Edit your profile',"/candidates/"+@candidate.id.to_s+"/edit"%></th>
-</table>
-
-<br>
 <div class="content_pane">
+	<div id="menu">
+		<ul>
+			<li>
+				<%= link_to 'Search for jobs',"/candidates/"+@candidate.id.to_s+"/search"%>
+			</li>
+			<li>
+				<%= link_to 'Company List',"/companies"%>
+			</li>
+			<li>
+				<%= link_to 'Agencies List',"/agencies"%>
+			</li>
+			<li>
+				<%= link_to 'Edit your profile',"/candidates/"+@candidate.id.to_s+"/edit"%>
+			</li>
+		</ul>
+		<br clear="all" />
+	</div>
 
-<%if @positions.empty?%>
-<p>No job positions listed</p>
-<%else%>
-<table border ="1">
-<tr>
-   <th>Position Name:</th>
-   <th>Company Name:</th>
-   <th>Location:</th>
-   <th>Experience:</th>
-   <th>Skillsets:</th>
-</tr>
-<%end%>
-<% for position in @positions %>
-<tr>
-   <td><%= link_to position.title,"/positions/"+position.id.to_s+"/show"  %></td>
+	<br clear="all" />
 
-<td><%= link_to position.company.name,"/companies/"+position.company.id.to_s+"/show"%></td>
+	<%if @positions.empty?%>
+	<p>
+		No job positions listed
+	</p>
+	<%else%>
+	<table class="gridtable">
+		<tr>
+			<th>Position Name:</th>
+			<th>Company Name:</th>
+			<th>Location:</th>
+			<th>Experience:</th>
+			<th>Skillsets:</th>
+		</tr>
+		<%end%>
+		<% for position in @positions %>
+		<tr>
+			<td><%= link_to position.title,"/positions/"+position.id.to_s+"/show"  %></td>
 
-<td><%= position.city%></td>
+			<td><%= link_to position.company.name,"/companies/"+position.company.id.to_s+"/show"%></td>
 
+			<td><%= position.city%></td>
 
-<td><%= position.experience%></td>
+			<td><%= position.experience%></td>
 
-<td><%= position.skillsets.collect{|skillset| skillset.name }.join(', ')%></td>
+			<td><%= position.skillsets.collect{|skillset| skillset.name }.join(', ')%></td>
 
-<% end %>
-</tr>
-</table>
+			<% end %>
+		</tr>
+	</table>
 
 </div>
 </dt>
