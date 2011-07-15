@@ -5,10 +5,13 @@
 <th><%= link_to 'Agencies List',"/agencies"%></th>
 <th><%= link_to 'Edit your profile',"/candidates/"+@candidate.id.to_s+"/edit"%></th>
 </table>
+
 <br>
 <div class="content_pane">
 
-
+<%if @positions.empty?%>
+<p>No job positions listed</p>
+<%else%>
 <table border ="1">
 <tr>
    <th>Position Name:</th>
@@ -17,13 +20,14 @@
    <th>Experience:</th>
    <th>Skillsets:</th>
 </tr>
+<%end%>
 <% for position in @positions %>
 <tr>
    <td><%= link_to position.title,"/positions/"+position.id.to_s+"/show"  %></td>
 
 <td><%= link_to position.company.name,"/companies/"+position.company.id.to_s+"/show"%></td>
 
-<td><%= Contactinfo.find(position.company.contactinfos_id).city%></td>
+<td><%= position.city%></td>
 
 
 <td><%= position.experience%></td>

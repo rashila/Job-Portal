@@ -57,14 +57,14 @@ class PositionsController < ApplicationController
     @position  = Position.new(params[:position])
     @company = Company.find(params[:position][:company_id]) if params[:position][:company_id]
     @city = Contactinfo.find(@company.contactinfos_id).city
-   
+#    
     @positionskillset = Positionskillset.new(params[:positionskillset])
     @position.valid?
-   
+#    
    respond_to do |format| 
-     if params[:commit] == "SAVE"
-     
-       # @position.company_id = params[:company_id]
+     # if params[:commit] == "SAVE"
+#      
+       # # @position.company_id = params[:company_id]
           if @position.errors.length == 0
              @positionskillset.positions_id = @position.id
              @positionskillset.skillsets_id = @position.skillset_ids
@@ -73,41 +73,46 @@ class PositionsController < ApplicationController
              @position.status = 'Open'
              @position.city = @city
              @position.save
-          
-         
+#           
+#          
             flash[:notice] = "Position #{@position.title} was created successfully."
-         
+#          
             format.html { redirect_to(@position) }
-            
+#             
          else
             format.html { render :action => "new" }
             format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
          end
-      
-    else if params[:commit] == "SAVE&PUBLISH"
-           flash[:notice] = "Publish"
-          format.html { redirect_to("/publish")}
+#       
+    # else if params[:commit] == "SAVE&PUBLISH"
+           # flash[:notice] = "Publish"
+          # format.html { redirect_to("/publish")}
         end
-       
-      end 
+#        
+      # end 
   end
 
   # PUT /positions/1
   # PUT /positions/1.xml
   def update
+    puts "@@@@@@@@@@@"
+    puts params
     load_data
     @position = Position.find(params[:id])
 
     respond_to do |format|
-      if @position.update_attributes(params[:position])
+    
+        if @position.update_attributes(params[:position])
         
-         flash[:notice] = "Position #{@position.title} was updated successfully."
-        format.html { redirect_to(@position)}
-      else
+      
+        flash[:notice] = "Position #{@position.title} was updated successfully."
+          format.html { redirect_to @position}
+        else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
       end
     end
+   
   end
 
   # DELETE /positions/1
@@ -123,18 +128,17 @@ class PositionsController < ApplicationController
   end
 end
 
-  end
   
   def publish
      #@position = Position.find(params[:id])
      #flash[:notice] = "Position #{@position.title} was updated successfully."
      @data = params[:publish_all]
      @data1 = params[:publish_agency]
-       if @data
-         flash[:notice] = "Public to all"
+        if @data
+          flash[:notice] = "Public to all"
        else if @data1
-         flash[:notice] = "Public to agency"
-         end
+          flash[:notice] = "Public to agency"
+          end
       end  
    end
    

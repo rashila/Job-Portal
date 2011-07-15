@@ -46,7 +46,7 @@
  <tr>
   <div class="field">
   <td><%= f.label :salary_range %></td>
-   <td><%= f.text_field :salary_range %></td>
+   <td><%= select_tag "position[salary_range]",options_for_select(["10,000-30,000","40,000-70,000","75,000-100,000"])%></td>
   </div>
 </tr>
  <tr>
@@ -66,8 +66,7 @@
 </table>	
   <div class="actions">
   	<table>
-   <th> <%= f.submit :UPDATE %></th>
-   <th> <%= f.submit :PUBLISH %></th>
+  <th><%= f.submit :UPDATE %></th>
 	</table>
   </div>
 <% end %>
@@ -80,5 +79,4 @@
 
 </script>
 
-<%= link_to 'Show', @position %> |
-<%= link_to 'Back', positions_path %>
+

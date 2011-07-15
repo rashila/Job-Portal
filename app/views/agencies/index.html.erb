@@ -1,5 +1,7 @@
 <h1>Listing agencies</h1>
-
+<%if @agencies.empty?%>
+<p>Agencies not listed</p>
+<%else%>
 <table class="gridtable">
   <tr>
     <th>Agency Name</th>
@@ -10,9 +12,9 @@
 	<th>Agency Email</th>
 	<th>Contact number</th>
     <th>Agency Profile</th>
-    <th></th>
-    <th></th>
+   
   </tr>
+<%end%>
 
 <% @agencies.each do |agency| %>
   <tr>

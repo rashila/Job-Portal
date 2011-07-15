@@ -89,7 +89,7 @@ class CompaniesController < ApplicationController
     end
     respond_to do |format|
       if contactinfo_success == 1 and company_success == 1
-        format.html { redirect_to(@company) }
+        format.html { redirect_to("/companies/"+@company.id.to_s+"/welcome") }
         flash[:notice] = "Company #{@company.name} was successfully updated." 
         format.xml  { head :ok }
       else

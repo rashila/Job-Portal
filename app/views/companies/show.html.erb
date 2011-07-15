@@ -1,4 +1,9 @@
+<br>
+<%= link_to 'Edit', edit_company_path(@company) %> 
+
+
 <div class="content_pane">
+
 <h3><%=@company.name%></h3>
 
 		<div class="label"><b>Name:</b></div>
@@ -23,5 +28,3 @@
 		<div class="label"> <b>Contact Number:</b></div>
 		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).contact_number if @company.contactinfos_id %></div><br clear="all" />
 <br>
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', "/companies/"+@company.id.to_s+"/welcome" %>

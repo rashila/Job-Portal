@@ -1,5 +1,7 @@
 <h1>Listing companies</h1>
-
+<%if @companies.empty?%>
+<p>Companies not listed</p>
+<%else%>
 <table class="gridtable">
   <tr>
     <th>Company Name</th>
@@ -10,10 +12,9 @@
 	<th>Company Email</th>
 	<th>Contact number</th>
     <th>Company Profile</th>
-    <th></th>
-    <th></th>
+    
   </tr>
-
+<%end%>
 <% @companies.each do |company| %>
   <tr>
     <td><%= link_to company.name,"/companies/"+company.id.to_s+"/show" %></td>

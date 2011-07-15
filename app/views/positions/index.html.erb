@@ -1,5 +1,7 @@
 <h1>Listing positions</h1>
-
+<%if @positions.empty?%>
+<p>Positions not listed for this company</p>
+<%else%>
 <table class="gridtable">
   <tr>
     <th>Title</th> 
@@ -9,6 +11,7 @@
     
     
   </tr>
+<%end%>
 
 <% @positions.each do |position|%>
   <tr>
