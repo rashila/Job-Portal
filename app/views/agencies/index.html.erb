@@ -25,7 +25,7 @@
 
 		<% @agencies.each do |agency| %>
 		<tr>
-			<td><%= link_to agency.name,"/agenciess/"+agency.id.to_s+"/show" %></td>
+			<td><%= link_to agency.name,"/agencies/"+agency.id.to_s %></td>
 			<td><%= agency.established_date %></td>
 			<td><%= Contactinfo.find(agency.contactinfos_id).address if agency.contactinfos_id%></td>
 			<td><%= State.find(Contactinfo.find(agency.contactinfos_id).state).name%></td>

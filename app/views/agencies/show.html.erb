@@ -1,36 +1,68 @@
-<br>
-<table>
-
-<th><%= link_to 'Company List',"/companies"%></th>
-
-<th><%= link_to 'Edit your profile',"/agencies/"+@agency.id.to_s+"/edit"%></th>
-</table>
 <div class="content_pane">
-<h3><%=@agency.name%></h3>
+	<%if current_user.user_type == "Candidate" %>
+	<br clear="all" />
+	<%= render "candidates/menu" %>
+	<% end %>
+	<%= link_to 'Edit your profile',edit_agency_path(@agency) if @agency.user_id == current_user.id %>
+	<h4><%=@agency.name%></h4>
+	<table class="gridtable">
+	<tr>
+		<td>
+			<b>Name:</b>
+		</td>
+		<td><%= @agency.name %></td>
+	</tr>
+	<tr>
+		<td>
+			<b>Established date:</b>
+		</td>
+		<td><%= @agency.established_date %></td>
+	</tr>
+	<tr>
+		<td>
+			<b>Website:</b>
+		</td>
+		<td><%= @agency.website %></td>
+	</tr>
+	<tr>
+		<td>
+			<b>Description:</b>
+		</td>
+		<td><%= @agency.description %></td>
+	</tr>
+	<tr>
+		<td>
+			<b>Address:</b>
+		</td>
+		<td><%= Contactinfo.find(@agency.contactinfos_id).address if @agency.contactinfos_id %></td>
+	</tr>
+	<tr>
+		<td>
+			<b>State:</b>
+		</td>
+		<td><%= State.find(Contactinfo.find(@agency.contactinfos_id).state).name%></td>
+	</tr>
+	<tr>
+		<td>
+			<b>Email:</b>
+		</td>
+		<td><%= Contactinfo.find(@agency.contactinfos_id).email if @agency.contactinfos_id %></td>
+	</tr>
+	<tr>
+		<td>
+			<b>Alternate Email:</b>
+		</td>
+		<td><%= Contactinfo.find(@agency.contactinfos_id).alternate_email if @agency.contactinfos_id %></td>
+	</tr>
+	<tr>
+		<td>
+			<b>Contact Number:</b>
+		</td>
+		<td><%= Contactinfo.find(@agency.contactinfos_id).contact_number if @agency.contactinfos_id %></td>
+	</tr>
+</table>
+</div>
 
-		<div class="label"><b>Name:</b></div>
-		<div class="value"><%= @agency.name %></div><br clear="all" />
-		<div class="label"><b>Established date:</b></div>
-		<div class="value"><%= @agency.established_date %></div><br clear="all" />
-
-		<div class="label"><b>Website:</b></div>
-		<div class="value"><%= @agency.website %></div><br clear="all" />
-
-		<div class="label"><b>Description:</b></div>
-		<div class="value"><%= @agency.description %></div><br clear="all" />
-		<div class="label"><b>Address:</b></div>
-		<div class="value"><%= Contactinfo.find(@agency.contactinfos_id).address if @agency.contactinfos_id %></div><br clear="all" />
-        <div class="label"><b>State:</b></div>
-		<div class="value"><%= State.find(Contactinfo.find(@agency.contactinfos_id).state).name%></div><br clear="all" />
-
-		<div class="label"> <b>Email:</b></div>
-		<div class="value"><%= Contactinfo.find(@agency.contactinfos_id).email if @agency.contactinfos_id %></div><br clear="all" />
-		<div class="label"> <b>Alternate Email:</b></div>
-		<div class="value"><%= Contactinfo.find(@agency.contactinfos_id).alternate_email if @agency.contactinfos_id %></div><br clear="all" />
-		<div class="label"> <b>Contact Number:</b></div>
-		<div class="value"><%= Contactinfo.find(@agency.contactinfos_id).contact_number if @agency.contactinfos_id %></div><br clear="all" />
-<br>
 
 
-<%= link_to 'Edit', edit_agency_path(@agency) %> 
 <!--%= link_to 'Back', agencies_path %-->
