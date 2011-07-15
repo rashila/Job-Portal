@@ -1,30 +1,62 @@
-<br>
-<%= link_to 'Edit', edit_company_path(@company) %> 
-
-
 <div class="content_pane">
+	<%if current_user.user_type == "Candidate" %>
+	<br clear="all" />
+	<%= render "candidates/menu" %>
+	<% end %>
+	<%= link_to 'Edit', edit_company_path(@company) if @company.user_id == current_user.id %>
 
-<h3><%=@company.name%></h3>
-
-		<div class="label"><b>Name:</b></div>
-		<div class="value"><%= @company.name %></div><br clear="all" />
-		<div class="label"><b>Established date:</b></div>
-		<div class="value"><%= @company.established_date %></div><br clear="all" />
-
-		<div class="label"><b>Website:</b></div>
-		<div class="value"><%= @company.website %></div><br clear="all" />
-
-		<div class="label"><b>Description:</b></div>
-		<div class="value"><%= @company.description %></div><br clear="all" />
-		<div class="label"><b>Address:</b></div>
-		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).address if @company.contactinfos_id %></div><br clear="all" />
-        <div class="label"><b>State:</b></div>
-		<div class="value"><%= State.find(Contactinfo.find(@company.contactinfos_id).state).name%></div><br clear="all" />
-
-		<div class="label"> <b>Email:</b></div>
-		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).email if @company.contactinfos_id %></div><br clear="all" />
-		<div class="label"> <b>Alternate Email:</b></div>
-		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).alternate_email if @company.contactinfos_id %></div><br clear="all" />
-		<div class="label"> <b>Contact Number:</b></div>
-		<div class="value"><%= Contactinfo.find(@company.contactinfos_id).contact_number if @company.contactinfos_id %></div><br clear="all" />
-<br>
+	<h4><%= @company.name%></h4>
+	<table class="gridtable">
+		<tr>
+			<td>
+			<b>Name:</b>
+			</td>
+			<td><%= @company.name %></td>
+		</tr>
+		<tr>
+			<td>
+			<b>Established date:</b>
+			</td>
+			<td><%= @company.established_date %></td>
+		</tr>
+		<tr>
+			<td><b>Website:</b></td>
+			<td><%= @company.website %></td>
+		</tr>
+		<tr>
+			<td>
+			<b>Description:</b>
+			</td>
+			<td><%= @company.description %></td>
+		</tr>
+		<tr>
+			<td>
+			<b>Address:</b>
+			</td>
+			<td><%= Contactinfo.find(@company.contactinfos_id).address if @company.contactinfos_id %></td>
+		</tr>
+		<tr>
+			<td>
+			<b>State:</b>
+			</td>
+			<td><%= State.find(Contactinfo.find(@company.contactinfos_id).state).name%></td>
+		</tr>
+		<tr>
+			<td>
+			<b>Email:</b>
+			</td>
+			<td><%= Contactinfo.find(@company.contactinfos_id).email if @company.contactinfos_id %></td>
+		</tr>
+		<tr>
+			<td>
+			<b>Alternate Email:</b>
+			</td>
+			<td><%= Contactinfo.find(@company.contactinfos_id).alternate_email if @company.contactinfos_id %></td>
+		</tr>
+		<tr>
+			<td>
+			<b>Contact Number:</b>
+			</td>
+			<td><%= Contactinfo.find(@company.contactinfos_id).contact_number if @company.contactinfos_id %></td>
+		</tr>
+	</table>

@@ -1,38 +1,44 @@
-<h1>Listing agencies</h1>
-<%if @agencies.empty?%>
-<p>Agencies not listed</p>
-<%else%>
-<table class="gridtable">
-  <tr>
-    <th>Agency Name</th>
-    <th>Established date</th>
-	<th>Agency Address</th> 
-    <th>State</th>
-    <th>Website</th>
-	<th>Agency Email</th>
-	<th>Contact number</th>
-    <th>Agency Profile</th>
-   
-  </tr>
-<%end%>
+<div class="content_pane">
+	<%if current_user.user_type == "Candidate" %>
+	<br clear="all" />
+	<%= render "candidates/menu" %>
+	<% end %>
+	<h4>Listing agencies</h4>
+	<%if @agencies.empty?%>
+	<p>
+		Agencies not listed
+	</p>
+	<%else%>
+	<table class="gridtable">
+		<tr>
+			<th>Agency Name</th>
+			<th>Established date</th>
+			<th>Agency Address</th>
+			<th>State</th>
+			<th>Website</th>
+			<th>Agency Email</th>
+			<th>Contact number</th>
+			<th>Agency Profile</th>
 
-<% @agencies.each do |agency| %>
-  <tr>
-    <td><%= link_to agency.name,"/agenciess/"+agency.id.to_s+"/show" %></td>
-    <td><%= agency.established_date %></td> 
-	<td><%= Contactinfo.find(agency.contactinfos_id).address if agency.contactinfos_id%></td>
-    <td><%= State.find(Contactinfo.find(agency.contactinfos_id).state).name%></td>
-    <td><%= agency.website %></td>
-	<td><%= Contactinfo.find(agency.contactinfos_id).email if agency.contactinfos_id%></td>
-	<td><%= Contactinfo.find(agency.contactinfos_id).contact_number if agency.contactinfos_id%></td>
-    <td><%= agency.description %></td>
-    <!--td><%= link_to 'Show', agency %></td>
-    <td><%= link_to 'Edit', edit_agency_path(agency) %></td>
-    <td><%= link_to 'Destroy', "/destroy_agencies?id="+agency.id.to_s+"", :confirm => 'Are you sure?', :method => :delete %></td-->
-  </tr>
-<% end %>
-</table>
+		</tr>
+		<%end%>
 
+		<% @agencies.each do |agency| %>
+		<tr>
+			<td><%= link_to agency.name,"/agenciess/"+agency.id.to_s+"/show" %></td>
+			<td><%= agency.established_date %></td>
+			<td><%= Contactinfo.find(agency.contactinfos_id).address if agency.contactinfos_id%></td>
+			<td><%= State.find(Contactinfo.find(agency.contactinfos_id).state).name%></td>
+			<td><%= agency.website %></td>
+			<td><%= Contactinfo.find(agency.contactinfos_id).email if agency.contactinfos_id%></td>
+			<td><%= Contactinfo.find(agency.contactinfos_id).contact_number if agency.contactinfos_id%></td>
+			<td><%= agency.description %></td>
+			<!--td><%= link_to 'Show', agency %></td>
+			<td><%= link_to 'Edit', edit_agency_path(agency) %></td>
+			<td><%= link_to 'Destroy', "/destroy_agencies?id="+agency.id.to_s+"", :confirm => 'Are you sure?', :method => :delete %></td-->
+		</tr>
+		<% end %>
+	</table>
+</div>
 <br />
-
 

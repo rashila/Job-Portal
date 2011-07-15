@@ -7,6 +7,7 @@ class CandidatesController < ApplicationController
     @positions = Position.find(:all)
      @skillsets = Skillset.all
   end
+  
   # GET /candidates
   # GET /candidates.xml
   def index

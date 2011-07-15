@@ -1,36 +1,42 @@
-<h1>Listing companies</h1>
-<%if @companies.empty?%>
-<p>Companies not listed</p>
-<%else%>
-<table class="gridtable">
-  <tr>
-    <th>Company Name</th>
-    <th>Established date</th>
-	<th>Company Address</th> 
-    <th>State</th>
-    <th>Website</th>
-	<th>Company Email</th>
-	<th>Contact number</th>
-    <th>Company Profile</th>
-    
-  </tr>
-<%end%>
-<% @companies.each do |company| %>
-  <tr>
-    <td><%= link_to company.name,"/companies/"+company.id.to_s+"/show" %></td>
-    <td><%= company.established_date %></td> 
-	<td><%= Contactinfo.find(company.contactinfos_id).address if company.contactinfos_id%></td>
-    <td><%= State.find(Contactinfo.find(company.contactinfos_id).state).name%></td>
-    <td><%= company.website %></td>
-	<td><%= Contactinfo.find(company.contactinfos_id).email if company.contactinfos_id%></td>
-	<td><%= Contactinfo.find(company.contactinfos_id).contact_number if company.contactinfos_id%></td>
-    <td><%= company.description %></td>
-    <!--td><%= link_to 'Edit', edit_company_path(company) %></td>
-    <td><%= link_to 'Destroy', "/destroy_companies?id="+company.id.to_s+"", :confirm => 'Are you sure?', :method => :delete %></td-->
-  </tr>
-<% end %>
-</table>
+<div class="content_pane">
+	<%if current_user.user_type == "Candidate" %>
+	<br clear="all" />
+	<%= render "candidates/menu" %>
+	<% end %>
+	<h4>Listing companies</h4>
+	<%if @companies.empty?%>
+	<p>
+		Companies not listed
+	</p>
+	<%else%>
+	<table class="gridtable">
+		<tr>
+			<th>Company Name</th>
+			<th>Established date</th>
+			<th>Company Address</th>
+			<th>State</th>
+			<th>Website</th>
+			<th>Company Email</th>
+			<th>Contact number</th>
+			<th>Company Profile</th>
 
+		</tr>
+		<%end%>
+		<% @companies.each do |company| %>
+		<tr>
+			<td><%= link_to company.name,"/companies/"+company.id.to_s+"/show" %></td>
+			<td><%= company.established_date %></td>
+			<td><%= Contactinfo.find(company.contactinfos_id).address if company.contactinfos_id%></td>
+			<td><%= State.find(Contactinfo.find(company.contactinfos_id).state).name%></td>
+			<td><%= company.website %></td>
+			<td><%= Contactinfo.find(company.contactinfos_id).email if company.contactinfos_id%></td>
+			<td><%= Contactinfo.find(company.contactinfos_id).contact_number if company.contactinfos_id%></td>
+			<td><%= company.description %></td>
+			<!--td><%= link_to 'Edit', edit_company_path(company) %></td>
+			<td><%= link_to 'Destroy', "/destroy_companies?id="+company.id.to_s+"", :confirm => 'Are you sure?', :method => :delete %></td-->
+		</tr>
+		<% end %>
+	</table>
+</div>
 <br />
-
 

@@ -1,6 +1,7 @@
 class CompaniesController < ApplicationController
   
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :load_user
+  
   
   def welcome
     @company = Company.find(params[:id])
@@ -197,5 +198,11 @@ class CompaniesController < ApplicationController
     @skillsets = Skillset.find(:all)
     @states = State.all
     @cities = City.all
+  end
+  
+  def load_user
+    if current_user.user_type == "Candidate"
+      @candidate = Candidate.find(:first)
+    end
   end
 end

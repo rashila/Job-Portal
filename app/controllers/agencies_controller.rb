@@ -1,6 +1,8 @@
 class AgenciesController < ApplicationController
   # GET /agencies
   # GET /agencies.xml
+  before_filter :authenticate_user!, :load_user
+  
   def welcome
     @agency = Agency.find(params[:id])
   end
@@ -120,5 +122,11 @@ class AgenciesController < ApplicationController
   def load_data
     @states = State.all
     @cities = City.all
+  end
+  
+  def load_user
+    if current_user.user_type == "Candidate"
+      @candidate = Candidate.find(:first)
+    end
   end
 end
