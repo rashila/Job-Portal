@@ -8,6 +8,7 @@
 <%= check_box_tag(:publish_agency) %>
 <%= label_tag(:publish_agency, "Publish to Agencies") %>
 <br>
+
 <%= select_tag 'position[agency_ids][]',
 options_from_collection_for_select(@agencies, :id, :name, @position.agencies.collect{|agency| agency.id}),
 { :multiple => true}
@@ -15,4 +16,20 @@ options_from_collection_for_select(@agencies, :id, :name, @position.agencies.col
 
 <%= submit_tag "PUBLISH"%>
 <% end %>
+<br>
+<%if @data1%>
+<table border="1">
+<tr>
+<td><b>Position title</b></td>
+<td><%=@position.title%></td>
+</tr>
+<tr>
+<td><b>Agencies</b></td>
+<td>
+<%= @position.agencies.collect{|agency| agency.name }.join(', ') %></td></tr>
+</table>
+<%end%>
+<br>
+
+<%= link_to 'Back',"/companies/"+@position.company_id.to_s+"/welcome"%>
 
