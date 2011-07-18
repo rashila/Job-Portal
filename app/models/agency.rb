@@ -9,6 +9,7 @@ class Agency
   
   has_many :contactinfos
   belongs_to :user
+  has_and_belongs_to_many  :positions
   validates_presence_of :name,:established_date,:website,:description
   validates_date :established_date, :on_or_before => :today
 end

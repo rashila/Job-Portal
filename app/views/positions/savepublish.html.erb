@@ -1,0 +1,18 @@
+
+  
+<h1>Publish Position </h1>
+
+<%= form_tag('/savepublish?id='+params[:id].to_s) do%>
+<%= check_box_tag(:publish_all) %>
+<%= label_tag(:publish_all, "Public to All") %>
+<%= check_box_tag(:publish_agency) %>
+<%= label_tag(:publish_agency, "Publish to Agencies") %>
+<br>
+<%= select_tag 'position[agency_ids][]',
+options_from_collection_for_select(@agencies, :id, :name, @position.agencies.collect{|agency| agency.id}),
+{ :multiple => true}
+%>
+
+<%= submit_tag "PUBLISH"%>
+<% end %>
+

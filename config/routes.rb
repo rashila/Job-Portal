@@ -1,7 +1,6 @@
 JobPortal::Application.routes.draw do
-  
   devise_for :users
-  
+
   resources :skillsets
   resources :states
   resources :cities
@@ -20,7 +19,7 @@ JobPortal::Application.routes.draw do
     resources :emails
   end
   #resources :companies do
-    resources :positions
+   resources :positions
   #end
 
   #positions
@@ -29,7 +28,9 @@ JobPortal::Application.routes.draw do
   match "/positions/:company_id/index" => "positions#index"
   match "/create_position" => 'positions#create'
   match "/destroy_positions" => 'positions#destroy'
-  match "/publish" => 'positions#publish'
+  match "/positions/:id/edit" => 'positions#edit'
+  match "/savepublish" => 'positions#savepublish'
+  #match "/publish" => 'position#publish'
   
   
   #candidates

@@ -37,8 +37,7 @@
 <%= text_field_tag :search2, params[:search2] %>
 <%= submit_tag "Search"%> -->
 
-<% if @search.total > 0 %>
-
+<% if @search and @search.total > 0 %>  
 <% @search.each_hit_with_result do |hit, post| %>
 
 <table class="gridtable">
@@ -68,12 +67,10 @@
 </table>
 <div class="table_padding"></div>
 <% end %>
-
 </dl>
 <%else%>
-<p>
-	Record not found
-</p>
+<p>Record not found</p>
 <% end %>
-</div>
+
+
 

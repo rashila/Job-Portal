@@ -11,7 +11,8 @@ class Position
   field :title, :type => String
   field :description, :type => String
   field :status, :type => String
-  field :published_status, :type => String
+  field :public_status, :type => String
+  field :agency_status, :type => String
   field :city, :type => String
   field :date_published, :type => Date, :null =>false
   field :last_date, :type => Date, :null =>false
@@ -29,6 +30,7 @@ class Position
   belongs_to :candidate
   has_and_belongs_to_many  :skillsets
   has_and_belongs_to_many  :cities
+  has_and_belongs_to_many  :agencies
   
     
  searchable :auto_index => false, :auto_remove => false do
@@ -40,7 +42,6 @@ class Position
       text :city 
       
       string :status
-      string :city
       string :title, :stored => true
     end      
 

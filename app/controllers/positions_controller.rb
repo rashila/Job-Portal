@@ -9,8 +9,6 @@ class PositionsController < ApplicationController
     @company = Company.find(params[:company_id])
     @positions = @company.positions
     #@positions = Position.order(params[:sort] + ' ' + params[:direction])if (params[:sort] && params[:direction])
-
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @positions }
@@ -21,8 +19,6 @@ class PositionsController < ApplicationController
   # GET /positions/1.xml
   def show
     @position = Position.find(params[:id])
-   # @company = Company.find(params[:id])
-    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @position }
@@ -37,6 +33,7 @@ class PositionsController < ApplicationController
     @city = Contactinfo.find(@company.contactinfos_id).city
     @position = Position.new
     @positionskillset = Positionskillset.new
+    @positionagency = PositionsAgencies.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @position }
@@ -53,66 +50,46 @@ class PositionsController < ApplicationController
   # POST /positions.xml
   def create
     load_data
-    puts params
     @position  = Position.new(params[:position])
     @company = Company.find(params[:position][:company_id]) if params[:position][:company_id]
     @city = Contactinfo.find(@company.contactinfos_id).city
-#    
     @positionskillset = Positionskillset.new(params[:positionskillset])
-    @position.valid?
-#    
-   respond_to do |format| 
-     # if params[:commit] == "SAVE"
-#      
-       # # @position.company_id = params[:company_id]
-          if @position.errors.length == 0
-             @positionskillset.positions_id = @position.id
-             @positionskillset.skillsets_id = @position.skillset_ids
-             @positionskillset.save
-             @position.positionskillsets_id = @positionskillset.id
-             @position.status = 'Open'
-             @position.city = @city
-             @position.save
-#           
-#          
-            flash[:notice] = "Position #{@position.title} was created successfully."
-#          
-            format.html { redirect_to(@position) }
-#             
-         else
-            format.html { render :action => "new" }
-            format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
-         end
-#       
-    # else if params[:commit] == "SAVE&PUBLISH"
-           # flash[:notice] = "Publish"
-          # format.html { redirect_to("/publish")}
-        end
-#        
-      # end 
+  
+    if @position.errors.length == 0
+      @positionskillset.positions_id = @position.id
+      @positionskillset.skillsets_id = @position.skillset_ids
+      @positionskillset.save
+      @position.positionskillsets_id = @positionskillset.id
+      @position.status = 'Open'
+      @position.city = @city
+      @position.save 
+      if params[:commit] == "SAVE"
+        flash[:notice] = "Position #{@position.title} was created successfully."
+        redirect_to(@position)
+      elsif params[:commit] == "SAVEPUBLISH"
+        flash[:notice] = "Position #{@position.title} was created successfully."
+        redirect_to("/savepublish?id=#{@position.id}")
+      end  
+    else
+      render :action => "new"
+    end
   end
 
   # PUT /positions/1
   # PUT /positions/1.xml
   def update
-    puts "@@@@@@@@@@@"
-    puts params
     load_data
     @position = Position.find(params[:id])
 
     respond_to do |format|
-    
-        if @position.update_attributes(params[:position])
-        
-      
+      if @position.update_attributes(params[:position])
         flash[:notice] = "Position #{@position.title} was updated successfully."
-          format.html { redirect_to @position}
-        else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
+        format.html { redirect_to @position}
+      else
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
       end
     end
-   
   end
 
   # DELETE /positions/1
@@ -124,29 +101,48 @@ class PositionsController < ApplicationController
     @positionskillset.destroy
     respond_to do |format|
       format.html { redirect_to("/positions/#{params[:company_id]}/index") }
-      format.xml  { head :ok }
+    end
   end
-end
 
   
-  def publish
-     #@position = Position.find(params[:id])
-     #flash[:notice] = "Position #{@position.title} was updated successfully."
-     @data = params[:publish_all]
-     @data1 = params[:publish_agency]
-        if @data
-          flash[:notice] = "Public to all"
-       else if @data1
-          flash[:notice] = "Public to agency"
-          end
-      end  
-   end
-   
-  
-  
+  def savepublish
+    puts "..........Entered......"
+    puts params.inspect
+    puts ".............End......."
+    @position = Position.find(params[:id])
+    @agencies = Agency.all
+    @positionagency = PositionsAgencies.new(params[:positionagency])
+    
+    @data = params[:publish_all]
+    @data1 = params[:publish_agency]
+    if @data
+      @position.public_status = "Public"
+      @position.agency_status = ""
+      @position.update_attributes(params[:position])
+      flash[:notice] = "Public to all"
+    elsif @data1
+      @positionagency.positions_id = @position.id
+      @positionagency.agencies_id = @position.agency_ids
+      @positionagency.save
+      @position.public_status = ""
+      @position.agency_status = "Agency"
+      @position.update_attributes(params[:position])
+      flash[:notice] = "Public to agency"
+    elsif (@data && @data1)
+     
+      @positionagency.positions_id = @position.id
+      @positionagency.agencies_id = @position.agency_ids
+      @positionagency.save
+      @position.public_status = "Public"
+      @position.agency_status = "Agency"
+      @position.update_attributes(params[:position])
+      flash[:notice] = "Public to all and agencies"
+    end 
+  end   
+ 
   private
-def load_data
+  def load_data
     @skillsets = Skillset.all
-end
+  end
 
 end
