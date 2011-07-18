@@ -116,16 +116,14 @@ class PositionsController < ApplicationController
     @data = params[:publish_all]
     @data1 = params[:publish_agency]
     if @data
-      @position.public_status = "Public"
-      @position.agency_status = ""
+      @position.published_status = "Public"
       @position.update_attributes(params[:position])
       flash[:notice] = "Public to all"
     elsif @data1
       @positionagency.positions_id = @position.id
       @positionagency.agencies_id = @position.agency_ids
       @positionagency.save
-      @position.public_status = ""
-      @position.agency_status = "Agency"
+      @position.published_status = "Agency"
       @position.update_attributes(params[:position])
       flash[:notice] = "Public to agency"
     elsif (@data && @data1)
@@ -133,8 +131,7 @@ class PositionsController < ApplicationController
       @positionagency.positions_id = @position.id
       @positionagency.agencies_id = @position.agency_ids
       @positionagency.save
-      @position.public_status = "Public"
-      @position.agency_status = "Agency"
+      @position.published_status = "Both"
       @position.update_attributes(params[:position])
       flash[:notice] = "Public to all and agencies"
     end 

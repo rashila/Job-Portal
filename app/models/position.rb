@@ -11,8 +11,7 @@ class Position
   field :title, :type => String
   field :description, :type => String
   field :status, :type => String
-  field :public_status, :type => String
-  field :agency_status, :type => String
+  field :published_status, :type => String
   field :city, :type => String
   field :date_published, :type => Date, :null =>false
   field :last_date, :type => Date, :null =>false
