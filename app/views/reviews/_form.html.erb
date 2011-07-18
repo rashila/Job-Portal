@@ -1,0 +1,9 @@
+  <h4>Enter your review</h4>
+  <% form_for @review,:html => {:class => "ajaxForm"} do |f| -%>
+      <%= f.text_area :name %>
+      <div class="buttons">
+          <%= link_to 'Cancel',reviews_path() %>
+          <%= f.submit("Add my review") %>
+      </div>
+  <% end %>
+

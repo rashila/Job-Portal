@@ -1,0 +1,9 @@
+//We hide the message saying no review if present
+$('.reviews h3').hide();
+//Hide the review form
+$('.newReview').html('<%= escape_javascript("#{new_review_link()}").html_safe %>');
+//Display the new review
+$('.reviews').append('<%= escape_javascript("#{render :partial => @review}").html_safe  %>');
+//Ajaxify the new links
+ajaxLinks();
+
