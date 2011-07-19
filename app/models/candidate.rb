@@ -14,8 +14,8 @@ class Candidate
   field :user_id, :type => String
   field :candidateskills_id, :type => String
   field :PHD,:type => String
-  field :Mtech,:type => String
-  field :Btech,:type => String
+  field :PG,:type => String
+  field :Graduation,:type => String
   validates_presence_of :first_name,:last_name,:qualification,:date_of_birth,:experience,:expected_salary
   validates_date :date_of_birth, :before => lambda { 18.years.ago },
                                  :before_message => "must be at least 18 years old"

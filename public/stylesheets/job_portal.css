@@ -92,5 +92,12 @@ table.gridtable td {
   	text-align: right;
   	padding-right: 20px;
 }
+.checkbox_tag {
+	width: 15px;
+	float: left;
+}
+hr {
+	color: #FFFFFF;
+}
 
 

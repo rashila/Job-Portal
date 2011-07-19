@@ -1,10 +1,10 @@
 class EmailSettingsController < ApplicationController
-
   # GET /email_settings
   # GET /email_settings.xml
   def index
     @company = Company.find(params[:company_id])
     @email_settings = @company.email_settings
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @email_settings }
@@ -25,13 +25,11 @@ class EmailSettingsController < ApplicationController
   # GET /email_settings/new
   # GET /email_settings/new.xml
   def new
-    @company = Company.find(params[:company_id])
     @email_setting = EmailSetting.new
-    @email_settings = @company.email_settings
-    if @email_settings
-      @email_settings.each do |email_setting|
-        email_setting.password = email_setting.decrypted_password
-      end
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @email_setting }
     end
   end
 
@@ -45,40 +43,37 @@ class EmailSettingsController < ApplicationController
   # POST /email_settings
   # POST /email_settings.xml
   def create
+    @email_setting = EmailSetting.new(params[:email_setting])
+    password = params[:email_setting][:password]
+    @email_setting.password = @email_setting.encrypted_password(params[:email_setting][:password]) if params[:email_setting][:password].length > 0
     @company = Company.find(params[:company_id])
-    @email_settings = Array.new
-    @email_params = params[:email_settings]
+    @email_setting[:company_id] = @company.id
     respond_to do |format|
-      params[:email_settings].values.each do |email_setting|
-        if params[:commit] == "Save"
-          email_setting[:company_id] = @company.id
-          @email_setting = EmailSetting.new(email_setting)
-          @email_setting.password = @email_setting.encrypted_password(email_setting[:password]) if email_setting[:password].length > 0
-          if @email_setting.save
-            format.html { redirect_to([@company, @email_setting], :notice => 'Email setting was successfully created.') }
-            format.xml  { render :xml => @email_setting, :status => :created, :location => @email_setting }
-          else
-            format.html { render :action => "new" }
-            format.xml  { render :xml => @email_setting.errors, :status => :unprocessable_entity }
-          end
-        end     
+      if @email_setting.save
+        format.html { redirect_to([@company, @email_setting], :notice => 'Email setting was successfully created.') }
+        format.xml  { render :xml => @email_setting, :status => :created, :location => @email_setting }
+      else
+        @email_setting.password = password
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @email_setting.errors, :status => :unprocessable_entity }
       end
     end
   end
-
 
   # PUT /email_settings/1
   # PUT /email_settings/1.xml
   def update
     @email_setting = EmailSetting.find(params[:id])
     @company = Company.find(@email_setting.company_id)
+    password = params[:email_setting][:password]
     params[:email_setting][:password] = @email_setting.encrypted_password(params[:email_setting][:password]) if params[:email_setting][:password].length > 0
-    
     respond_to do |format|
       if @email_setting.update_attributes(params[:email_setting])
+        
         format.html { redirect_to([@company, @email_setting], :notice => 'Email setting was successfully updated.') }
         format.xml  { head :ok }
       else
+        @email_setting.password = password
         format.html { render :action => "edit" }
         format.xml  { render :xml => @email_setting.errors, :status => :unprocessable_entity }
       end
@@ -97,4 +92,6 @@ class EmailSettingsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  
 end

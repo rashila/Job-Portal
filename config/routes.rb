@@ -44,7 +44,10 @@ JobPortal::Application.routes.draw do
      
   #companies
   match "/companies/:id/welcome" => "companies#welcome", :as=> :company_welcome
+  match "/companies/:id/fetch_resumes_settings" => "companies#fetch_resumes_settings", :as => :fetch_resumes_settings
   match "/companies/:id/company_resumes" => "companies#company_resumes", :as => :company_resumes
+  match "/companies/:id/fetch_resumes" => "companies#fetch_resumes"
+  match "/companies/:id/resumes_list" => "companies#resumes_list"
   match '/companies/resume_download/:id/:type/:attached_file_name(.:format)' => 'companies#resume_download', :as => 'resume_download'
   match "/destroy_companies" => 'companies#destroy' 
   match "/companies/:id/show" => 'companies#show'
