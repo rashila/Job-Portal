@@ -30,7 +30,7 @@ JobPortal::Application.routes.draw do
   match "/destroy_positions" => 'positions#destroy'
   match "/positions/:id/edit" => 'positions#edit'
   match "/savepublish" => 'positions#savepublish'
-  #match "/publish" => 'position#publish'
+  match "/updatepublish" => 'positions#updatepublish'
   
   
   #candidates
@@ -41,7 +41,7 @@ JobPortal::Application.routes.draw do
   match '/my_cities_list' => 'candidates#update_cities'
   match "/joblist/search" => 'joblist#search'
   match "/joblist/show" => 'joblist#show'
-     
+  match "/candidates/contactinfo"  => 'candidates#savecontinue'
   #companies
   match "/companies/:id/welcome" => "companies#welcome", :as=> :company_welcome
   match "/companies/:id/fetch_resumes_settings" => "companies#fetch_resumes_settings", :as => :fetch_resumes_settings

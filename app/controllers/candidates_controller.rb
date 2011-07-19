@@ -55,30 +55,26 @@ class CandidatesController < ApplicationController
     load_data
     
     @candidate = Candidate.new(params[:candidate])
-    @contactinfo = Contactinfo.new(params[:contactinfo])
+   
     @candidateskill = Candidateskill.new(params[:candidateskill])
     @candidate.user_id = current_user.id
     @candidate.valid?
-    @contactinfo.valid?
-    respond_to do |format|
-      if @candidate.errors.length == 0 and @contactinfo.errors.length == 0
-        @contactinfo.save(:validate => false)
-        @candidate.contactinfos_id = @contactinfo.id
-        #@state.contactinfos_id = @contactinfo.state_id
-        
+    
+      if @candidate.errors.length == 0 
         @candidateskill.candidates_id = @candidate.id
-        
         @candidateskill.skillsets_id = @candidate.skillset_ids
         @candidateskill.save
         @candidate.candidateskills_id = @candidateskill.id
         @candidate.save(:validate => false)
-        format.html { redirect_to(@candidate) }
-        flash[:notice] = "Candidate #{@candidate.name} was created successfully."
-        format.xml  { render :xml => @candidate, :status => :created, :location => @candidate }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @candidate.errors + @contactinfo.errors, :status => :unprocessable_entity }
-      end
+         if params[:commit] == "SAVE"
+            flash[:notice] = "Candidate #{@candidate.name} was created successfully."
+            redirect_to(@candidate)
+         elsif params[:commit] == "SAVE&CONTINUE"
+         lash[:notice] = "Candidate #{@candidate.name} was created successfully."
+          redirect_to("/candidates/contactinfo?id=#{@candidate.id}")
+        end  
+    else
+      render :action => "new"
     end
   end
 
@@ -164,6 +160,18 @@ class CandidatesController < ApplicationController
        end
          
    end
+   def savecontinue
+      @candidate = Candidate.find(params[:id])
+      @contactinfo = Contactinfo.new(params[:contactinfo])
+      @contactinfo.valid?
+      if @contactinfo.errors.length == 0
+          @contactinfo.save(:validate => false)
+         @candidate.contactinfos_id = @contactinfo.id
+         @candidate.update_attributes(params[:candidate])
+         flash[:notice]= "Contact Information has been saved successfully"
+         redirect_to(@candidate)
+      end
+    end  
   private
 
   def load_data

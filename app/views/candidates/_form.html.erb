@@ -1,7 +1,7 @@
 <%= form_for @candidate  , :html => { :multipart => true } do |f| %>
-<% if @candidate.errors.any? ||  @contactinfo.errors.any? %>
+<% if @candidate.errors.any?%>
 <div id="error_explanation">
-	<h2><%= pluralize(@candidate.errors.count+@contactinfo.errors.count, "error") %> prohibited this candidate from being saved:</h2>
+	<h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
 
 	<ul>
 		<% @candidate.errors.full_messages.each do |msg| %>
@@ -9,11 +9,7 @@
 			<%= msg %>
 		</li>
 		<% end %>
-		<% @contactinfo.errors.full_messages.each do |msg| %>
-		<li>
-			<%= msg %>
-		</li>
-		<% end %>
+		
 	</ul>
 </div>
 <% end %>
@@ -73,7 +69,8 @@
 <br>
 <div class="actions">
 	<label></label>
-	<%= f.submit %>
+	<%= f.submit "SAVE" %>
+    <%= f.submit "SAVE&CONTINUE" %>
 	<br clear="all" />
 </div>
 <%=link_to "Contact Informations","/candidates/contactinfo"%>
