@@ -18,6 +18,7 @@ class Position
   field :salary_range, :type => String
   field :qualification, :type => String
   field :positionskillsets_id, :type => String
+  field :positionagencies_id, :type => String
   field :experience, :type => String , :null => false
   validates_presence_of :title,:description,:salary_range,:qualification,:experience
   #validates_numericality_of :salary_range, :message => "cannot be string/special character"

@@ -33,7 +33,7 @@ class PositionsController < ApplicationController
     @city = Contactinfo.find(@company.contactinfos_id).city
     @position = Position.new
     @positionskillset = Positionskillset.new
-    @positionagency = PositionsAgencies.new
+    @positionagency = Positionagency.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @position }
@@ -54,6 +54,7 @@ class PositionsController < ApplicationController
     @company = Company.find(params[:position][:company_id]) if params[:position][:company_id]
     @city = Contactinfo.find(@company.contactinfos_id).city
     @positionskillset = Positionskillset.new(params[:positionskillset])
+    #@positionagency = Positionagency.new(params[:positionagency])
   
     if @position.errors.length == 0
       @positionskillset.positions_id = @position.id
@@ -62,6 +63,7 @@ class PositionsController < ApplicationController
       @position.positionskillsets_id = @positionskillset.id
       @position.status = 'Open'
       @position.city = @city
+      @position.published_status = "0"
       @position.save 
       if params[:commit] == "SAVE"
         flash[:notice] = "Position #{@position.title} was created successfully."
@@ -78,18 +80,20 @@ class PositionsController < ApplicationController
   # PUT /positions/1
   # PUT /positions/1.xml
   def update
-    load_data
+   load_data
     @position = Position.find(params[:id])
-
-    respond_to do |format|
-      if @position.update_attributes(params[:position])
+     if params[:commit] == "UPDATE"
+         @position.update_attributes(params[:position])
         flash[:notice] = "Position #{@position.title} was updated successfully."
-        format.html { redirect_to @position}
+        redirect_to(@position)
+      elsif params[:commit] == "UPDATEPUBLISH"
+         @position.update_attributes(params[:position])
+        flash[:notice] = "Position #{@position.title} was updated successfully."
+        redirect_to("/updatepublish?id=#{@position.id}")
       else
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
+          render :action => "edit" 
       end
-    end
+    
   end
 
   # DELETE /positions/1
@@ -97,8 +101,16 @@ class PositionsController < ApplicationController
   def destroy
     @position = Position.find(params[:id])
     @positionskillset = Positionskillset.find(@position.positionskillsets_id)
-    @position.destroy
-    @positionskillset.destroy
+   
+    if @position.published_status == "2" || @position.published_status == "3" 
+       @positionagency = Positionagency.find(@position.positionagencies_id)
+      @positionagency.destroy
+      @position.destroy
+      @positionskillset.destroy
+    else
+      @position.destroy
+      @positionskillset.destroy
+    end
     respond_to do |format|
       format.html { redirect_to("/positions/#{params[:company_id]}/index") }
     end
@@ -106,40 +118,79 @@ class PositionsController < ApplicationController
 
   
   def savepublish
-    puts "..........Entered......"
-    puts params.inspect
-    puts ".............End......."
+   
     @position = Position.find(params[:id])
-    @agencies = Agency.all
-    @positionagency = PositionsAgencies.new(params[:positionagency])
-    
+    @agencies = Agency.find(:all)
+    @positionagency = Positionagency.new(params[:positionagency])
     @data = params[:publish_all]
     @data1 = params[:publish_agency]
-    if @data
-      @position.published_status = "Public"
+    if (@data &&  @data1)
+      @positionagency.positions_id = @position.id
+      @positionagency.save
+      @position.positionagencies_id = @positionagency.id
+      @position.published_status = "3"
       @position.update_attributes(params[:position])
+     
+      @positionagency.agencies_id = @position.agency_ids
+      @positionagency.update_attributes(params[:positionagency])
+      redirect_to(@position)
+      flash[:notice] = "Public to all and agencies"
+    elsif @data
+      @position.published_status = "1"
+      @position.update_attributes(params[:position])
+      redirect_to(@position)
       flash[:notice] = "Public to all"
     elsif @data1
       @positionagency.positions_id = @position.id
-      @positionagency.agencies_id = @position.agency_ids
       @positionagency.save
-      @position.published_status = "Agency"
+      @position.positionagencies_id = @positionagency.id
+      @position.published_status = "2"
       @position.update_attributes(params[:position])
-      flash[:notice] = "Public to agency"
-    elsif (@data && @data1)
-     
-      @positionagency.positions_id = @position.id
+      
       @positionagency.agencies_id = @position.agency_ids
-      @positionagency.save
-      @position.published_status = "Both"
-      @position.update_attributes(params[:position])
-      flash[:notice] = "Public to all and agencies"
+      @positionagency.update_attributes(params[:positionagency])
+      redirect_to(@position)
+      flash[:notice] = "Public to agencies"
     end 
   end   
+  
+  def updatepublish
+    @position = Position.find(params[:id])
+    @agencies = Agency.all
+    # #@positionagency = Position.find(@position.positionagencies_id)
+    # @data = params[:publish_all]
+    # @data1 = params[:publish_agency]
+    # # if (@data &&  @data1)
+      # # @positionagency.positions_id = @position.id
+      # # @positionagency.save
+      # # @position.positionagencies_id = @positionagency.id
+      # # @position.published_status = "Both"
+      # # @position.update_attributes(params[:position])
+      # # flash[:notice] = "Public to all and agencies"
+      # # @positionagency.agencies_id = @position.agency_ids
+      # # @positionagency.update_attributes(params[:positionagency])
+    # if @data
+      # @position.published_status = "Public"
+      # @position.update_attributes(params[:position])
+      # flash[:notice] = "Public to all"
+    # elsif @data1
+      # position_agency = Position.find(@position.positionagencies_id)
+      # @positionagency = Positionagency.find(params[:position_agency])
+      # @positionagency.positions_id = @position.id
+      # @positionagency.save
+      # @position.positionagencies_id = @positionagency.id
+      # @position.published_status = "Agency"
+      # @position.update_attributes(params[:position])
+      # flash[:notice] = "Public to agencies"
+      # @positionagency.agencies_id = @position.agency_ids
+      # @positionagency.update_attributes(params[:positionagency])
+    # end 
+  end
  
   private
   def load_data
     @skillsets = Skillset.all
+    
   end
 
 end

@@ -64,6 +64,44 @@
 			<%= @position.experience %>
 		</div>
 		<br clear="all">
+       <div class="label">
+			<b>Published Status:</b>
+		</div>
+        <%if @position.published_status == "0"%>
+		<div class="value">
+			Saved
+		</div>
+        <br clear="all">
+      <%elsif @position.published_status == "1"%>
+		<div class="value">
+			Public to all
+		</div>
+		<br clear="all">
+      <%elsif @position.published_status == "2"%>
+		<div class="value">
+			Public to Agencies
+		</div>
+		<br clear="all">
+       <%elsif @position.published_status == "3"%>
+		<div class="value">
+			Public to all and agencies
+		</div>
+		<br clear="all">
+       <%end%>
+       <div class="label">
+			<b>Agencies:</b>
+		</div>
+        <%if @position.published_status == "0" || @position.published_status == "1"%>
+        <div class="value">
+			N/A
+		</div>
+        <br clear="all">
+        <%else%>
+		<div class="value">
+			<%= @position.agencies.collect{|agency| agency.name }.join(', ')%>
+		</div>
+		<br clear="all">
+         <%end%>
 	</div>
 
 <%= link_to 'Back',"/companies/"+@position.company_id.to_s+"/welcome"%>
