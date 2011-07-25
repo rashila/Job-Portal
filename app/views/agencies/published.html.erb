@@ -1,0 +1,61 @@
+<h1>Published positions</h1>
+
+<%if @positions.empty?%>
+<p>Positions not listed for this agency</p>
+<%else%>
+<table class="gridtable">
+  <tr>
+    <th>Title</th> 
+    <th>Description</th> 
+    <th>Company name</th> 
+    <th>Company Location</th>
+    <th>Last date</th>
+    <th>Skillsets</th>
+    <th>Edit</th>
+   
+    <th>Publish to all</th>
+    <th>Publish via agencies</th>
+    
+    
+  </tr>
+<%end%>
+
+<% @positions.each do |position|%>
+  <tr>
+    <td><%= link_to position.title,"/positions/"+position.id.to_s+"/show" %></td>
+    
+    <td><%= position.description %></td>
+    <td><%= position.company.name %></td>
+    <td><%= Contactinfo.find(position.company.contactinfos_id).city%></td>
+    <td><%= position.last_date%></td>
+    <td><%= position.skillsets.collect{|skillset| skillset.name }.join(', ') %></td>
+    <%if position.published_status == "4"%>
+    <td><%= link_to 'Edit', "/positions/"+position.id.to_s+"/edit"%></td>
+    <%else%>
+    <td></td>
+    <%end%>
+    
+    <%if position.published_status == "2" && position.status == "Open"%>
+    <td><%= link_to 'Publish to all',"/savepublish?id="+position.id.to_s%></td>
+    <%elsif position.published_status == "4" && position.status == "Open"%>
+     <td><%= link_to 'Publish to all',"/savepublish?id="+position.id.to_s%></td>
+    <%else%>
+     <td></td>
+    <%end%>
+    <%if position.published_status == "3" && position.status == "Open"%>
+    <td><%= link_to 'Publish via agencies',"/publish_agency?id="+position.id.to_s%></td>
+    <%elsif position.published_status == "4" && position.status == "Open"%>
+     <td><%= link_to 'Publish via agencies',"/publish_agency?id="+position.id.to_s%></td>
+    <%else%>
+    <td></td>
+    <%end%>
+    
+   
+   
+<%end%>
+  </tr>
+
+</table>
+
+<br />
+

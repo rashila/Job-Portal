@@ -1,0 +1,41 @@
+<br>
+
+<%if @position.status == "Open"%>
+<%if @position.published_status == "1"%>
+<% @flag_all = 1%>
+<%elsif @position.published_status == "2"%>
+<% @flag_agency = 1%>
+<%elsif @position.published_status == "3"%>
+<% @flag_all = 1 && @flag_agency = 1%>
+<%end%>
+  
+<h1>Publish Position </h1>
+
+<%= form_tag('/updatepublish?id='+params[:id].to_s) do%>
+
+<%= check_box_tag(:publish_all,'',false,:checked => @flag_all) %>
+<%= label_tag(:publish_all, "Public to All") %>
+<%= check_box_tag(:publish_agency,'',false,:onclick => "javascript:add();",:checked => @flag_agency)  %>
+<%= label_tag(:publish_agency, "Publish to Agencies") %>
+<br>
+
+<%= select_tag 'position[agency_ids][]',options_from_collection_for_select(@agencies, :id, :name, @position.agencies.collect{|agency| agency.id}),
+{ :multiple => true,:disabled => true}%>
+
+<%= submit_tag "PUBLISH"%>
+<%end%>
+<br>
+<br>
+<script type="text/javascript">function add() {
+
+		if (document.getElementById("publish_agency").checked == true) {
+
+			document.getElementById("position_agency_ids_").disabled = false;
+
+		} else {
+			document.getElementById("position_agency_ids_").disabled = true
+
+		}
+
+	}</script>
+<%end%>

@@ -1,3 +1,6 @@
+
+<%if current_user.user_type == "Company" || current_user.user_type == "Candidate"%>
+<%if @position.status == "Open"%>
 <div class="content_pane">
 <h3><%= @position.title%></h3>
 
@@ -67,26 +70,42 @@
        <div class="label">
 			<b>Published Status:</b>
 		</div>
-        <%if @position.published_status == "0"%>
+        <%if @position.published_status == "0" && @position.status == "Open"%>
 		<div class="value">
 			Saved
 		</div>
         <br clear="all">
-      <%elsif @position.published_status == "1"%>
+      <%elsif @position.published_status == "1" && @position.status == "Open"%>
 		<div class="value">
 			Public to all
 		</div>
 		<br clear="all">
-      <%elsif @position.published_status == "2"%>
+      <%elsif @position.published_status == "2" && @position.status == "Open"%>
 		<div class="value">
 			Public to Agencies
 		</div>
 		<br clear="all">
-       <%elsif @position.published_status == "3"%>
+       <%elsif @position.published_status == "3"&& @position.status == "Open"%>
 		<div class="value">
 			Public to all and agencies
 		</div>
 		<br clear="all">
+       <%elsif @position.published_status == "4"&& @position.status == "Open"%>
+		<div class="value">
+			Saved By Agency
+		</div>
+		<br clear="all">
+    <%elsif @position.status == "Inprogress"%>
+		<div class="value">
+			Publishing In progress
+		</div>
+		<br clear="all">
+  <%elsif @position.status == "Close"%>
+		<div class="value">
+			Publishing closed
+		</div>
+		<br clear="all">
+
        <%end%>
        <div class="label">
 			<b>Agencies:</b>
@@ -105,3 +124,78 @@
 	</div>
 
 <%= link_to 'Back',"/companies/"+@position.company_id.to_s+"/welcome"%>
+<%end%>
+<%elsif current_user.user_type == "Agency" || current_user.user_type == "Candidate"%>
+<%if @position.status == "Open"%>
+<div class="content_pane">
+<h3><%= @position.title%></h3>
+	<div class="label">
+		<b>Position Title:</b>
+	</div>
+	<div class="value">
+		<%= @position.title %>
+	</div>
+	<br clear="all">
+    <div class="label">
+		<b>Company Name:</b>
+	</div>
+	<div class="value">
+		<%= @position.company.name %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Description:</b>
+	</div>
+	<div class="value">
+		<%= @position.description %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Date Published:</b>
+	</div>
+	<div class="value">
+		<%= @position.date_published %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Last Date:</b>
+	</div>
+	<div class="value">
+		<%= @position.last_date %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Salary Range:</b>
+	</div>
+	<div class="value">
+		<%=@position.salary_range %>
+	</div>
+	<br clear="all">
+	<div class="label">
+		<b>Skillsets:</b>
+	</div>
+		<div class="value">
+			<%= @position.skillsets.collect{|skillset| skillset.name }.join(', ') %>
+		</div>
+		<br clear="all">
+		<div class="label">
+			<b>Qualification:</b>
+		</div>
+		<div class="value">
+			<%= @position.qualification %>
+		</div>
+		<br clear="all">
+		<div class="label">
+			<b>Experience:</b>
+		</div>
+		<div class="value">
+			<%= @position.experience %>
+		</div>
+		<br clear="all">
+       
+         
+	</div>
+
+
+<%end%>
+<%end%>

@@ -1,0 +1,26 @@
+
+<br>
+
+<h1>Publish Position </h1>
+<%= form_tag('/publish_agency?id='+params[:id].to_s) do%>
+ <%= check_box_tag(:publish_agency,'',false,:onclick => "javascript:add();")  %>
+<%= label_tag(:publish_agency, "Publish to Agencies") %>
+
+<%= select_tag 'position[agency_ids][]',options_from_collection_for_select(@agencies, :id, :name),
+{ :multiple => true,:disabled =>true}%>
+
+<%= submit_tag "PUBLISH TO AGENCIES"%>
+<% end %>
+<br>
+<script type="text/javascript">function add() {
+
+		if (document.getElementById("publish_agency").checked == true) {
+
+			document.getElementById("position_agency_ids_").disabled = false;
+
+		} else {
+			document.getElementById("position_agency_ids_").disabled = true
+
+		}
+
+	}</script>

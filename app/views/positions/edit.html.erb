@@ -67,6 +67,9 @@
   <div class="actions">
   	<table>
   <th><%= f.submit :UPDATE %></th>
+ <%if current_user.user_type == "Company"%>
+  <th><%= f.submit :UPDATEPUBLISH %></th>
+  <%end%>
 	</table>
   </div>
 <% end %>

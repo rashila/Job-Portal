@@ -1,8 +1,5 @@
 <br>
-<%= link_to 'Back',"/companies/"+@position.company_id.to_s+"/welcome"%>
 
-
-  
 <h1>Publish Position </h1>
 
 <%= form_tag('/savepublish?id='+params[:id].to_s) do%>
@@ -19,25 +16,9 @@
 <%= submit_tag "PUBLISH"%>
 <% end %>
 <br>
-<%if @data1%>
 
-<table border="1">
-	<tr>
-		<td>
-		<b>Position title</b>
-		</td>
-		<td><%= @position.title%></td>
-	</tr>
-	<tr>
-		<td>
-		<b>Agencies</b>
-		</td>
-		<td><%= @position.agencies.collect{|agency| agency.name }.join(', ') %></td>
-	</tr>
-</table>
 
-<%end%>
-<br>
+
 <script type="text/javascript">
 	function add(id) {
 		if(document.getElementById(id).checked){

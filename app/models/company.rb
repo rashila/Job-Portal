@@ -14,7 +14,7 @@ class Company
   validates_presence_of :name,:established_date,:website,:description
   validates_date :established_date, :on_or_before => :today
   belongs_to :user
-  
+  #has_many :agencies
   validates_presence_of :name,:established_date,:website,:description
 
  # validates_format_of :established_date, :with =>/\A[0-9]{2}\/[0-9]{2}\/[0-9]{4}\z/

@@ -116,6 +116,12 @@ class AgenciesController < ApplicationController
     end
   end
 
+  def published
+    @agency = Agency.find(params[:id])
+    @positions = @agency.positions
+  end
+
+
   
   private
 

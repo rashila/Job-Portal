@@ -9,6 +9,7 @@ class Position
   include Sunspot::Mongoid 
  
   field :title, :type => String
+  #field :company, :type => String
   field :description, :type => String
   field :status, :type => String
   field :published_status, :type => String
@@ -30,7 +31,7 @@ class Position
   belongs_to :candidate
   has_and_belongs_to_many  :skillsets
   has_and_belongs_to_many  :cities
-  has_and_belongs_to_many  :agencies
+  references_and_referenced_in_many :agencies
   
     
  searchable :auto_index => false, :auto_remove => false do
@@ -42,6 +43,7 @@ class Position
       text :city 
       
       string :status
+      string :published_status
       string :title, :stored => true
     end      
 

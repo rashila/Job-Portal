@@ -17,25 +17,36 @@
 <%end%>
 
 <% @positions.each do |position|%>
+
+
   <tr>
     <td><%= link_to position.title,"/positions/"+position.id.to_s+"/show" %></td>
     <td><%= position.status %></td>
     <!--td><%= load_address :id => position.company.contactinfos_id %></td-->
     <td><%= Contactinfo.find(position.company.contactinfos_id).city%></td>
     <td><%= position.last_date%></td>
-   
-    <%if position.published_status == "0" || position.published_status == "1" %>
-    <td>No</td>
-    <%else%>
-    <td>Yes</td>
-      <%end%>
+    <%if position.status == "Open"%>
+       <%if position.published_status == "0" || position.published_status == "1" %>
+        <td>No</td>
+        <%else%>
+        <td>Yes</td>
+        <%end%>
+     <%elsif position.status == "Inprogress"%>
+        <td>Processing in progress</td>
+       <%elsif position.status == "Close"%>
+          <td>Position closed</td>
+     <%end%>
     <td><%= link_to 'Edit', "/positions/"+position.id.to_s+"/edit"%></td>
    <td><%= link_to 'Destroy', "/destroy_positions?id="+position.id.to_s+"&company_id="+params[:company_id]+"", :confirm => 'Are you sure?', :method => :delete %></td>
-   <%if position.published_status == "0" %>
-   <td><%= link_to 'Publish',"/savepublish?id="+position.id.to_s%></td>
-   <%else%>
-   <td></td>
+
+ 
+    <%if position.published_status == "0" && position.status == "Open"%>
+    <td><%= link_to 'Publish',"/savepublish?id="+position.id.to_s%></td>
+    <%elsif position.published_status == "4" && position.status == "Open"%>
+    <td><%= link_to 'Publish',"/savepublish?id="+position.id.to_s%></td>
+    
     <%end%>
+
 <%end%>
   </tr>
 
