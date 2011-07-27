@@ -24,7 +24,7 @@
 
 			<td><%= link_to position.company.name,"/companies/"+position.company.id.to_s+"/show"%></td>
 
-			<td><%= position.city%></td>
+			<td><%= Contactinfo.find(position.company.contactinfos_id).city%></td>
 
 			<td><%= position.experience%></td>
 

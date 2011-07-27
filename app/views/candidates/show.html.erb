@@ -16,13 +16,33 @@
 		<%= @candidate.last_name %>
 	</div>
 	<br clear="all">
-	<div class="label">
-		<b>Qualification:</b>
-	</div>
+    <%if !@candidate.phd.empty?%>
+	   <div class="label">
+		 <b>PHD:</b>
+	   </div>
 	<div class="value">
-		<%= @candidate.qualification %>
-	</div>
-	<br clear="all">
+     <%= @candidate.phd %>
+    </div>
+    <br clear="all">
+    <%end%>
+    <%if !@candidate.pg.empty?%>
+	 <div class="label">
+		 <b>PG:</b>
+	   </div>
+	<div class="value">
+     <%= @candidate.pg %>
+    </div>
+    
+    <%end%>
+    
+    <div class="label">
+		 <b>Graduation:</b>
+	   </div>
+	<div class="value">
+     <%= @candidate.graduate %>
+    </div>
+     <br clear="all">
+    
 	<div class="label">
 		<b>Date of Birth:</b>
 	</div>
@@ -30,41 +50,65 @@
 		<%= @candidate.date_of_birth %>
 	</div>
 	<br clear="all">
-	<div class="label">
+<%if !@candidate.contactinfos_id.nil?%>
+	 <div class="label">
 		<b>Address:</b>
-	</div>
-	<div class="value">
+	 </div>
+   
+	 <div class="value">
+       
 		<%= Contactinfo.find(@candidate.contactinfos_id).address if @candidate.contactinfos_id %>
-	</div>
+	
+   
+     
+     </div>
 	<br clear="all">
+     
    <div class="label">
 		<b>State:</b>
 	</div>
+    
 	<div class="value">
+       
 		<%= State.find(Contactinfo.find(@candidate.contactinfos_id).state).name%>
+    
 	</div>
 	<br clear="all">
+ 
 	<div class="label">
 		<b>Email:</b>
 	</div>
+     
 		<div class="value">
+        
 			<%= Contactinfo.find(@candidate.contactinfos_id).email if @candidate.contactinfos_id %>
+       
+          
 		</div>
 		<br clear="all">
+     
 		<div class="label">
 			<b>Alternate Email:</b>
 		</div>
+        
 		<div class="value">
+         
 			<%= Contactinfo.find(@candidate.contactinfos_id).alternate_email if @candidate.contactinfos_id %>
+         
 		</div>
 		<br clear="all">
+        
 		<div class="label">
 			<b>Contact Number:</b>
 		</div>
+        
 		<div class="value">
+           
 			<%= Contactinfo.find(@candidate.contactinfos_id).contact_number if @candidate.contactinfos_id %>
+         
 		</div>
 		<br clear="all">
+       <%end%>  
 		<div class="label">
 			<b>Experience:</b>
 		</div>

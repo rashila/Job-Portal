@@ -34,7 +34,7 @@ class CandidatesController < ApplicationController
   def new
     load_data
     @candidate = Candidate.new
-    @contactinfo = Contactinfo.new
+   
     @candidateskill = Candidateskill.new
     respond_to do |format|
       format.html # new.html.erb
@@ -46,7 +46,7 @@ class CandidatesController < ApplicationController
   def edit
     load_data
     @candidate = Candidate.find(params[:id])
-    @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
+    #@contactinfo = Contactinfo.find(@candidate.contactinfos_id)
   end
 
   # POST /candidates
@@ -70,8 +70,10 @@ class CandidatesController < ApplicationController
             flash[:notice] = "Candidate #{@candidate.name} was created successfully."
             redirect_to(@candidate)
          elsif params[:commit] == "SAVE&CONTINUE"
-         lash[:notice] = "Candidate #{@candidate.name} was created successfully."
-          redirect_to("/candidates/contactinfo?id=#{@candidate.id}")
+       
+          
+            flash[:notice] = "Candidate #{@candidate.name} was created successfully."
+            redirect_to("/contactinfo?id=#{@candidate.id}")
         end  
     else
       render :action => "new"
@@ -82,21 +84,27 @@ class CandidatesController < ApplicationController
   # PUT /candidates/1.xml
   def update
     load_data
-    puts params[:candidate][:skillset]
-    puts "........."
+    
     @candidate = Candidate.find(params[:id])
-    @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
-    if @contactinfo.update_attributes(params[:contactinfo])
-    contactinfo_success = 1
-    end
+    #@contactinfo = Contactinfo.find(@candidate.contactinfos_id)
+    @candidateskill = Candidateskill.find(@candidate.candidateskills_id)
+    
     if @candidate.update_attributes(params[:candidate])
     candidate_success = 1
     end
     respond_to do |format|
-      if contactinfo_success == 1 and candidate_success == 1
-        format.html { redirect_to("/candidates/"+@candidate.id.to_s+"/welcome") }
-        flash[:notice] = "Candidate #{@candidate.name} was successfully updated."
-        format.xml  { head :ok }
+      if candidate_success == 1
+         if params[:commit] == "SAVE"
+           format.html { redirect_to("/candidates/"+@candidate.id.to_s+"/welcome") }
+           flash[:notice] = "Candidate #{@candidate.name} was successfully updated."
+           format.xml  { head :ok }
+         elsif params[:commit] == "SAVE&CONTINUE"
+            format.html { redirect_to("/contactinfo_update?id=#{@candidate.id}") }
+            flash[:notice] = "Candidate #{@candidate.name} was successfully updated."
+            format.xml  { head :ok }
+            
+          end  
+        
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @candidate.errors+@contactinfo.errors, :status => :unprocessable_entity }
@@ -110,8 +118,9 @@ class CandidatesController < ApplicationController
     @candidate = Candidate.find(params[:id])
     @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
     @candidateskill = Candidateskill.find(@candidate.candidateskills_id)
-    @candidate.destroy
     @contactinfo.destroy
+    @candidate.destroy
+    
     @candidateskill.destroy
 
     respond_to do |format|
@@ -130,18 +139,9 @@ class CandidatesController < ApplicationController
     send_file "public"+@candidate.resume.url, :disposition => 'inline' 
   end
   def update_cities
-    # updates songs based on artist selected
+    # updates cities based on state selected
     state = State.find(params[:state_id])
     cities = state.cities
-    puts "@@@@@@@@@"
-    puts cities.inspect
-    puts "!!!!!!!1"
-
-    # respond_to do |format|
-        # format.js{ render :update do |page|
-         # page.replace_html 'cities', :partial => 'cities', :object => cities
-         # end}
-      # end
       render :update do |page|
       page.replace_html 'cities', :partial => 'cities', :object => cities
     end
@@ -149,29 +149,61 @@ class CandidatesController < ApplicationController
     def search
              load_data
                @candidate = Candidate.find(params[:id])
-            @search = Position.search do
+               @search = Position.search do
           
                 keywords(params[:title]) 
                 keywords(params[:experience]) 
                 keywords(params[:skillset_names]) 
                 keywords(params[:city]) 
-              
                 with (:status,'Open')
+                with (:published_status,'1')
+ 
        end
          
    end
+   def contactinfo   
+      load_data
+      @candidate = Candidate.find(params[:id])
+      @contactinfo = Contactinfo.new
+      
+      
+    end  
+    def contactinfo_update 
+      load_data
+      @candidate = Candidate.find(params[:id])
+      if !@candidate.contactinfos_id.nil?
+          @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
+       elsif @candidate.contactinfos_id.nil?
+         redirect_to("/contactinfo?id=#{@candidate.id}")
+       end
+      
+    end  
    def savecontinue
       @candidate = Candidate.find(params[:id])
       @contactinfo = Contactinfo.new(params[:contactinfo])
+      
       @contactinfo.valid?
       if @contactinfo.errors.length == 0
-          @contactinfo.save(:validate => false)
+         @contactinfo.save(:validate => false)
          @candidate.contactinfos_id = @contactinfo.id
          @candidate.update_attributes(params[:candidate])
-         flash[:notice]= "Contact Information has been saved successfully"
+         flash[:notice]= "Contact Information for #{@candidate.name} has been saved successfully"
          redirect_to(@candidate)
       end
-    end  
+      
+   end
+   
+   def updatecontinue
+         @candidate = Candidate.find(params[:id])
+         @contactinfo = Contactinfo.find(@candidate.contactinfos_id)
+          if @contactinfo.update_attributes(params[:contactinfo])
+         
+         flash[:notice]= "Contact Information for #{@candidate.name} has been updated successfully"
+         redirect_to(@candidate)
+      end
+   end
+   
+   
   private
 
   def load_data
@@ -179,6 +211,9 @@ class CandidatesController < ApplicationController
     @states = State.all
     @cities = City.all
     @cities = @cities.sort
+
+
+   
     
   end
 end

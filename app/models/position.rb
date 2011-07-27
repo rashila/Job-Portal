@@ -30,7 +30,7 @@ class Position
   belongs_to :company
   belongs_to :candidate
   has_and_belongs_to_many  :skillsets
-  has_and_belongs_to_many  :cities
+  #has_and_belongs_to_many  :cities
   references_and_referenced_in_many :agencies
   
     

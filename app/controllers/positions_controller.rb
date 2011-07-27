@@ -64,6 +64,7 @@ class PositionsController < ApplicationController
        @city = Contactinfo.find(@company.contactinfos_id).city
     elsif current_user.user_type == "Agency"
        @agency = Agency.find(params[:position][:agency_id]) if params[:position][:agency_id]
+       
      end
     @positionskillset = Positionskillset.new(params[:positionskillset])
     
@@ -94,6 +95,11 @@ class PositionsController < ApplicationController
              redirect_to("/savepublish?id=#{@position.id}")
            end  
        elsif current_user.user_type == "Agency"
+              @company_id = Company.find(@position.company_id).id
+              @company = Company.find(@company_id)
+              @company_city = Contactinfo.find(@company.contactinfos_id).city
+              @position.city = @company_city
+      
               positionagency = params[:position][:agency_id]
               agency = Agency.find(positionagency)
               @position.agencies << agency
@@ -197,11 +203,14 @@ class PositionsController < ApplicationController
     
     if current_user.user_type == "Company"
        @position = Position.find(params[:id])
+       
        @agencies = Agency.find(:all)
        @data = params[:publish_all]
        @data1 = params[:publish_agency]
        if (@data &&  @data1)
+         @city = Contactinfo.find(@position.company.contactinfos_id).city
           @position.published_status = "3"
+          @position.city = @city
           @position.update_attributes(params[:position])
           @arr = params[:position][:agency_ids]
           @arr.each do |a|
@@ -212,12 +221,18 @@ class PositionsController < ApplicationController
           redirect_to(@position)
           flash[:notice] = "Public to all and agencies"
       elsif @data
+          @city = Contactinfo.find(@position.company.contactinfos_id).city
           @position.published_status = "1"
+          @position.city = @city
           @position.update_attributes(params[:position])
           redirect_to(@position)
           flash[:notice] = "Public to all"
       elsif @data1
+          
+          
+          @city = Contactinfo.find(@position.company.contactinfos_id).city
           @position.published_status = "2"
+          @position.city = @city
           @position.update_attributes(params[:position])
           @arr = params[:position][:agency_ids] 
           @arr.each do |a|
@@ -242,10 +257,11 @@ class PositionsController < ApplicationController
          end  
       end  
  end   
- 
+
  def publish_agency
+     
       @position = Position.find(params[:id])
-      @agencies = Agency.all
+      @agencies = Agency.find(:all,:conditions => { :user_id => {'$ne'=> current_user.id}})
       if request.post?
       @position.published_status = "2"
       @arr = params[:position][:agency_ids]
@@ -269,7 +285,7 @@ class PositionsController < ApplicationController
     @agencies = Agency.all
     @data = params[:publish_all]
     @data1 = params[:publish_agency]
-    if (@data &&  @data1)
+    if (@data &&  @data1) 
         @position.published_status = "3" 
         @arr = params[:position][:agency_ids]
          Agency.any_in(:position_ids => [@position.id]).each do |p|

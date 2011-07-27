@@ -1,10 +1,18 @@
 <%= form_for @candidate  , :html => { :multipart => true } do |f| %>
 <% if @candidate.errors.any?%>
 <div id="error_explanation">
-	<h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
+	<h2><%= pluralize(@candidate.errors.count + @contactinfo.errors.count , "error") %> prohibited this candidate from being saved:</h2>
 
 	<ul>
 		<% @candidate.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+		
+	</ul>
+ <ul>
+		<% @contactinfo.errors.full_messages.each do |msg| %>
 		<li>
 			<%= msg %>
 		</li>
@@ -26,23 +34,22 @@
 <%= f.label :date_of_birth %>
 <%= f.text_field :date_of_birth %>
 <br clear="left">
-
 <hr />
 <label>Qualification:</label>
 <br clear="left">
 <%= label_tag (:PHD) %>
-<%= check_box_tag(:PHD) %>
-<%= f.text_field :PHD %>
+<%= check_box :PHD, :check, :onclick => "doEnable(this.id);" %>
+<%= f.text_field :phd %>
 
 <br clear="left">
 <%= label_tag (:PG) %>
-<%= check_box_tag(:PG) %>
-<%= f.text_field :PG %>
+<%= check_box :PG, :check, :onclick => "doEnable(this.id);" %>
+<%= f.text_field :pg %>
 
 <br clear="left">
 <%= label_tag (:Graduation) %>
-<%= check_box_tag(:Graduation) %>
-<%= f.text_field :Graduation %>
+<%= check_box :Graduation, :check,  :onclick => "doEnable(this.id);" %>
+<%= f.text_field :graduate %>
 <br clear="left">
 <hr />
 <label for="candidate_experience">
@@ -69,14 +76,65 @@
 <br>
 <div class="actions">
 	<label></label>
-	<%= f.submit "SAVE" %>
-    <%= f.submit "SAVE&CONTINUE" %>
+	
+  
+     <%= f.submit "SAVE" %>
+     <%= f.submit "SAVE&CONTINUE" %>
+   
 	<br clear="all" />
 </div>
-<%=link_to "Contact Informations","/candidates/contactinfo"%>
+
 <% end %>
 <script>$( function () {
 		$('#candidate_date_of_birth').datepicker();
-	});</script>
+	});
+	
+	function doEnable(id) {
+		if (id == "PHD_check") {
+			if (document.getElementById(id).checked == true) {
+				document.getElementById("PG_check").disabled = true;
+				document.getElementById("Graduation_check").disabled = true;
+                document.getElementById("candidate_PG").disabled = true;
+				document.getElementById("candidate_Graduation").disabled = true;
+                
+			}
+			else {
+				resetAll();
+			}
+		}
+        else if(id == "PG_check")
+        {
+			if (document.getElementById(id).checked == true) {
+				document.getElementById("PHD_check").disabled = true;
+				document.getElementById("Graduation_check").disabled = false;
+                document.getElementById("candidate_PHD").disabled = true;
+				document.getElementById("candidate_Graduation").disabled = false;
+			}
+			else {
+				resetAll();
+			}
+		}
+       else if(id == "Graduation_check")
+        {
+			if (document.getElementById(id).checked == true) {
+				document.getElementById("PHD_check").disabled = true;
+				document.getElementById("PG_check").disabled = true;
+                document.getElementById("candidate_PHD").disabled = true;
+				document.getElementById("candidate_PG").disabled = true;
+			}
+			else {
+				resetAll();
+			}
+		}
+	}
+	function resetAll() {
+		document.getElementById("PHD_check").disabled = false;
+		document.getElementById("candidate_PHD").disabled = false;
+		document.getElementById("PG_check").disabled = false;
+		document.getElementById("candidate_PG").disabled = false;
+		document.getElementById("Graduation_check").disabled = false;
+		document.getElementById("candidate_Graduation").disabled = false;
+	}
+</script>
 
 </html>

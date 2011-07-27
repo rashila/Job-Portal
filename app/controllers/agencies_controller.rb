@@ -99,8 +99,9 @@ class AgenciesController < ApplicationController
   def destroy
     @agency = Agency.find(params[:id])
     @contactinfo= Contactinfo.find(@agency.contactinfos_id)
-    @agency.destroy
     @contactinfo.destroy
+    @agency.destroy
+    
 
     respond_to do |format|
       format.html { redirect_to(agencies_url) }

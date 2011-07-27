@@ -13,10 +13,10 @@ class Candidate
   field :contactinfos_id, :type => String
   field :user_id, :type => String
   field :candidateskills_id, :type => String
-  field :PHD,:type => String
-  field :PG,:type => String
-  field :Graduation,:type => String
-  validates_presence_of :first_name,:last_name,:qualification,:date_of_birth,:experience,:expected_salary
+  field :phd,:type => String
+  field :pg,:type => String
+  field :graduate,:type => String
+  validates_presence_of :first_name,:last_name,:date_of_birth,:experience,:expected_salary
   validates_date :date_of_birth, :before => lambda { 18.years.ago },
                                  :before_message => "must be at least 18 years old"
 

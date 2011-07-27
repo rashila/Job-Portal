@@ -104,6 +104,8 @@ class CompaniesController < ApplicationController
   # DELETE /companies/1.xml
   def destroy
     @company = Company.find(params[:id])
+    @contactinfo= Contactinfo.find(@company.contactinfos_id)
+    @contactinfo.destroy
     @company.destroy
 
     respond_to do |format|

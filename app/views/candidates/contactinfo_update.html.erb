@@ -1,7 +1,7 @@
 <h1>Contact Informations </h1>
 
 
-<%= form_tag('/savecontinue?id='+params[:id].to_s) do%>
+<%= form_tag('/updatecontinue?id='+params[:id].to_s) do%>
 <%= error_messages_for 'contactinfo' %>
 
 <%= label :contactinfo, :address1 %>
@@ -42,7 +42,7 @@
 <%= text_field :contactinfo,:contact_number %>
 <div>
 	<label></label>
-	<%= submit_tag "SAVE" %>
+	<%= submit_tag "UPDATE" %>
 	<br clear="all" />
 </div>
 <%end%>
