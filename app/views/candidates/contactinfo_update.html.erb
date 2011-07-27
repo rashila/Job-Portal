@@ -4,42 +4,50 @@
 <%= form_tag('/updatecontinue?id='+params[:id].to_s) do%>
 <%= error_messages_for 'contactinfo' %>
 
-<%= label :contactinfo, :address1 %>
-<%= text_field :contactinfo, :address1 %>
-<br clear="left">
-<%= label :contactinfo, :address2 %>
-<%= text_field :contactinfo, :address2 %>
-<br clear="left">
-<%= label :contactinfo, :address3 %>
-<%= text_field :contactinfo, :address3 %>
-<br clear="left">
-<%= label :contactinfo, :state %></label>
+<table>
+	<tr>
+		<td><%= label :contactinfo, :address1 %></td>
+		<td><%= text_field :contactinfo, :address1 %></td>
+	</tr>
+	<tr>
+		<td><%= label :contactinfo, :address2 %></td>
+		<td><%= text_field :contactinfo, :address2 %></td>
+	</tr>
+	<tr>
 
-<%= collection_select(:contactinfo, :state, @states, :id, :name,
-{:prompt   => "Select a state"},
-{:onchange => "#{remote_function(:url  => '/my_cities_list',:with => "'state_id='+value")}"}) %>
-<br clear="left">
-<%= label :contactinfo, :city %></label>
-<div id="cities">
-	<%= render :partial => 'cities',   :object => @cities %>
-</div>
-<br clear="left">
-
-<%= label :contactinfo, :pin %>
-
-<%= text_field :contactinfo, :zip %>
-<br clear="left">
-<%= label :contactinfo,:email %>
-
-<%= text_field :contactinfo,:email %>
-<br clear="left">
-<%= label :contactinfo,:alternate_email %>
-
-<%= text_field :contactinfo,:alternate_email %>
-<br clear="left">
-<%= label :contactinfo,:contact_number %>
-
-<%= text_field :contactinfo,:contact_number %>
+		<td><%= label :contactinfo, :address3 %></td>
+		<td><%= text_field :contactinfo, :address3 %></td>
+	</tr>
+	<tr>
+		<td><%= label :contactinfo, :state %></td>
+		<td>
+		<%= collection_select(:contactinfo, :state, @states, :id, :name,
+		{:prompt   => "Select a state"},
+		{:onchange => "#{remote_function(:url  => '/my_cities_list',:with => "'state_id='+value")}"}) %>
+		<br clear="left">
+		</td>
+	</tr>
+	<tr>
+		<td><%= label :contactinfo, :city %></td>
+		<td id="cities"><%= render :partial => 'cities',   :object => @cities %></td>
+	</tr>
+	<tr>
+		<td><%= label :contactinfo, :pin %></td>
+		<td><%= text_field :contactinfo, :zip %></td>
+	</tr>
+    <tr>
+		<td><%= label :contactinfo,:email %></td>
+		<td><%= text_field :contactinfo,:email %></td>
+	</tr>
+   <tr>
+		<td><%= label :contactinfo,:alternate_email %></td>
+		<td><%= text_field :contactinfo,:alternate_email %></td>
+	</tr>
+     <tr>
+		<td><%= label :contactinfo,:contact_number %></td>
+		<td><%= text_field :contactinfo,:contact_number %></td>
+	</tr>
+</table>
 <div>
 	<label></label>
 	<%= submit_tag "UPDATE" %>

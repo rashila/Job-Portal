@@ -94,8 +94,8 @@
 			if (document.getElementById(id).checked == true) {
 				document.getElementById("PG_check").disabled = true;
 				document.getElementById("Graduation_check").disabled = true;
-                document.getElementById("candidate_PG").disabled = true;
-				document.getElementById("candidate_Graduation").disabled = true;
+                document.getElementById("candidate_pg").disabled = true;
+				document.getElementById("candidate_graduate").disabled = true;
                 
 			}
 			else {
@@ -107,8 +107,8 @@
 			if (document.getElementById(id).checked == true) {
 				document.getElementById("PHD_check").disabled = true;
 				document.getElementById("Graduation_check").disabled = false;
-                document.getElementById("candidate_PHD").disabled = true;
-				document.getElementById("candidate_Graduation").disabled = false;
+                document.getElementById("candidate_phd").disabled = true;
+				document.getElementById("candidate_graduate").disabled = false;
 			}
 			else {
 				resetAll();
@@ -119,8 +119,8 @@
 			if (document.getElementById(id).checked == true) {
 				document.getElementById("PHD_check").disabled = true;
 				document.getElementById("PG_check").disabled = true;
-                document.getElementById("candidate_PHD").disabled = true;
-				document.getElementById("candidate_PG").disabled = true;
+                document.getElementById("candidate_phd").disabled = true;
+				document.getElementById("candidate_pg").disabled = true;
 			}
 			else {
 				resetAll();
@@ -129,11 +129,11 @@
 	}
 	function resetAll() {
 		document.getElementById("PHD_check").disabled = false;
-		document.getElementById("candidate_PHD").disabled = false;
+		document.getElementById("candidate_phd").disabled = false;
 		document.getElementById("PG_check").disabled = false;
-		document.getElementById("candidate_PG").disabled = false;
+		document.getElementById("candidate_pg").disabled = false;
 		document.getElementById("Graduation_check").disabled = false;
-		document.getElementById("candidate_Graduation").disabled = false;
+		document.getElementById("candidate_graduate").disabled = false;
 	}
 </script>
 
