@@ -59,122 +59,153 @@ class PositionsController < ApplicationController
     load_data
     @position  = Position.new(params[:position])
     
-    if current_user.user_type == "Company"
-       @company = Company.find(params[:position][:company_id]) if params[:position][:company_id]
-       @city = Contactinfo.find(@company.contactinfos_id).city
-    elsif current_user.user_type == "Agency"
-       @agency = Agency.find(params[:position][:agency_id]) if params[:position][:agency_id]
+      if current_user.user_type == "Company"
+         @company = Company.find(params[:position][:company_id]) if params[:position][:company_id]
+         @city = Contactinfo.find(@company.contactinfos_id).city
+      elsif current_user.user_type == "Agency"
+         @agency = Agency.find(params[:position][:agency_id]) if params[:position][:agency_id]
        
-     end
-    @positionskillset = Positionskillset.new(params[:positionskillset])
+        end
+        @positionskillset = Positionskillset.new(params[:positionskillset])
     
   
-    if @position.errors.length == 0
+   
        @positionskillset.positions_id = @position.id
        @positionskillset.skillsets_id = @position.skillset_ids
        @positionskillset.save
        @position.positionskillsets_id = @positionskillset.id
        @position.status = 'Open'
        
-       @position.save 
-      # /*
-       # * if agency_id parameter present
-       # *   call savepublish(agency_id)
-       # */
+      @position.save
+    
 #       
-      
+     
         if current_user.user_type == "Company"
-          if params[:commit] == "SAVE"
-            @position.city = @city
-            @position.published_status = "0"
-            @position.update_attributes(params[:position])
-             flash[:notice] = "Position #{@position.title} was created successfully."
-             redirect_to(@position)
+           if params[:commit] == "SAVE"
+             @position.city = @city
+             @position.published_status = "0"
+             @position.update_attributes(params[:position])
+            if @position.save 
+              flash[:notice] = "Position #{@position.title} was created successfully."
+              redirect_to(@position)
+            else
+               render :action => "new"
+            end
+            
           elsif params[:commit] == "SAVEPUBLISH"
+            if @position.save
              flash[:notice] = "Position #{@position.title} was created successfully."
              redirect_to("/savepublish?id=#{@position.id}")
-           end  
-       elsif current_user.user_type == "Agency"
+            else
+              render :action => "new"
+            end
+           
+           
+           
+        
+         elsif current_user.user_type == "Agency"
               @company_id = Company.find(@position.company_id).id
               @company = Company.find(@company_id)
               @company_city = Contactinfo.find(@company.contactinfos_id).city
               @position.city = @company_city
-      
+             
               positionagency = params[:position][:agency_id]
               agency = Agency.find(positionagency)
               @position.agencies << agency
-              @position.published_status = "4"
+              @position.published_status = "2"
               @position.save
-            
-          redirect_to(@position)
-          flash[:notice] = "Position #{@position.title} was created successfully."
-
-        end 
-     else
-        render :action => "new"
-     end
+          else
+              render :action => "new"
+            end
+       
+     end 
   end
 
   # PUT /positions/1
   # PUT /positions/1.xml
    def update
-    load_data
+   load_data
 
     @position = Position.find(params[:id])
     @position.update_attributes(params[:position])
- 
-    if params[:commit] == "UPDATE"
-      if @position.status == "Open"
+    if current_user.user_type == "Company"
+         if params[:commit] == "UPDATE"
+            if @position.status == "Open"
 
-        if !@position.agency_ids.nil?
-          @position.agency_ids = []
-          @position.published_status = "0"
-          @position.update_attributes(params[:position])
-          Agency.any_in(:position_ids => [@position.id]).each do |p|
-            p.positions.delete(@position)
-            p.save
+               if !@position.agency_ids.nil?
+               @position.agency_ids = []
+               @position.published_status = "0"
+               @position.update_attributes(params[:position])
+               Agency.any_in(:position_ids => [@position.id]).each do |p|
+                     p.positions.delete(@position)
+                     p.save
+                     end
+
+               else
+                 @position.published_status = "0"
+                 @position.update_attributes(params[:position])
+               end
+                if @position.update_attributes(params[:position])
+                   flash[:notice] = "Position #{@position.title} was updated successfully."
+                   redirect_to(@position)
+                else
+                    render :action => "edit"
+    
+                end
+           elsif @position.status == "Close" || @position.status == "Inprogress"
+                @position.agency_ids = []
+                @position.published_status = "0"
+                Agency.any_in(:position_ids => [@position.id]).each do |p|
+                  p.positions.delete(@position)
+                  p.save
+                  end
+                @position.update_attributes(params[:position])
+                flash[:notice] = "Position #{@position.title} has been closed or in progress."
+                redirect_to(@position)
           end
-
-        else
-          @position.published_status = "0"
-          @position.update_attributes(params[:position])
-        end
-        flash[:notice] = "Position #{@position.title} was updated successfully."
-        redirect_to(@position)
-
-      elsif @position.status == "Close" || @position.status == "Inprogress"
-        @position.agency_ids = []
-        @position.published_status = "0"
-        Agency.any_in(:position_ids => [@position.id]).each do |p|
-          p.positions.delete(@position)
-          p.save
-        end
-        @position.update_attributes(params[:position])
-        flash[:notice] = "Position #{@position.title} has been closed or in progress."
-        redirect_to(@position)
-      end
     elsif params[:commit] == "UPDATEPUBLISH"
-      if @position.status == "Open"
-        @position.update_attributes(params[:position])
-        flash[:notice] = "Position #{@position.title} was updated successfully."
-        redirect_to("/updatepublish?id=#{@position.id}")
-      elsif @position.status == "Close" || @position.status == "Inprogress"
-        @position.agency_ids = []
-        @position.published_status = "0"
-        Agency.any_in(:position_ids => [@position.id]).each do |p|
-          p.positions.delete(@position)
-          p.save
-        end
-        @position.update_attributes(params[:position])
-        flash[:notice] = "Position #{@position.title} has been closed or in progress."
-        redirect_to("/updatepublish?id=#{@position.id}")
-      end
+          if @position.status == "Open"
+             @position.update_attributes(params[:position])
+             flash[:notice] = "Position #{@position.title} was updated successfully."
+             redirect_to("/updatepublish?id=#{@position.id}")
+          elsif @position.status == "Close" || @position.status == "Inprogress"
+             @position.agency_ids = []
+             @position.published_status = "0"
+             Agency.any_in(:position_ids => [@position.id]).each do |p|
+                p.positions.delete(@position)
+                p.save
+                end
+            @position.update_attributes(params[:position])
+             if @position.update_attributes(params[:position])
+                   flash[:notice] = "Position #{@position.title} has been closed or in progress."
+                  redirect_to("/updatepublish?id=#{@position.id}")
+                else
+                    render :action => "edit"
     
-    else
-      render :action => "edit"
-    
-   end
-  end
+                end
+           end 
+         end 
+      
+   
+  elsif current_user.user_type == "Agency"
+            if @position.status == "Open"
+               @position.published_status = "2"
+               #@position.update_attributes(params[:position])
+               if @position.update_attributes(params[:position])
+                 redirect_to(@position)
+                 flash[:notice] = "Position #{@position.title} was updated successfully."
+               else
+                 render :action => "edit"
+                end 
+           elsif @position.status == "Inprogress" || @position.status == "Close"
+               @position.published_status = "0"
+               @position.update_attributes(params[:position])
+                 redirect_to(@position)
+                 flash[:notice] = "Position #{@position.title} has been closed or in progress."
+            end
+     end       
+ 
+end
 
   # DELETE /positions/1
   # DELETE /positions/1.xml
@@ -207,6 +238,7 @@ class PositionsController < ApplicationController
        @agencies = Agency.find(:all)
        @data = params[:publish_all]
        @data1 = params[:publish_agency]
+       
        if (@data &&  @data1)
          @city = Contactinfo.find(@position.company.contactinfos_id).city
           @position.published_status = "3"
@@ -228,8 +260,6 @@ class PositionsController < ApplicationController
           redirect_to(@position)
           flash[:notice] = "Public to all"
       elsif @data1
-          
-          
           @city = Contactinfo.find(@position.company.contactinfos_id).city
           @position.published_status = "2"
           @position.city = @city

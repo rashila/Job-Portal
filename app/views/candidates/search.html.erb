@@ -38,36 +38,55 @@
 <%= submit_tag "Search"%> -->
 
 <% if @search and @search.total > 0 %>  
-<% @search.each_hit_with_result do |hit, post| %>
 
 <table class="gridtable">
 	<tr>
-		<th colspan="2">
-			<%= link_to post.title,"/positions/"+post.id.to_s+"/show"%>
+        <th>
+          <%= check_box_tag(:apply)%>
+        </th>
+		<th>
+		  Title:
+		</th>
+        <th>
+			Company:
+		</th>
+         <th>
+			Location:
+		</th>
+        <th>
+			Experience:
+		</th>
+        <th>
+			Skillsets:
+		</th>
+       <th>
+			Apply
 		</th>
 	</tr>
+    <% @search.each_hit_with_result do |hit, post| %>
+
 	<tr>
-		<td>Company:</td>
+        <td><%= check_box_tag(:apply)%></td>
+		<td><%= link_to post.title,"/positions/"+post.id.to_s+"/show"%></td>
 		<td><%= link_to post.company.name,"/companies/"+post.company.id.to_s+"/show"%></td>
-	</tr>
-	<tr>
-		<td>Location:</td>
+	
 		<td><%= Contactinfo.find(post.company.contactinfos_id).city%></td>
-	</tr>
-	<tr>
-		<td>Experience:</td>
+	
 		<td><%= post.experience%></td>
-	</tr>
-	<tr>
-		<td>Skillsets:</td>
+	
 		<td><%= post.skillsets.collect{|skillset| skillset.name }.join(', ')%></td>
+        <td><%= link_to 'Apply',"/candidates/apply?id="+post.id.to_s%></td>
 
 	</tr>
 
+<%end%>
 </table>
+
+
 <div class="table_padding"></div>
-<% end %>
+
 </dl>
+
 <%else%>
 <p>Record not found</p>
 <% end %>

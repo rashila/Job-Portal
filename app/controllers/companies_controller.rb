@@ -205,7 +205,7 @@ class CompaniesController < ApplicationController
             fn = tattch.filename
             
             extension = File.extname(fn)
-            if extension == ".doc" || extension == ".docx"
+            if extension == ".doc" || extension == ".docx" || extension == ".pdf"
              
               @email = Email.new
               @email.from = email.from

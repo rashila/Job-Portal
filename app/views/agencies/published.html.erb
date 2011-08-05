@@ -11,6 +11,7 @@
     <th>Company Location</th>
     <th>Last date</th>
     <th>Skillsets</th>
+    <th>Status</th>
     <th>Edit</th>
    
     <th>Publish to all</th>
@@ -29,23 +30,19 @@
     <td><%= Contactinfo.find(position.company.contactinfos_id).city%></td>
     <td><%= position.last_date%></td>
     <td><%= position.skillsets.collect{|skillset| skillset.name }.join(', ') %></td>
-    <%if position.published_status == "4"%>
+   <td><%= position.status%></td>
     <td><%= link_to 'Edit', "/positions/"+position.id.to_s+"/edit"%></td>
-    <%else%>
-    <td></td>
-    <%end%>
+    
     
     <%if position.published_status == "2" && position.status == "Open"%>
     <td><%= link_to 'Publish to all',"/savepublish?id="+position.id.to_s%></td>
-    <%elsif position.published_status == "4" && position.status == "Open"%>
-     <td><%= link_to 'Publish to all',"/savepublish?id="+position.id.to_s%></td>
+    
     <%else%>
      <td></td>
     <%end%>
     <%if position.published_status == "3" && position.status == "Open"%>
     <td><%= link_to 'Publish via agencies',"/publish_agency?id="+position.id.to_s%></td>
-    <%elsif position.published_status == "4" && position.status == "Open"%>
-     <td><%= link_to 'Publish via agencies',"/publish_agency?id="+position.id.to_s%></td>
+   
     <%else%>
     <td></td>
     <%end%>

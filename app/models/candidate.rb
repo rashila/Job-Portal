@@ -16,6 +16,9 @@ class Candidate
   field :phd,:type => String
   field :pg,:type => String
   field :graduate,:type => String
+  field :cover_letter,:type => String
+  field :position_ids,:type => Array
+  references_and_referenced_in_many :positions
   validates_presence_of :first_name,:last_name,:date_of_birth,:experience,:expected_salary
   validates_date :date_of_birth, :before => lambda { 18.years.ago },
                                  :before_message => "must be at least 18 years old"

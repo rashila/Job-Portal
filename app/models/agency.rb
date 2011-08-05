@@ -8,6 +8,8 @@ class Agency
   field :user_id, :type => String
   #belongs_to :company
   has_many :contactinfos
+  has_many :email_settings
+  has_many :emails
   belongs_to :user
   references_and_referenced_in_many :positions
   validates_presence_of :name,:established_date,:website,:description

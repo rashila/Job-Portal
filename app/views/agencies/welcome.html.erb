@@ -1,11 +1,24 @@
 <h1>Welcome <%= @agency.name %></h1><br />
 <br>
 
+<table>
+<tr>
 
+<td><%= link_to 'Company List',"/companies"%></td>
+</tr>
+<tr>
+<td><%= link_to 'Edit your profile',"/agencies/"+@agency.id.to_s+"/edit"%></td>
+</tr>
+<tr>
+<td><%= link_to 'List all Positions' ,"/published?id="+@agency.id.to_s%></td>
+</tr>
+<tr>
+<td><%= link_to 'Create New Position',"/positions/new/"+@agency.id.to_s%></td>
+<tr>
 
-<%= link_to 'Company List',"/companies"%>
-
-<%= link_to 'Edit your profile',"/agencies/"+@agency.id.to_s+"/edit"%>
-
-<%= link_to 'List all Published position' ,"/published?id="+@agency.id.to_s%>
-<%= link_to 'Create New Position',"/positions/new/"+@agency.id.to_s%>
+<td><%= link_to 'Fetch Resumes', fetch_resumes_agency_settings_path(@agency.id) %></td>
+</tr>
+<tr>
+<td><%= link_to 'Email Settings', agency_email_settings_url(@agency) %><br /></td>
+</tr>
+</table>

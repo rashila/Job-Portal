@@ -1,7 +1,7 @@
 <br>
 
 <h1>Publish Position </h1>
-
+<%= error_messages_for 'position'%>
 <%= form_tag('/savepublish?id='+params[:id].to_s) do%>
 <%= check_box_tag(:publish_all) %>
 <%= label_tag(:publish_all, "Public to All") %>

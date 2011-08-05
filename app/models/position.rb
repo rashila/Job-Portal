@@ -32,6 +32,7 @@ class Position
   has_and_belongs_to_many  :skillsets
   #has_and_belongs_to_many  :cities
   references_and_referenced_in_many :agencies
+  references_and_referenced_in_many :candidates
   
     
  searchable :auto_index => false, :auto_remove => false do

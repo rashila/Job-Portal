@@ -1,0 +1,14 @@
+<br>
+
+<h1>Applying for <%=@position.title%></h1>
+
+
+<%= form_tag('/position_apply?id='+params[:id].to_s) do %>
+
+<%= label :candidate,:cover_letter%>
+<br>
+<%= text_area :candidate,:cover_letter%>
+<br>
+<br>
+<%= submit_tag "SEND"%>
+<% end %>

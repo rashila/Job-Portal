@@ -22,7 +22,7 @@
   <tr>
     <td><%= link_to position.title,"/positions/"+position.id.to_s+"/show" %></td>
     <td><%= position.status %></td>
-    <!--td><%= load_address :id => position.company.contactinfos_id %></td-->
+    
     <td><%= Contactinfo.find(position.company.contactinfos_id).city%></td>
     <td><%= position.last_date%></td>
     <%if position.status == "Open"%>
@@ -41,8 +41,6 @@
 
  
     <%if position.published_status == "0" && position.status == "Open"%>
-    <td><%= link_to 'Publish',"/savepublish?id="+position.id.to_s%></td>
-    <%elsif position.published_status == "4" && position.status == "Open"%>
     <td><%= link_to 'Publish',"/savepublish?id="+position.id.to_s%></td>
     
     <%end%>

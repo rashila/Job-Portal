@@ -1,5 +1,8 @@
 <h1>New email_setting</h1>
 
 <%= render 'form' %>
-
+<%if current_user.user_type == "Company"%>
 <%= link_to 'Back', company_email_settings_url(@company) %>
+<%elsif current_user.user_type == "Agency"%>
+<%= link_to 'Back', agency_email_settings_url(@agency) %>
+<%end%>

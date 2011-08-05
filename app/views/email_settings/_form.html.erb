@@ -1,3 +1,5 @@
+<%if current_user.user_type == "Company"%>
+
 <%= form_for [:company, @email_setting] do |f| %>
   <% if @email_setting.errors.any? %>
     <div id="error_explanation">
@@ -17,3 +19,25 @@
     <%= f.submit %>
   </div>
 <% end %>
+<%elsif current_user.user_type == "Agency"%>
+ <%= form_for [:agency, @email_setting] do |f| %>
+  <% if @email_setting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@email_setting.errors.count, "error") %> prohibited this email_setting from being saved:</h2>
+
+      <ul>
+      <% @email_setting.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+  	<%= f.text_field :email %>
+  	<%= f.password_field :password %>
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%end%>

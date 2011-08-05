@@ -4,6 +4,8 @@ class Email
   field :to, :type => String
   field :resume_file, :type => String
   field :company_id, :type => String
+  field :agency_id, :type => String
   field :date_received, :type => Date
   belongs_to :company
+  belongs_to :agency
 end

@@ -34,7 +34,7 @@ class CandidatesController < ApplicationController
   def new
     load_data
     @candidate = Candidate.new
-   
+    
     @candidateskill = Candidateskill.new
     respond_to do |format|
       format.html # new.html.erb
@@ -203,15 +203,52 @@ class CandidatesController < ApplicationController
       end
    end
    
+   def apply
+     @position = Position.find(params[:id])
+     @candidateposition = CandidatePosition.new
+   end 
+   
+   def position_apply
+      @position = Position.find(params[:id])
+      @candidate = current_user.candidate
+      @candidateposition = CandidatePosition.new(params[:candidateposition])
+      @candidateposition.position_id = @position.id
+      @candidateposition.candidate_id = @candidate.id
+      @candidateposition.title = @position.title
+      @candidateposition.apply_status = "0"
+      @candidateposition.save
+     # position_ids = Array.new
+     # puts "@@@@@@@@@@@@@@222"
+     # puts params[:candidate][:position_ids].inspect
+     # exit
+          
+       # @arr = params[:candidate][:position_ids]
+          # @arr.each do |a|
+          # position = Position.find(a)
+          # @candidate.positions << positon
+          # @candidate.save
+          # end
+      @candidate.position_ids = @position.id
+      @candidate.update_attributes(params[:candidate])
+      @position.candidate_ids = @candidate.id
+      @position.update_attributes(params[:position])
+        redirect_to("/applied?id=#{@position.id}")
+       
+      end  
+      
+    def applied
+        @position = Position.find(params[:id])
+        @candidate = current_user.candidate
+       flash[:notice] = "Applied for position #{@position.title}"
+      end  
    
   private
 
   def load_data
     @skillsets = Skillset.find(:all)
     @states = State.all
-    @cities = City.all
-    @cities = @cities.sort
-
+    @cities = City.find(:all).asc(:name)
+    
 
    
     

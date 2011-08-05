@@ -1,3 +1,13 @@
+<!-- <%if !@candidate.phd.nil?%>
+<% @phd = 1%>
+<%elsif !@candidate.pg.nil?%>
+<% @pg = 1%>
+<%elsif !@candidate.graduate.nil?%>
+<% @graduate = 1%>
+<%end%>
+   -->
+
+
 <%= form_for @candidate  , :html => { :multipart => true } do |f| %>
 <% if @candidate.errors.any?%>
 <div id="error_explanation">
@@ -38,17 +48,17 @@
 <label>Qualification:</label>
 <br clear="left">
 <%= label_tag (:PHD) %>
-<%= check_box :PHD, :check, :onclick => "doEnable(this.id);" %>
+<%= check_box :PHD, :check, :onclick => "doEnable(this.id);"%>
 <%= f.text_field :phd %>
 
 <br clear="left">
 <%= label_tag (:PG) %>
-<%= check_box :PG, :check, :onclick => "doEnable(this.id);" %>
+<%= check_box :PG, :check, :onclick => "doEnable(this.id);"%>
 <%= f.text_field :pg %>
 
 <br clear="left">
 <%= label_tag (:Graduation) %>
-<%= check_box :Graduation, :check,  :onclick => "doEnable(this.id);" %>
+<%= check_box :Graduation, :check,  :onclick => "doEnable(this.id);"%>
 <%= f.text_field :graduate %>
 <br clear="left">
 <hr />
